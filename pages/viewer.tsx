@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Btn from "@/components/Btn";
 import { ChzzkChat } from "chzzk";
 import { ViewerType } from "@/lib/types";
+import Chat from "@/components/Chat";
 
 const Frame = styled.div`
   display: flex;
@@ -124,6 +125,7 @@ export default function Home() {
   const [ state, setState ] = useState('before')
   const [ subscribe, setSubscribe ] = useState<boolean>(false)
   const [ viewers, setViewers ] = useState<ViewerType[]>([])
+  const [ chat, setChat ] = useState<null | ViewerType>(null)
 
   useEffect(() => {
     if(channel.channelId === ''){
@@ -257,7 +259,10 @@ export default function Home() {
             <Viewers>
               {
                 viewers.map(e => 
-                <Viewer key={`viewer_${e.userIdHash}`}>
+                <Viewer
+                  key={`viewer_${e.userIdHash}`}
+                  onClick={() => setChat(e)}
+                >
                   {
                     e.badges.map((e2, i2) => <ViewerBadge key={`viewer_${e.userIdHash}_badge_${i2}`} src={e2} />)
                   }
@@ -273,6 +278,9 @@ export default function Home() {
               }
             </ViewersBottom>
           </ViewersFrame>
+        }
+        {
+          chat !== null && <Chat viewer={chat} onClose={() => setChat(null)} />
         }
       </Frame>
     </>
