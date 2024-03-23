@@ -122,7 +122,7 @@ const Chat = (props: ChatType) => {
     return () => { 
       setTimeout(() => {
         client.disconnect()
-      }, 100)
+      }, 500)
     }
 
   }, [])
