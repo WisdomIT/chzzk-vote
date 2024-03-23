@@ -153,13 +153,27 @@ export default function Home() {
     }
   }
 
+  const getVoices = (): Promise<SpeechSynthesisVoice[]> => {
+    return new Promise((resolve, reject) => {
+      let synth = window.speechSynthesis;
+      let id: number; // id의 타입을 number로 명시적으로 지정
+  
+      id = window.setInterval(() => {
+        if (synth.getVoices().length !== 0) {
+          resolve(synth.getVoices());
+          clearInterval(id);
+        }
+      }, 10);
+    });
+  };
+
   const onSetChannel = async () => {
     if(!find){
       alert('잘못된 요청입니다!')
       return
     }
 
-    const voices = await speechSynthesis.getVoices()
+    const voices = await getVoices()
     const voicesKR = voices.filter(voice => voice.lang === 'ko-KR')
     const findGoogleVoice = voicesKR.find(e => e.name.startsWith('Google'))
 
