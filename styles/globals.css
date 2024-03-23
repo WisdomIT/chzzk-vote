@@ -152,10 +152,6 @@ a {
     opacity: 0;
     height: 0px;
   }
-  50% {
-    opacity: 1;
-    height: 200px;
-  }
   100% {
     opacity: 1;
     height: 400px;

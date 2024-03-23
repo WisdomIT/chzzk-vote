@@ -30,7 +30,7 @@ const Btn = styled.a<{ $type: string, $width: number }>`
   @media ${device.mobile} {
     font: 800 14px/1 var(--font-default);
     height: 48px;
-    width: ${props => props.$width / 2}px;
+    width: ${props => props.$width / 1.8}px;
   }
 `
 

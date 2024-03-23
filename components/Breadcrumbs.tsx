@@ -10,6 +10,11 @@ const Frame = styled.div`
   left: 40px;
   gap: 10px;
   align-items: center;
+
+  @media ${device.mobile} {
+    top: 10px;
+    left: 10px;
+  }
 `
 
 const Breadcrumb = styled(Link)`

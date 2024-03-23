@@ -37,6 +37,11 @@ const BtnFrame = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+
+  @media ${device.mobile} {
+    gap: 20px;
+    flex-direction: column;
+  }
 `
 
 const Subscribe = styled.a<{$active: boolean}>`
@@ -44,6 +49,11 @@ const Subscribe = styled.a<{$active: boolean}>`
   font: 600 20px/1 var(--font-default);
 
   opacity: ${props => props.$active ? '1' : '0.2'};
+
+  @media ${device.mobile} {
+    position: relative;
+    font: 600 14px/1 var(--font-default);
+  }
 `
 
 const BeforeSubscribe = styled(Subscribe)`
@@ -53,11 +63,20 @@ const BeforeSubscribe = styled(Subscribe)`
   &:hover {
     opacity: ${props => props.$active ? '1' : '0.5'};
   }
+
+  @media ${device.mobile} {
+    bottom: initial;
+  }
 `
 
 const OpenSubscribe = styled(Subscribe)`
   left: 300px;
   width: 220px;
+
+  @media ${device.mobile} {
+    left: initial;
+    width: auto;
+  }
 `
 
 const SubscribeIcon = styled.i`
@@ -71,14 +90,13 @@ const ViewersFrame = styled.div`
 `
 
 const Viewers = styled.div`
-  gap: 10px;
   width: 100%;
   max-width: 1000px;
   height: 400px;
   padding: 20px;
   border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
-  animation: viewers .2s;
+  animation: viewers .5s;
   overflow-y: auto;
 `
 
@@ -96,12 +114,16 @@ const Viewer = styled.a`
   &:hover {
     background-color: var(--color-white-10);
   }
+
+  &:last-child {
+    margin-right: 0px;
+  }
 `
 
 const ViewerBadge = styled.img`
   width: 14px;
   height: 14px;
-  margin-right: 4px;
+  margin-right: 2px;
   vertical-align: middle;
 `
 
@@ -116,6 +138,10 @@ const ViewersBottom = styled.div`
 const ViewerBottomText = styled.p`
   font: 800 20px/1 var(--font-default);
 
+  @media ${device.mobile} {
+    font: 600 14px/1 var(--font-default);
+  }
+`
 
 export default function Home() {
 
