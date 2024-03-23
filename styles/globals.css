@@ -5,13 +5,15 @@
   --font-default: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   --color-stroke-01: rgba(255,255,255,0.06);
   --color-stroke-02: rgba(255,255,255,0.1);
-  --color-stroke-03: rgba(0,0,0,0.1);
-  --color-stroke-04: rgba(0,0,0,0.2);
+  --color-stroke-light-01: rgba(0,0,0,0.1);
+  --color-stroke-light-02: rgba(0,0,0,0.2);
   --color-background-01: #141517;
   --color-background-02: #373A3F;
   --color-background-01-transparent: rgba(20, 21, 23, 0.5);
   --color-brand: #00FFA3;
-  --color-brand-tranparent: rgba(0, 255, 16, 0.3);
+  --color-brand-light: #1bb373;
+  --color-brand-tranparent: rgba(0, 255, 163, 0.3);
+  --color-brand-light-tranparent: rgba(27, 179, 115, 0.3);
   --color-white-10: rgba(255,255,255,0.1);
   --color-white-20: rgba(255,255,255,0.2);
   --color-white-30: rgba(255,255,255,0.3);
@@ -126,7 +128,7 @@ a {
 @keyframes appearUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
@@ -141,6 +143,21 @@ a {
   }
   100% {
     opacity: 1;
-    transform: translateY(20px);
+    transform: translateY(10px);
+  }
+}
+
+@keyframes viewers {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  50% {
+    opacity: 1;
+    height: 200px;
+  }
+  100% {
+    opacity: 1;
+    height: 400px;
   }
 }

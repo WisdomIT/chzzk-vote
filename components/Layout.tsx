@@ -23,7 +23,7 @@ const Nav = styled.nav`
   }
 
   .light & {
-    border-bottom: 1px solid var(--color-stroke-03);
+    border-bottom: 1px solid var(--color-stroke-light-01);
   }
 
   @media ${device.mobile} {
@@ -184,7 +184,7 @@ const FooterFrame = styled.footer`
   }
 
   .light & {
-    border-top: 1px solid var(--color-stroke-03);
+    border-top: 1px solid var(--color-stroke-light-01);
   }
 
   @media ${device.mobile} {

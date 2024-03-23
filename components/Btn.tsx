@@ -21,6 +21,7 @@ const Btn = styled.a<{ $type: string, $width: number }>`
   border: 3px solid var(--color-brand);
   border-radius: 8px;
   cursor: pointer;
+  animation: appear .2s;
 
   &:hover {
     opacity: 0.8;

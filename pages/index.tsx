@@ -13,6 +13,8 @@ const Frame = styled.div`
   align-items: center;
   padding: 20px;
 
+  animation: appearUp .3s;
+
   @media ${device.mobile} {
     padding: 80px 20px;
     flex-direction: column;
@@ -36,7 +38,7 @@ const Btn = styled(Link)`
   }
   
   .light & {
-    border: 1px solid var(--color-stroke-03);
+    border: 1px solid var(--color-stroke-light-01);
   }
 
   &:hover {
