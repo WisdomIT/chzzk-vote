@@ -1,13 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-
-export interface ChannelType {
-  channelId: string;
-  channelImageUrl: string;
-  channelName: string;
-  verifiedMark: boolean;
-  followerCount: number;
-}
+import { ChannelType } from './types';
 
 interface GlobalOptionState {
   channel: ChannelType;

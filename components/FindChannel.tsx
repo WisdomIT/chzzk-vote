@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { size, device, truncate } from '@/lib/style'
 import { PopupBackground } from "@/components/Popup";
 import Btn from "@/components/Btn";
-import { ChannelType } from "@/lib/zustand";
+import { ChannelType } from "@/lib/types";
 
 const Background = styled(PopupBackground)`
   gap: 100px;

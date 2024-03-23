@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Btn from "@/components/Btn";
 import { ChzzkChat } from "chzzk";
+import { ViewerType } from "@/lib/types";
 
 const Frame = styled.div`
   display: flex;
@@ -113,13 +114,7 @@ const ViewersBottom = styled.div`
 
 const ViewerBottomText = styled.p`
   font: 800 20px/1 var(--font-default);
-`
 
-type ViewerType = {
-  userIdHash: string,
-  badges: string[],
-  nickname: string
-}
 
 export default function Home() {
 

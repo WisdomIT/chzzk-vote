@@ -3,7 +3,7 @@ import { size, device, truncate } from '@/lib/style'
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ChannelType, useGlobalOptionStore } from "@/lib/zustand";
+import { useGlobalOptionStore } from "@/lib/zustand";
 
 const Frame = styled.div`
   display: block;

@@ -4,9 +4,10 @@ import { size, device, truncate } from '@/lib/style'
 import Input from "@/components/Input";
 import { useEffect, useState } from "react";
 import { ChzzkClient } from "chzzk";
-import { ChannelType, useGlobalOptionStore } from "@/lib/zustand";
+import { useGlobalOptionStore } from "@/lib/zustand";
 import { useRouter } from "next/router";
 import FindChannel from "@/components/FindChannel";
+import { ChannelType } from "@/lib/types";
 
 const Frame = styled.div`
   display: flex;
