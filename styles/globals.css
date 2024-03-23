@@ -157,3 +157,62 @@ a {
     height: 400px;
   }
 }
+
+@keyframes slotViewerDiv {
+  0% {
+    height: 180px;
+  }
+  100% {
+    height: 100px;
+  }
+}
+
+@keyframes slotViewerBadge {
+  0% {
+    width: 60px;
+    height: 60px;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes slotViewerName {
+  0% {
+    font: 800 60px/1 var(--font-default);
+  }
+  100% {
+    font: 800 40px/1 var(--font-default);
+  }
+}
+
+@keyframes chatbox {
+  0% {
+    opacity: 0;
+    height: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  100% {
+    opacity: 1;
+    height: 400px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+}
+
+@keyframes btnHeight {
+  0% {
+    opacity: 0;
+    height: 0px;
+    overflow: hidden;
+    border: 0px solid var(--color-brand);
+  }
+  100% {
+    opacity: 1;
+    height: 80px;
+    overflow: hidden;
+    border: 3px solid var(--color-brand);
+  }
+}

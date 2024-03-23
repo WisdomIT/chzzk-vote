@@ -6,9 +6,24 @@ import { ViewerType } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { ChzzkChat } from "chzzk";
 import { useGlobalOptionStore } from "@/lib/zustand";
+import Slot from "./Slot";
 
 const Background = styled(PopupBackground)`
-  gap: 20px;
+  gap: 0px;
+`
+
+const SlotItem = styled.div`
+  display: flex;
+  gap: 10px;
+`
+
+const SlotBadge = styled.img`
+  width: 60px;
+  height: 60px;
+`
+
+const SlotName = styled.p`
+  font: 800 60px/1 var(--font-default);
 `
 
 const Viewer = styled.div`
@@ -23,18 +38,22 @@ const Viewer = styled.div`
   background-color: var(--color-background-01);
   border-top: 1px solid var(--color-stroke-01);
   border-bottom: 1px solid var(--color-stroke-01);
+
+  animation: slotViewerDiv .3s;
 `
 
 const ViewerBadge = styled.img`
   width: 40px;
   height: 40px;
+
+  animation: slotViewerBadge .3s;
 `
 
 const ViewerName = styled.p`
   font: 800 40px/1 var(--font-default);
-
   ${truncate}
 
+  animation: slotViewerName .3s;
 `
 
 const ChatBox = styled.div`
@@ -49,8 +68,10 @@ const ChatBox = styled.div`
   background-color: var(--color-background-01);
   border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
-  animation: viewers .5s;
+  animation: chatbox .5s;
   overflow-y: auto;
+  margin-top: 20px;
+  margin-bottom: 40px;
 `
 
 const Balloon = styled.p`
@@ -67,13 +88,15 @@ const Balloon = styled.p`
 const ChatBottom = styled.div``
 
 type ChatType = {
-  viewer: ViewerType,
+  viewers: ViewerType[],
+  target: number,
   onClose: () => void
 }
 
-const Chat = (props: ChatType) => {
+const ChatSlot = (props: ChatType) => {
 
-  const { viewer, onClose } = props
+  const { viewers, target, onClose } = props
+  const [ state, setState ] = useState(false)
   const [ chat, setChat ] = useState<string[]>([])
   const { channel, voice } = useGlobalOptionStore()
 
@@ -86,6 +109,11 @@ const Chat = (props: ChatType) => {
   }
   
   useEffect(() => {
+
+    if(!state) return
+    if(viewers.length <= target) return
+
+    const viewer = viewers[target]
     
     const options = {
       channelId: channel.channelId,
@@ -123,7 +151,7 @@ const Chat = (props: ChatType) => {
       }, 100)
     }
 
-  }, [])
+  }, [state])
 
   useEffect(() => {
     document.querySelector('#chatBottom')?.scrollIntoView({
@@ -132,30 +160,49 @@ const Chat = (props: ChatType) => {
   },[chat])
 
   return <Background>
-    <Viewer>
-      {
-        viewer.badges.map((e, i) => 
-        <ViewerBadge key={`chat_badge_${i}`} src={e} />
-        )
-      }
-      <ViewerName>{viewer.nickname}</ViewerName>
-    </Viewer>
-    <ChatBox>
-      {
-        chat.map((e, i) => 
-        <Balloon key={`chat_balloon_${i}`}>
-          {e}
-        </Balloon>
-        )
-      }
-      <ChatBottom id="chatBottom" />
-    </ChatBox>
-    <Btn
-      $type="line"
-      $width={200}
-      onClick={onClose}
-    >닫기</Btn>
+    {
+      !state && <Slot data={viewers.map((e) => 
+        <SlotItem key={`slot_${e.userIdHash}`}>
+          {
+            e.badges.map((e2,i2) => <SlotBadge key={`slot_${e.userIdHash}_badge_${i2}`} src={e2} />)
+          }
+          <SlotName>{e.nickname}</SlotName>
+        </SlotItem>
+        )}
+        target={target}
+        duration={3000}
+        onEnd={() => setState(true)}
+        />
+    }
+    {
+      state && <>
+      <Viewer>
+        {
+          viewers[target].badges.map((e, i) => 
+          <ViewerBadge key={`chat_badge_${i}`} src={e} />
+          )
+        }
+        <ViewerName>{viewers[target].nickname}</ViewerName>
+      </Viewer>
+      <ChatBox>
+        {
+          chat.map((e, i) => 
+          <Balloon key={`chat_balloon_${i}`}>
+            {e}
+          </Balloon>
+          )
+        }
+        <ChatBottom id="chatBottom" />
+      </ChatBox>
+      <Btn
+        $type="line"
+        $width={200}
+        onClick={onClose}
+        style={{animation: 'btnHeight .2s'}}
+      >닫기</Btn>
+      </>
+    }
   </Background>
 }
 
-export default Chat
+export default ChatSlot

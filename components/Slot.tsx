@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+const height = 180
+
 type SlotDataType = string | JSX.Element;
 
 type SlotData = {
   data: SlotDataType[];
   target: number;
   duration: number;
-  height: number;
-  onEnd: (target: number) => void;
+  onEnd?: (target: number) => void;
 };
 
 const SlotContainer = styled.div<{ $height: number }>`
   overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
   height: ${(props) => `${props.$height}px`};
+  background-color: var(--color-background-01);
+  border-top: 1px solid var(--color-stroke-01);
+  border-bottom: 1px solid var(--color-stroke-01);
 `;
 
 const SlotItems = styled.div<{ $duration: number; $translateY: number; $initAnimation: boolean }>`
   display: flex;
   flex-direction: column;
-  transition: ${(props) => props.$initAnimation ? `none` : `transform ${props.$duration}ms ease-out`};
+  transition: ${(props) => props.$initAnimation ? `none` : `transform ${props.$duration - 200}ms ease-out`};
   transform: ${(props) => `translateY(-${props.$translateY}px)`};
 `;
 
@@ -32,7 +38,7 @@ const SlotItem = styled.div<{ $height: number }>`
   height: ${(props) => `${props.$height}px`};
 `;
 
-const Slot: React.FC<SlotData> = ({ data, target, duration, height, onEnd }) => {
+const Slot: React.FC<SlotData> = ({ data, target, duration, onEnd }) => {
   const [items, setItems] = useState<SlotDataType[]>([]);
   const [translateY, setTranslateY] = useState(0);
   const [initAnimation, setInitAnimation] = useState(true);
@@ -65,7 +71,7 @@ const Slot: React.FC<SlotData> = ({ data, target, duration, height, onEnd }) => 
     });
   
     const timer = setTimeout(() => {
-      onEnd(target);
+      if(onEnd) onEnd(target);
     }, duration);
   
     return () => clearTimeout(timer);

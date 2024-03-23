@@ -9,6 +9,7 @@ import Btn from "@/components/Btn";
 import { ChzzkChat } from "chzzk";
 import { ViewerType } from "@/lib/types";
 import Chat from "@/components/Chat";
+import ChatSlot from "@/components/ChatSlot";
 
 const Frame = styled.div`
   display: flex;
@@ -72,6 +73,7 @@ const BeforeSubscribe = styled(Subscribe)`
 const OpenSubscribe = styled(Subscribe)`
   left: 300px;
   width: 220px;
+  animation: appear .3s;
 
   @media ${device.mobile} {
     left: initial;
@@ -152,6 +154,7 @@ export default function Home() {
   const [ subscribe, setSubscribe ] = useState<boolean>(false)
   const [ viewers, setViewers ] = useState<ViewerType[]>([])
   const [ chat, setChat ] = useState<null | ViewerType>(null)
+  const [ target, setTarget ] = useState<null | number>(null)
 
   useEffect(() => {
     if(channel.channelId === ''){
@@ -228,6 +231,13 @@ export default function Home() {
     setViewers([])
   }
 
+  const onSlot = () => {
+
+    const RandomIndex = Math.floor(Math.random() * viewers.length);
+    setTarget(RandomIndex)
+
+  }
+
   return (
     <>
       <Head>
@@ -275,7 +285,7 @@ export default function Home() {
             <Btn
               $type="default"
               $width={260}
-              onClick={() => {}}
+              onClick={onSlot}
             >추첨하기</Btn>
           </BtnFrame>
         </>
@@ -307,6 +317,9 @@ export default function Home() {
         }
         {
           chat !== null && <Chat viewer={chat} onClose={() => setChat(null)} />
+        }
+        {
+          target !== null && <ChatSlot viewers={viewers} target={target} onClose={() => setTarget(null)} />
         }
       </Frame>
     </>
