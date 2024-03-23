@@ -23,25 +23,52 @@ const Breadcrumb = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-white-10);
+    .dark & {
+      background-color: var(--color-white-10);
+    }
+    
+    .light & {
+      background-color: var(--color-black-10);
+    }
   }
 `
 
 const BreadcrumbIcon = styled.i`
   font-size: 14px;
-  color: var(--color-brand);
   margin-right: 4px;
+
+  .dark & {
+    color: var(--color-brand);
+  }
+  
+  .light & {
+    color: var(--color-black);
+  }
 `
 
 const BreadcrumbText = styled.p`
   display: inline-block;
   font: 600 14px/1 var(--font-default);
-  color: var(--color-brand);
+
+  .dark & {
+    color: var(--color-brand);
+  }
+
+  .light & {
+    color: var(--color-black);
+  }
 `
 
 const BreadcrumbNext = styled.i`
   font-size: 12px;
-  color: var(--color-brand);
+
+  .dark & {
+    color: var(--color-brand);
+  }
+
+  .light & {
+    color: var(--color-black);
+  }
 `
 
 type BreadcrumbsType = {

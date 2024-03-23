@@ -48,7 +48,7 @@ const Btn = styled(Link)`
     }
 
     .light & {
-      border: 5px solid var(--color-brand);
+      border: 5px solid var(--color-brand-light);
     }
 
   }
@@ -60,7 +60,7 @@ const Btn = styled(Link)`
     }
 
     .light & {
-      color: var(--color-black);
+      color: var(--color-brand-light);
     }
 
   }

@@ -96,16 +96,22 @@ const Viewers = styled.div`
   max-width: 1000px;
   height: 400px;
   padding: 20px;
-  border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
   animation: viewers .5s;
   overflow-y: auto;
+
+  .dark & {
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    border: 1px solid var(--color-stroke-light-01);
+  }
 `
 
 const Viewer = styled.a`
   display: inline-block;
   padding: 12px 20px;
-  border: 1px solid var(--color-stroke-01);
   border-radius: 4px;
   font: 600 14px/1 var(--font-default);
   margin-bottom: 10px;
@@ -113,8 +119,22 @@ const Viewer = styled.a`
   cursor: pointer;
   animation: appearUp .2s;
 
+  .dark & {
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    border: 1px solid var(--color-stroke-light-01);
+  }
+
   &:hover {
-    background-color: var(--color-white-10);
+    .dark & {
+      background-color: var(--color-white-10);
+    }
+
+    .light & {
+      background-color: var(--color-black-10);
+    }
   }
 
   &:last-child {
@@ -232,6 +252,11 @@ export default function Home() {
   }
 
   const onSlot = () => {
+
+    if(viewers.length === 0){
+      alert('최소 한 명 이상의 참여자가 필요합니다!')
+      return
+    }
 
     const RandomIndex = Math.floor(Math.random() * viewers.length);
     setTarget(RandomIndex)
