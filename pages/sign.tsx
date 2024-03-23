@@ -8,6 +8,7 @@ import { useGlobalOptionStore } from "@/lib/zustand";
 import { useRouter } from "next/router";
 import FindChannel from "@/components/FindChannel";
 import { ChannelType } from "@/lib/types";
+import getVoices from "@/lib/getVoices";
 
 const Frame = styled.div`
   display: flex;
@@ -152,20 +153,6 @@ export default function Home() {
       onSubmit()
     }
   }
-
-  const getVoices = (): Promise<SpeechSynthesisVoice[]> => {
-    return new Promise((resolve, reject) => {
-      let synth = window.speechSynthesis;
-      let id: number; // id의 타입을 number로 명시적으로 지정
-  
-      id = window.setInterval(() => {
-        if (synth.getVoices().length !== 0) {
-          resolve(synth.getVoices());
-          clearInterval(id);
-        }
-      }, 10);
-    });
-  };
 
   const onSetChannel = async () => {
     if(!find){

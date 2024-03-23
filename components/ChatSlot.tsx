@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { ChzzkChat } from "chzzk";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import Slot from "./Slot";
+import getVoices from "@/lib/getVoices";
 
 const Background = styled(PopupBackground)`
   gap: 0px;
@@ -101,8 +102,9 @@ const ChatSlot = (props: ChatType) => {
   const { channel, voice } = useGlobalOptionStore()
 
   const getVoice = async () => {
-    const voices = await speechSynthesis.getVoices().filter(voice => voice.lang === 'ko-KR')
-    const findSettedVoice = voices.find(e => e.name === voice)
+    const voices = await getVoices()
+    const filter = voices.filter(voice => voice.lang === 'ko-KR')
+    const findSettedVoice = filter.find(e => e.name === voice)
     
     if(findSettedVoice) return findSettedVoice
     return voices[0] 
