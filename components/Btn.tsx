@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { size, device, truncate } from '@/lib/style'
 
-const Btn = styled.a<{ $type: string, $width: number }>`
+const Btn = styled.a<{ $type: string, $width?: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   font: 800 24px/1 var(--font-default);
   height: 80px;
-  width: ${props => props.$width}px;
+  width: ${props => props.$width ? `${props.$width}px` : 'initial'};
   border-radius: 8px;
   cursor: pointer;
   animation: appear .2s;
@@ -43,7 +43,7 @@ const Btn = styled.a<{ $type: string, $width: number }>`
   &:hover {
 
     .dark & {
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     .light & {
@@ -54,7 +54,7 @@ const Btn = styled.a<{ $type: string, $width: number }>`
   @media ${device.mobile} {
     font: 800 14px/1 var(--font-default);
     height: 48px;
-    width: ${props => props.$width / 1.8}px;
+    width: ${props => props.$width ? `${props.$width / 1.8}px` : 'initial'};
   }
 `
 
