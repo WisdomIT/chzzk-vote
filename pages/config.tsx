@@ -194,6 +194,7 @@ export default function Home() {
 
     setChannel(find)
     alert('저장되었습니다')
+    setFind(null)
     
   }
 

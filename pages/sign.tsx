@@ -175,7 +175,7 @@ export default function Home() {
     if(channel.channelId !== ''){
       router.push('/')
     }
-  }, [])
+  }, [channel])
   
   return (
     <>
