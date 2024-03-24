@@ -8,6 +8,7 @@ import { ChzzkChat } from "chzzk";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import Slot from "./Slot";
 import getVoices from "@/lib/getVoices";
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const Background = styled(PopupBackground)`
   gap: 0px;
@@ -87,6 +88,13 @@ const Balloon = styled.p`
 `
 
 const ChatBottom = styled.div``
+
+const ConfettiFrame = styled.div`
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
+`
 
 type ChatType = {
   viewers: ViewerType[],
@@ -178,6 +186,10 @@ const ChatSlot = (props: ChatType) => {
     }
     {
       state && <>
+      <ConfettiFrame>
+        <ConfettiExplosion force={0.5} width={2000} />
+        <ConfettiExplosion force={0.5} width={2000} />
+      </ConfettiFrame>
       <Viewer>
         {
           viewers[target].badges.map((e, i) => 
