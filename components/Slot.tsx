@@ -75,7 +75,7 @@ const Slot: React.FC<SlotData> = ({ data, target, duration, onEnd }) => {
     }, duration);
   
     return () => clearTimeout(timer);
-  }, [data, target, duration, height, onEnd]);
+  }, []);
 
   return (
     <SlotContainer $height={height}>
