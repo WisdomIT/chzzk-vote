@@ -99,6 +99,8 @@ const Viewers = styled.div`
   border-radius: 8px;
   animation: viewers .5s;
   overflow-y: auto;
+  padding-right: 10px;
+  padding-bottom: 10px;
 
   .dark & {
     border: 1px solid var(--color-stroke-01);
@@ -182,7 +184,7 @@ export default function Home() {
     }
   }, [])
 
-  const updateViewers = (list: ViewerType[], newChat: ViewerType) => {
+  const updateViewers = (list: ViewerType[], newChat: ViewerType): ViewerType[] => {
     if(list.find(e => e.userIdHash === newChat.userIdHash)) return Array.from(list)
     
     return Array.from([...list, newChat])
