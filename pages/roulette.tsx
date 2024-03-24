@@ -30,7 +30,7 @@ const Frame = styled.div`
   animation: appearUp .3s;
 
   @media ${device.mobile} {
-    padding: 80px 20px;
+    padding: 80px 10px;
     flex-direction: column;
     gap: 20px;
   }
@@ -57,6 +57,10 @@ const SetItem = styled.div`
   flex-direction: row;
   gap: 10px;
   align-items: center;
+
+  @media ${device.mobile} {
+    gap: 4px;
+  }
 `
 
 const SetNum = styled.p`
@@ -64,8 +68,8 @@ const SetNum = styled.p`
   width: 120px;
 
   @media ${device.mobile} {
-    font: 600 20px/1 var(--font-default);
-    width: 70px;
+    font: 600 14px/1 var(--font-default);
+    width: 40px;
   }
 `
 
@@ -73,17 +77,32 @@ const SetName = styled(Input)`
   flex: 1;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+
+  @media ${device.mobile} {
+    min-width: 100px;
+    padding: 16px 10px;
+  }
 `
 
 const SetSize = styled(Input)`
   width: 100px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+
+  @media ${device.mobile} {
+    width: 50px;
+    padding: 16px 10px;
+  }
 `
 
 const ViewSize = styled.p`
   font: 400 20px/1 var(--font-default);
   width: 80px;
+
+  @media ${device.mobile} {
+    font: 600 14px/1 var(--font-default);
+    width: 60px;
+  }
 `
 
 const SetDelete = styled.i`

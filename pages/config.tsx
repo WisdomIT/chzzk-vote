@@ -41,11 +41,20 @@ const InputFrame = styled.div`
 
 const InputName = styled.p`
   font: 800 20px/1 var(--font-default);
+
+  @media ${device.mobile} {
+    font: 800 16px/1 var(--font-default);
+  }
 `
 
 const InputNameDescription = styled.span`
   font: 600 14px/1 var(--font-default);
   margin-left: 20px;
+
+  @media ${device.mobile} {
+    font: 600 12px/1 var(--font-default);
+    margin-left: 10px;
+  }
 `
 
 const InputRow = styled.div`
@@ -68,6 +77,7 @@ const Select = styled.select`
   border: 0px;
   border-radius: 8px;
   flex: 1;
+  min-width: 120px;
 
   .dark & {
     background-color: var(--color-background-02);
@@ -105,6 +115,11 @@ const Description = styled.p`
   .light & {
     background-color: var(--color-black-10);
     border: 1px solid var(--color-black-10);
+  }
+
+  @media ${device.mobile} {
+    font: 600 12px/1 var(--font-default);
+    margin-bottom: 10px;
   }
 `
 

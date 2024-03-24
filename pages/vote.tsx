@@ -118,6 +118,10 @@ const OpenTop = styled.div`
 
 const OpenTopText = styled.p`
   font: 800 40px/1 var(--font-default);
+
+  @media ${device.mobile} {
+    font: 800 20px/1 var(--font-default);
+  }
 `
 
 const OpenList = styled.div`
@@ -130,7 +134,7 @@ const OpenList = styled.div`
   @media ${device.mobile} {
     max-height: none;
     overflow-y: unset;
-    gap: 10px;
+    gap: 20px;
   }
 `
 
@@ -138,6 +142,11 @@ const OpenItem = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  
+  @media ${device.mobile} {
+    flex-direction: column;
+    gap: 4px;
+  }
 `
 
 const OpenItemText = styled.div`
@@ -150,11 +159,19 @@ const OpenItemText = styled.div`
 
 const OpenItemNum = styled.p`
   font: 800 20px/1 var(--font-default);
+  
+  @media ${device.mobile} {
+    font: 800 12px/1 var(--font-default);
+  }
 `
 
 const OpenItemName = styled.p`
   font: 800 32px/1 var(--font-default);
   ${ truncate }
+  
+  @media ${device.mobile} {
+    font: 800 20px/1 var(--font-default);
+  }
 `
 
 const OpenItemBar = styled.div`
@@ -255,6 +272,10 @@ const HideViewIcon = styled.i`
 
 const DetailBackground = styled(PopupBackground)`
   gap: 60px;
+
+  @media ${device.mobile} {
+    padding: 0px 10px;
+  }
 `
 
 const DetailTop = styled.div`
@@ -278,16 +299,28 @@ const DetailTopText = styled.div`
 
 const DetailTopNum = styled.p`
   font: 800 24px/1 var(--font-default);
+
+  @media ${device.mobile} {
+    font: 800 12px/1 var(--font-default);
+  }
 `
 
 const DetailTopName = styled.p`
   font: 800 48px/1 var(--font-default);
   ${truncate}
+
+  @media ${device.mobile} {
+    font: 800 24px/1 var(--font-default);
+  }
 `
 
 const DetailTopCount = styled.span`
   font: 800 32px/1 var(--font-default);
   margin-left: 20px;
+
+  @media ${device.mobile} {
+    font: 800 20px/1 var(--font-default);
+  }
 `
 const DetailTopPercentage = styled.span`
   font: 800 20px/1 var(--font-default);
