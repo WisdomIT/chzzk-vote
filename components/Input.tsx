@@ -16,6 +16,15 @@ const Input = styled.input`
     }
   }
 
+  .light & {
+    background-color: var(--color-black-10);
+    color: var(--color-black);
+
+    &::placeholder{
+      color: var(--color-black-20);
+    }
+  }
+
   @media ${device.mobile} {
     font: 400 14px/1 var(--font-default);
   }

@@ -75,6 +75,14 @@ const SetDelete = styled.i`
   font-size: 40px;
   color: var(--color-white-20);
   cursor: pointer;
+
+  .dark & {
+    color: var(--color-white-20);
+  }
+
+  .light & {
+    color: var(--color-black-20);
+  }
   
   &:hover {
     color: var(--color-red);
@@ -152,9 +160,16 @@ const OpenItemName = styled.p`
 const OpenItemBar = styled.div`
   flex: 2;
   height: 60px;
-  background-color: var(--color-background-02);
   border-radius: 8px;
   cursor: pointer;
+
+  .dark & {
+    background-color: var(--color-background-02);
+  }
+
+  .light & {
+    background-color: var(--color-black-20);
+  }
 
   &:hover {
     opacity: 0.7;
@@ -181,6 +196,7 @@ const OpenItemBarNum = styled.p`
 const OpenItemBarNumPercentage = styled.span`
   font-size: 20px;
   margin-left: 10px;
+  color: var(--color-black);
 `
 
 const OpenItemBarHidden = styled.div`
@@ -191,6 +207,14 @@ const OpenItemBarHidden = styled.div`
   align-items: center;
   font: 600 20px/1 var(--font-default);
   color: var(--color-white-50);
+
+  .dark & {
+    color: var(--color-white-50);
+  }
+
+  .light & {
+    color: var(--color-black-30);
+  }
 `
 
 const BtnFrame = styled.div`
@@ -292,6 +316,7 @@ const Viewers = styled.div`
   }
 
   .light & {
+    background-color: var(--color-white);
     border: 1px solid var(--color-stroke-light-01);
   }
 `

@@ -11,7 +11,14 @@ export const PopupBackground = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-background-01-transparent);
   backdrop-filter: blur(10px);
   animation: .3s appear;
+
+  .dark & {
+    background-color: var(--color-background-01-transparent);
+  }
+
+  .light & {
+    background-color: var(--color-white-50);
+  }
 `

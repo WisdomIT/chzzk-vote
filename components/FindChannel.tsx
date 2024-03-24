@@ -16,9 +16,17 @@ const Block = styled.div`
   padding: 20px 40px;
   gap: 40px;
   align-items: center;
-  background-color: var(--color-background-01);
-  border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-stroke-light-01);
+  }
 
   @media ${device.mobile} {
     padding: 10px 20px;
@@ -30,9 +38,17 @@ const ChannelImage = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: var(--color-background-01);
-  border: 4px solid var(--color-stroke-01);
   padding: 4px;
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border: 4px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border: 4px solid var(--color-stroke-light-01);
+  }
 
   @media ${device.mobile} {
     width: 100px;

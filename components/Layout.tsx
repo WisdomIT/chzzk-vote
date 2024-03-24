@@ -119,8 +119,15 @@ const NavChannelImg = styled.img`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 3px solid var(--color-stroke-02);
   padding: 3px;
+
+  .dark & {
+    border: 3px solid var(--color-stroke-02);
+  }
+
+  .light & {
+    border: 2px solid var(--color-stroke-light-02);
+  }
 `
 
 const NavChannelName = styled.p`
@@ -244,8 +251,16 @@ const SpecialThanks = styled.p`
 
 const FooterLink = styled(Link)`
   &:hover {
-    color: var(--color-brand);
     text-decoration: underline;
+
+    .dark & {
+      color: var(--color-brand);
+    }
+
+    .light & {
+      color: var(--color-brand-light);
+      font-weight: 800;
+    }
   }
 `
 

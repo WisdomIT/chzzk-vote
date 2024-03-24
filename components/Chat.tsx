@@ -21,9 +21,18 @@ const Viewer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  background-color: var(--color-background-01);
-  border-top: 1px solid var(--color-stroke-01);
-  border-bottom: 1px solid var(--color-stroke-01);
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border-top: 1px solid var(--color-stroke-01);
+    border-bottom: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-stroke-light-01);
+    border-bottom: 1px solid var(--color-stroke-light-01);
+  }
 `
 
 const ViewerBadge = styled.img`
@@ -47,11 +56,19 @@ const ChatBox = styled.div`
   max-width: 1000px;
   height: 400px;
   padding: 30px;
-  background-color: var(--color-background-01);
-  border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
   animation: viewers .5s;
   overflow-y: auto;
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-stroke-light-01);
+  }
 `
 
 const Balloon = styled.p`

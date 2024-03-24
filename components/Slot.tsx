@@ -17,9 +17,18 @@ const SlotContainer = styled.div<{ $height: number }>`
   width: 100%;
   max-width: 1000px;
   height: ${(props) => `${props.$height}px`};
-  background-color: var(--color-background-01);
-  border-top: 1px solid var(--color-stroke-01);
-  border-bottom: 1px solid var(--color-stroke-01);
+  
+  .dark & {
+    background-color: var(--color-background-01);
+    border-top: 1px solid var(--color-stroke-01);
+    border-bottom: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-stroke-light-01);
+    border-bottom: 1px solid var(--color-stroke-light-01);
+  }
 `;
 
 const SlotItems = styled.div<{ $duration: number; $translateY: number; $initAnimation: boolean }>`

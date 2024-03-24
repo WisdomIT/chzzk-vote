@@ -78,6 +78,15 @@ const Select = styled.select`
     }
   }
 
+  .light & {
+    background-color: var(--color-black-10);
+    color: var(--color-black);
+
+    &::placeholder{
+      color: var(--color-black-20);
+    }
+  }
+
   @media ${device.mobile} {
     font: 400 14px/1 var(--font-default);
   }
@@ -85,10 +94,18 @@ const Select = styled.select`
 
 const Description = styled.p`
   font: 600 14px/1 var(--font-default);
-  background-color: var(--color-white-10);
   padding: 10px 20px;
   border-radius: 8px;
-  border: 1px solid var(--color-white-10);
+
+  .dark & {
+    background-color: var(--color-white-10);
+    border: 1px solid var(--color-white-10);
+  }
+
+  .light & {
+    background-color: var(--color-black-10);
+    border: 1px solid var(--color-black-10);
+  }
 `
 
 function isValidText(text: string): boolean {
@@ -195,7 +212,7 @@ export default function Home() {
     setChannel(find)
     alert('저장되었습니다')
     setFind(null)
-    
+
   }
 
   return (
@@ -207,7 +224,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Frame>
-        <Breadcrumbs icon="gear" text="설정" href="/roulette" />
+        <Breadcrumbs icon="gear" text="설정" href="/config" />
         <Description>모든 데이터는 컴퓨터에 저장되며, 서버에 전송되지 않습니다</Description>
         <InputFrame>
           <InputName>

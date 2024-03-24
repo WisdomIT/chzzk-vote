@@ -37,9 +37,18 @@ const Viewer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  background-color: var(--color-background-01);
-  border-top: 1px solid var(--color-stroke-01);
-  border-bottom: 1px solid var(--color-stroke-01);
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border-top: 1px solid var(--color-stroke-01);
+    border-bottom: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-stroke-light-01);
+    border-bottom: 1px solid var(--color-stroke-light-01);
+  }
 
   animation: slotViewerDiv .3s;
 `
@@ -67,13 +76,21 @@ const ChatBox = styled.div`
   max-width: 1000px;
   height: 400px;
   padding: 30px;
-  background-color: var(--color-background-01);
-  border: 1px solid var(--color-stroke-01);
   border-radius: 8px;
   animation: chatbox .5s;
   overflow-y: auto;
   margin-top: 20px;
   margin-bottom: 40px;
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-stroke-light-01);
+  }
 `
 
 const Balloon = styled.p`

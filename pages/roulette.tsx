@@ -88,8 +88,15 @@ const ViewSize = styled.p`
 
 const SetDelete = styled.i`
   font-size: 40px;
-  color: var(--color-white-20);
   cursor: pointer;
+
+  .dark & {
+    color: var(--color-white-20);
+  }
+
+  .light & {
+    color: var(--color-black-20);
+  }
   
   &:hover {
     color: var(--color-red);
@@ -162,6 +169,7 @@ const EndFrame = styled.div`
   justify-content: center;
   align-items: center;
   font: 800 4vw/1 var(--font-default);
+  color: var(--color-white);
   text-shadow: 0 0 5px var(--color-black),
                0 0 5px var(--color-black),
                0 0 5px var(--color-black),
