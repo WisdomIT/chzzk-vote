@@ -9,6 +9,7 @@ export type ChannelType = {
 export type ViewerType = {
   userIdHash: string,
   badges: string[],
-  nickname: string
+  nickname: string,
+  subscribe: boolean
 }
 

@@ -271,7 +271,7 @@ const HideViewIcon = styled.i`
 `
 
 const DetailBackground = styled(PopupBackground)`
-  gap: 60px;
+  gap: 20px;
 
   @media ${device.mobile} {
     padding: 0px 10px;
@@ -354,7 +354,7 @@ const Viewers = styled.div`
   }
 `
 
-const Viewer = styled.a`
+const Viewer = styled.a<{$active: boolean}>`
   display: inline-block;
   padding: 12px 20px;
   border-radius: 4px;
@@ -363,6 +363,7 @@ const Viewer = styled.a`
   margin-right: 10px;
   cursor: pointer;
   animation: appearUp .2s;
+  opacity: ${props => props.$active ? '1' : '0.3'};
 
   .dark & {
     border: 1px solid var(--color-stroke-01);
@@ -410,6 +411,36 @@ const ViewerBottomText = styled.p`
   }
 `
 
+const OptionBtn = styled.a<{$active: boolean}>`
+  font: 600 20px/1 var(--font-default);
+  cursor: pointer;
+
+  &:hover {
+    opacity: ${props => props.$active ? '1' : '0.5'};
+  }
+
+  opacity: ${props => props.$active ? '1' : '0.2'};
+
+  @media ${device.mobile} {
+    position: relative;
+    font: 600 14px/1 var(--font-default);
+  }
+`
+
+const OptionBtnIcon = styled.i`
+  font-size: 20px;
+  margin-right: 10px;
+`
+
+const ViewersOptionBtns = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: flex-end;
+`
+
 const convertSecondsToHMS = (seconds: number): string => {
   const hours: number = Math.floor(seconds / 3600);
   const minutes: number = Math.floor((seconds % 3600) / 60);
@@ -444,6 +475,11 @@ export default function Home() {
     viewers: [],
     target: null
   })
+  const [ option, setOption ] = useState({
+    subscribe: false,
+    duplicate: false
+  })
+  const [ drawn, setDrawn ] = useState<string[]>([])
 
   const addList = () => {
     setList(Array.from([...list, '']))
@@ -517,7 +553,8 @@ export default function Home() {
       let thisUser: ViewerType = {
         userIdHash: profile.userIdHash,
         badges: [],
-        nickname: profile.nickname
+        nickname: profile.nickname,
+        subscribe: profile.streamingProperty.subscription ? true : false
       }
 
       if(profile.badge){
@@ -563,22 +600,34 @@ export default function Home() {
     setState('before')
     setTime(0)
     setView(true)
+    setOption({
+      subscribe: false,
+      duplicate: false
+    })
+    setDrawn([])
   }
   
   const onSlot = (number: number) => {
 
     if(vote.length <= number) return
 
-    if(vote[number].length === 0){
+    const slotList = vote[number].filter(e => (option.subscribe ? e.subscribe : true) && (option.duplicate ? !drawn.includes(e.userIdHash) : true))
+
+    if(slotList.length === 0){
       alert('최소 한 명 이상의 참여자가 필요합니다!')
       return
     }
 
-    const RandomIndex = Math.floor(Math.random() * vote[number].length);
+    const RandomIndex = Math.floor(Math.random() * slotList.length);
+    
+    const getFromViewers = vote[number].findIndex(e => e.userIdHash === slotList[RandomIndex].userIdHash)
+    if(getFromViewers === -1) return
+
     setSlot({
       viewers: vote[number],
-      target: RandomIndex
+      target: getFromViewers
     })
+    setDrawn(prev => prev.includes(vote[number][getFromViewers].userIdHash) ? prev : ([...prev, vote[number][getFromViewers].userIdHash]))
 
   }
 
@@ -722,12 +771,26 @@ export default function Home() {
               onClick={() => onSlot(detail)}
             >추첨하기</Btn>
           </DetailTop>
+          <ViewersOptionBtns>
+            <OptionBtn $active={option.subscribe} onClick={() => setOption(prev => ({...prev, subscribe: !prev.subscribe}))}>
+              <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+              구독자만 추첨하기
+            </OptionBtn>
+            <OptionBtn $active={option.duplicate} onClick={() => setOption(prev => ({...prev, duplicate: !prev.duplicate}))}>
+              <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+              이미 뽑힌 참여자 제외하기
+            </OptionBtn>
+          </ViewersOptionBtns>
           <ViewersFrame>
             <Viewers>
               {
                 vote[detail].map(e => 
                 <Viewer
                   key={`viewer_${e.userIdHash}`}
+                  $active={ 
+                    (option.subscribe ? e.subscribe : true) &&
+                    (option.duplicate ? !drawn.includes(e.userIdHash) : true)
+                  }
                   onClick={() => setChat(e)}
                 >
                   {

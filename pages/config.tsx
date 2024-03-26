@@ -10,6 +10,8 @@ import getVoices from "@/lib/getVoices";
 import { ChzzkClient } from "chzzk";
 import { ChannelType } from "@/lib/types";
 import FindChannel from "@/components/FindChannel";
+import Link from "next/link";
+import { PopupBackground } from "@/components/Popup";
 
 const Frame = styled.div`
   display: flex;
@@ -123,6 +125,32 @@ const Description = styled.p`
   }
 `
 
+const BottomBtns = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  justify-content: space-between;
+`
+
+const ToonationLink = styled(Link)`
+  width: 320px;
+  height: 100px;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @media ${device.mobile} {
+    width: 240px;
+    height: 75px;
+  }
+`
+
+const Toonation = styled.img`
+  width: 100%;
+  height: 100%;
+`
+
 function isValidText(text: string): boolean {
   // 정규 표현식을 사용하여 32자의 영어 알파벳(대소문자 구분 없음)과 숫자로만 이루어져 있는지 확인
   const regex = /^[A-Za-z0-9]{32}$/;
@@ -146,6 +174,7 @@ export default function Home() {
   const [ voiceList, setVoiceList ] = useState<string[]>([])
   const { channel, voice, setChannel, setVoice } = useGlobalOptionStore()
   const [ find, setFind ] = useState<ChannelType | null>(null)
+  const [ patchnote, setPatchnote ] = useState(false)
 
   const getVoiceList = async () => {
     const voices = await getVoices()
@@ -293,10 +322,92 @@ export default function Home() {
             </SmallBtn>
           </InputRow>
         </InputFrame>
+        <BottomBtns>
+          <SmallBtn
+            $type="line"
+            $width={140}
+            onClick={() => setPatchnote(true)}
+          >
+            패치노트
+          </SmallBtn>
+          <ToonationLink href="https://toon.at/donate/wisdomit" target="_blank">
+            <Toonation src="/toonation.png" />
+          </ToonationLink>
+        </BottomBtns>
       </Frame>
       {
         find !== null && <FindChannel find={find} onCancel={() => setFind(null)} onAccept={onSetChannel} />
       }
+      {
+        patchnote && <Patchnote onClose={() => setPatchnote(false)} />
+      }
     </>
   )
+}
+
+
+const PatchnoteBlock = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 400px;
+  padding: 30px;
+  border-radius: 8px;
+  font: 400 14px/1.5 var(--font-default);
+  overflow-y: auto;
+
+  .dark & {
+    background-color: var(--color-background-01);
+    border: 1px solid var(--color-stroke-01);
+  }
+
+  .light & {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-stroke-light-01);
+  }
+
+  @media ${device.mobile} {
+    padding: 10px 20px;
+    gap: 20px;
+  }
+`
+
+const PatchDate = styled.p`
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  margin-top: 20px;
+
+  &:first-child{
+    margin-top: 0px;
+  }
+`
+
+const PatchnoteClose = styled.i`
+  position: absolute;
+  font-size: 24px;
+  top: 30px;
+  right: 30px;
+  color: var(--color-white-20);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-red);
+  }
+`
+
+const Patchnote = (props: { onClose: () => void }) => {
+
+  const { onClose } = props
+
+  return <PopupBackground onClick={onClose}>
+  <PatchnoteBlock onClick={(event) => { event.stopPropagation() }}>
+    <PatchDate>2024-03-27</PatchDate>
+    <p>- 채팅창 종료 시 tts가 정상적으로 unmount 되지 않는 버그 수정</p>
+    <p>- 시청자 추첨 시 추첨된 인원은 제외하는 옵션 추가</p>
+    <p>- 채팅에서 이모티콘 사용 가능하도록 변경</p>
+    <p>- 패치노트 버튼 추가</p>
+  <PatchnoteClose className="fa-sharp fa-solid fa-xmark" onClick={onClose} />
+  </PatchnoteBlock>
+</PopupBackground>
 }
