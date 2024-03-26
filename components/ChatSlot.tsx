@@ -212,9 +212,7 @@ const ChatSlot = (props: ChatType) => {
     client.connect()
 
     return () => { 
-      setTimeout(() => {
-        client.disconnect()
-      }, 500)
+      client.disconnect()
     }
 
   }, [state])

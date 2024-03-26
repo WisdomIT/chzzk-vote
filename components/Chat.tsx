@@ -100,6 +100,7 @@ const Chat = (props: ChatType) => {
   const { viewer, onClose } = props
   const [ chat, setChat ] = useState<JSX.Element[]>([])
   const { channel, voice } = useGlobalOptionStore()
+  const [ state, setState ] = useState(false)
 
   const getVoice = async () => {
     const voices = await getVoices()
@@ -112,6 +113,8 @@ const Chat = (props: ChatType) => {
   
   useEffect(() => {
     
+    if(!state) return
+
     const options = {
       channelId: channel.channelId,
       pollInterval: 30 * 1000,
@@ -176,18 +179,26 @@ const Chat = (props: ChatType) => {
     client.connect()
 
     return () => { 
-      setTimeout(() => {
-        client.disconnect()
-      }, 500)
+      client.disconnect()
     }
 
-  }, [])
+  }, [state])
 
   useEffect(() => {
     document.querySelector('#chatBottom')?.scrollIntoView({
       behavior: 'smooth'
     })
   },[chat])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setState(true)
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  },[])
 
   return <Background>
     <Viewer>
