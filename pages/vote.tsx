@@ -600,6 +600,11 @@ export default function Home() {
     setState('before')
     setTime(0)
     setView(true)
+    setOption({
+      subscribe: false,
+      duplicate: false
+    })
+    setDrawn([])
   }
   
   const onSlot = (number: number) => {

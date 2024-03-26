@@ -240,11 +240,12 @@ export default function Home() {
 
   const onReset = () => {
     setState('before')
+    setViewers([])
     setOption({
       subscribe: false,
       duplicate: false
     })
-    setViewers([])
+    setDrawn([])
   }
 
   const onSlot = () => {
