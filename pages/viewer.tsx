@@ -45,9 +45,13 @@ const BtnFrame = styled.div`
   }
 `
 
-const Subscribe = styled.a<{$active: boolean}>`
-  position: absolute;
+const OptionBtn = styled.a<{$active: boolean}>`
   font: 600 20px/1 var(--font-default);
+  cursor: pointer;
+
+  &:hover {
+    opacity: ${props => props.$active ? '1' : '0.5'};
+  }
 
   opacity: ${props => props.$active ? '1' : '0.2'};
 
@@ -57,33 +61,16 @@ const Subscribe = styled.a<{$active: boolean}>`
   }
 `
 
-const BeforeSubscribe = styled(Subscribe)`
-  bottom: -60px;
-  cursor: pointer;
-
-  &:hover {
-    opacity: ${props => props.$active ? '1' : '0.5'};
-  }
-
-  @media ${device.mobile} {
-    bottom: initial;
-  }
-`
-
-const OpenSubscribe = styled(Subscribe)`
-  left: 300px;
-  width: 220px;
-  animation: appear .3s;
-
-  @media ${device.mobile} {
-    left: initial;
-    width: auto;
-  }
-`
-
-const SubscribeIcon = styled.i`
+const OptionBtnIcon = styled.i`
   font-size: 20px;
   margin-right: 10px;
+`
+
+const ClosedOptionBtns = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin: -20px 0px;
 `
 
 const ViewersFrame = styled.div`
@@ -111,7 +98,7 @@ const Viewers = styled.div`
   }
 `
 
-const Viewer = styled.a`
+const Viewer = styled.a<{$active: boolean}>`
   display: inline-block;
   padding: 12px 20px;
   border-radius: 4px;
@@ -120,6 +107,7 @@ const Viewer = styled.a`
   margin-right: 10px;
   cursor: pointer;
   animation: appearUp .2s;
+  opacity: ${props => props.$active ? '1' : '0.3'};
 
   .dark & {
     border: 1px solid var(--color-stroke-01);
@@ -173,10 +161,14 @@ export default function Home() {
   const router = useRouter()
 
   const [ state, setState ] = useState('before')
-  const [ subscribe, setSubscribe ] = useState<boolean>(false)
   const [ viewers, setViewers ] = useState<ViewerType[]>([])
+  const [ option, setOption ] = useState({
+    subscribe: false,
+    duplicate: false
+  })
   const [ chat, setChat ] = useState<null | ViewerType>(null)
   const [ target, setTarget ] = useState<null | number>(null)
+  const [ drawn, setDrawn ] = useState<string[]>([])
 
   useEffect(() => {
     if(channel.channelId === ''){
@@ -215,12 +207,11 @@ export default function Home() {
 
       const profile = chat.profile
 
-      if(subscribe && !profile.streamingProperty.subscription) return
-
       let thisUser: ViewerType = {
         userIdHash: profile.userIdHash,
         badges: [],
-        nickname: profile.nickname
+        nickname: profile.nickname,
+        subscribe: profile.streamingProperty.subscription ? true : false
       }
 
       if(profile.badge){
@@ -249,19 +240,29 @@ export default function Home() {
 
   const onReset = () => {
     setState('before')
-    setSubscribe(false)
+    setOption({
+      subscribe: false,
+      duplicate: false
+    })
     setViewers([])
   }
 
   const onSlot = () => {
 
-    if(viewers.length === 0){
+    const slotList = viewers.filter(e => (option.subscribe ? e.subscribe : true) && (option.duplicate ? !drawn.includes(e.userIdHash) : true))
+
+    if(slotList.length === 0){
       alert('최소 한 명 이상의 참여자가 필요합니다!')
       return
     }
 
-    const RandomIndex = Math.floor(Math.random() * viewers.length);
-    setTarget(RandomIndex)
+    const RandomIndex = Math.floor(Math.random() * slotList.length);
+    
+    const getFromViewers = viewers.findIndex(e => e.userIdHash === slotList[RandomIndex].userIdHash)
+    if(getFromViewers === -1) return
+
+    setTarget(getFromViewers)
+    setDrawn(prev => prev.includes(viewers[getFromViewers].userIdHash) ? prev : ([...prev, viewers[getFromViewers].userIdHash]))
 
   }
 
@@ -282,9 +283,6 @@ export default function Home() {
             $width={260}
             onClick={() => setState('open')}
           >참여자 모집 시작</Btn>
-          <BeforeSubscribe $active={subscribe} onClick={() => setSubscribe(prev => !prev)}>
-            <SubscribeIcon className="fa-sharp fa-solid fa-check" />구독자만 모집하기
-          </BeforeSubscribe>
         </BtnFrame>
         }
         {
@@ -295,9 +293,6 @@ export default function Home() {
               $width={260}
               onClick={() => setState('closed')}
             >참여자 모집 종료</Btn>
-            <OpenSubscribe $active={true}>
-              { subscribe ? '구독자만 모집하는 중' : '모든 시청자 모집하는 중' }
-            </OpenSubscribe>
           </BtnFrame>
         </>
         }
@@ -315,6 +310,16 @@ export default function Home() {
               onClick={onSlot}
             >추첨하기</Btn>
           </BtnFrame>
+          <ClosedOptionBtns>
+            <OptionBtn $active={option.subscribe} onClick={() => setOption(prev => ({...prev, subscribe: !prev.subscribe}))}>
+              <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+              구독자만 추첨하기
+            </OptionBtn>
+            <OptionBtn $active={option.duplicate} onClick={() => setOption(prev => ({...prev, duplicate: !prev.duplicate}))}>
+              <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+              이미 뽑힌 참여자 제외하기
+            </OptionBtn>
+          </ClosedOptionBtns>
         </>
         }
         {
@@ -324,6 +329,10 @@ export default function Home() {
                 viewers.map(e => 
                 <Viewer
                   key={`viewer_${e.userIdHash}`}
+                  $active={ 
+                    (option.subscribe ? e.subscribe : true) &&
+                    (option.duplicate ? !drawn.includes(e.userIdHash) : true)
+                  }
                   onClick={() => setChat(e)}
                 >
                   {
