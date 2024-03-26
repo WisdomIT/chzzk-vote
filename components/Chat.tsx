@@ -82,6 +82,12 @@ const Balloon = styled.p`
   animation: appearUp .2s;
 `
 
+const BalloonEmoji = styled.img`
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+`
+
 const ChatBottom = styled.div``
 
 type ChatType = {
@@ -92,7 +98,7 @@ type ChatType = {
 const Chat = (props: ChatType) => {
 
   const { viewer, onClose } = props
-  const [ chat, setChat ] = useState<string[]>([])
+  const [ chat, setChat ] = useState<JSX.Element[]>([])
   const { channel, voice } = useGlobalOptionStore()
 
   const getVoice = async () => {
@@ -125,12 +131,45 @@ const Chat = (props: ChatType) => {
 
       //console.log(chat)
       if(chat.profile.userIdHash !== viewer.userIdHash) return
+
+      let voice: string[] = []
+      let elements: JSX.Element[] = []
+
+      const regex = /{:(.*?):}/g
+      let match: RegExpExecArray | null
+      let lastIndex = 0
+
+      while((match = regex.exec(chat.message)) !== null){
+        if(chat.extras && chat.extras.emojis !== ""){
+          const emojiUrl = chat.extras.emojis[match[1]]
+
+          // 이전 매치와 현재 매치 사이의 텍스트 추가
+          if (lastIndex < match.index) {
+            elements.push(<span key={lastIndex}>{chat.message.substring(lastIndex, match.index)}</span>);
+            voice.push(chat.message.substring(lastIndex, match.index))
+          }
+
+          // 이모티콘 이미지 태그 추가
+          if (emojiUrl) {
+            elements.push(<BalloonEmoji key={match.index} src={emojiUrl} alt={match[1]} />);
+          }
+
+          lastIndex = match.index + match[0].length;
+
+        }
+      }
+
+      // 마지막 매치 이후의 텍스트 추가
+      if (lastIndex < chat.message.length) {
+        elements.push(<span key={lastIndex}>{chat.message.substring(lastIndex)}</span>);
+        voice.push(chat.message.substring(lastIndex))
+      }
       
-      const utterance = new SpeechSynthesisUtterance(chat.message);
+      const utterance = new SpeechSynthesisUtterance(voice.join(' '));
       utterance.voice = await getVoice()
 
       window.speechSynthesis.speak(utterance);
-      setChat( prev => ([...prev, chat.message]))
+      setChat( prev => ([...prev, <>{elements}</>]))
 
     })
 
