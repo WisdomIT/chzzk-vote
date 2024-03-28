@@ -386,10 +386,9 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>CHZZK VOTE</title>
+        <title>CHZZK VOTE - 치지직 투표 추첨기</title>
         <meta name="description" content="치지직 투표 추첨기" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Frame>
         <Breadcrumbs icon="slot-machine" text="룰렛" href="/roulette" />
