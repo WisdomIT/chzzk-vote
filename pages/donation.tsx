@@ -50,6 +50,10 @@ const SetList = styled.div`
   }
 `;
 
+const SetListNoneOverflow = styled(SetList)`
+  overflow-y: hidden;
+`;
+
 const SetItem = styled.div`
   display: flex;
   flex-direction: row;
@@ -128,8 +132,8 @@ const OpenList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: calc(100vh - 600px);
   max-width: 1000px;
+  max-height: calc(100vh - 800px);
   overflow-y: auto;
   gap: 20px;
 
@@ -415,9 +419,19 @@ const ViewerBottomText = styled.p`
   }
 `;
 
-const OptionBtn = styled.a<{ $active: boolean }>`
+const OptionBtn = styled.button<{ $active: boolean }>`
   font: 600 20px/1 var(--font-default);
   cursor: pointer;
+  background-color: transparent;
+  border: 0px;
+
+  .dark & {
+    color: var(--color-white);
+  }
+
+  .light & {
+    color: var(--color-black);
+  }
 
   &:hover {
     opacity: ${(props) => (props.$active ? "1" : "0.5")};
@@ -445,6 +459,95 @@ const ViewersOptionBtns = styled.div`
   justify-content: flex-end;
 `;
 
+const Description = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  gap: 20px;
+  border: 1px solid var(--color-stroke-02);
+  border-radius: 8px;
+
+  @media ${device.mobile} {
+    padding-bottom: 50px;
+  }
+
+  .dark & {
+    border: 1px solid var(--color-stroke-02);
+  }
+
+  .light & {
+    border: 1px solid var(--color-stroke-light-02);
+  }
+`;
+
+const DescriptionTitle = styled.p`
+  font: 800 24px/1 var(--font-default);
+
+  @media ${device.mobile} {
+    font: 800 18px/1 var(--font-default);
+  }
+`;
+
+const DescriptionList = styled.ul`
+  font: 600 18px/1.5 var(--font-default);
+  margin-left: 20px;
+
+  @media ${device.mobile} {
+    font: 600 12px/1.5 var(--font-default);
+  }
+`;
+
+const DB = styled.span`
+  font-weight: 800;
+  .dark & {
+    color: var(--color-brand);
+  }
+
+  .light & {
+    color: var(--color-brand-light);
+  }
+`;
+
+const DescriptionButton = styled.button`
+  display: flex;
+  position: absolute;
+  align-items: center;
+  gap: 10px;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font: 600 18px/1 var(--font-default);
+  cursor: pointer;
+  background-color: transparent;
+  border: 0px;
+
+  .dark & {
+    color: var(--color-white);
+  }
+
+  .light & {
+    color: var(--color-black);
+  }
+
+  &:hover {
+    .dark & {
+      background-color: var(--color-white-10);
+    }
+
+    .light & {
+      background-color: var(--color-black-10);
+    }
+  }
+
+  @media ${device.mobile} {
+    font: 600 12px/1 var(--font-default);
+  }
+`;
+
 const convertSecondsToHMS = (seconds: number): string => {
   const hours: number = Math.floor(seconds / 3600);
   const minutes: number = Math.floor((seconds % 3600) / 60);
@@ -457,6 +560,19 @@ const convertSecondsToHMS = (seconds: number): string => {
 
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
+
+function extractVoteNumber(input: string) {
+  // '!투표'로 시작하는지 확인
+  if (!input.startsWith("!투표")) {
+    return null;
+  }
+
+  // 정규표현식을 사용하여 '!투표' 뒤의 숫자를 추출
+  const match = input.match(/^!투표\s*(\d+)/);
+
+  // 매칭되는 숫자가 있으면 숫자를 반환, 없으면 null 반환
+  return match ? parseInt(match[1]) : null;
+}
 
 type SlotType = {
   viewers: ViewerType[];
@@ -483,6 +599,11 @@ export default function Home() {
     duplicate: false,
   });
   const [drawn, setDrawn] = useState<string[]>([]);
+  const [donationOption, setDonationOption] = useState({
+    price: 1000,
+    plural: false,
+    description: true,
+  });
 
   const addList = () => {
     setList(Array.from([...list, ""]));
@@ -513,8 +634,24 @@ export default function Home() {
   const updateVote = (
     prev: ViewerType[][],
     thisUser: ViewerType,
-    number: number
+    number: number,
+    price: number
   ): ViewerType[][] => {
+    if (donationOption.price > price) return prev;
+
+    if (donationOption.plural) {
+      //복수투표일 경우 (기존 투표를 지우지 않음)
+      const newVote = deepCopy(prev);
+      const count = Math.floor(price / donationOption.price);
+
+      for (let i = 0; i < count; i++) {
+        newVote[number].push(thisUser);
+      }
+
+      return newVote;
+    }
+
+    //복수투표가 아닐 경우 (기존 투표를 지움)
     const newVote = prev.map((group) =>
       group.filter((user) => user.userIdHash !== thisUser.userIdHash)
     );
@@ -546,16 +683,19 @@ export default function Home() {
       console.log("[chzzk] Chat Connected");
     });
 
-    client.on("chat", (chat) => {
+    client.on("donation", (chat) => {
       if (!chat.message.startsWith("!투표")) return;
 
-      const onlyNumber = chat.message.replace("!투표", "").replace(" ", "");
-      let number = parseInt(onlyNumber);
+      let onlyNumber = extractVoteNumber(chat.message);
 
-      if (isNaN(number)) return;
-      number--;
+      if (!onlyNumber) return;
+      onlyNumber--;
 
+      console.log(chat);
       const profile = chat.profile;
+      const price = chat.extras.payAmount;
+
+      if (!profile) return;
 
       let thisUser: ViewerType = {
         userIdHash: profile.userIdHash,
@@ -578,7 +718,7 @@ export default function Home() {
         thisUser.badges.push(e.imageUrl);
       }
 
-      setVote((prev) => updateVote(prev, thisUser, number));
+      setVote((prev) => updateVote(prev, thisUser, onlyNumber, price));
     });
 
     client.connect();
@@ -646,6 +786,14 @@ export default function Home() {
     );
   };
 
+  const onOpen = () => {
+    if (donationOption.price < 1) {
+      alert("도네 금액은 반드시 1원 이상으로 설정되어야 합니다!");
+      return;
+    }
+    setState("open");
+  };
+
   return (
     <>
       <Head>
@@ -654,9 +802,43 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Frame>
-        <Breadcrumbs icon="check-to-slot" text="숫자 투표" href="/vote" />
+        <Breadcrumbs icon="cheese-swiss" text="도네 투표" href="/donation" />
         {state === "before" && (
           <>
+            <SetListNoneOverflow>
+              <SetItem>
+                <SetNum>금액</SetNum>
+                <SetName
+                  type="number"
+                  placeholder="1000"
+                  value={donationOption.price.toString()}
+                  step={1}
+                  onChange={(event) => {
+                    setDonationOption((prev) => ({
+                      ...prev,
+                      price: parseInt(event.target.value),
+                    }));
+                  }}
+                />
+                <SetDeleteDummy />
+              </SetItem>
+              <SetItem>
+                <SetNum />
+                <OptionBtn
+                  $active={donationOption.plural}
+                  onClick={() => {
+                    setDonationOption((prev) => ({
+                      ...prev,
+                      plural: !prev.plural,
+                    }));
+                  }}
+                >
+                  <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+                  복수투표 허용 (금액만큼 배수 투표됩니다)
+                </OptionBtn>
+                <SetDeleteDummy />
+              </SetItem>
+            </SetListNoneOverflow>
             <SetList>
               {list.map((e, i) => (
                 <SetItem key={`list_${i}`}>
@@ -682,7 +864,7 @@ export default function Home() {
                 <SetDeleteDummy />
               </SetItem>
             </SetList>
-            <Btn $type="default" $width={260} onClick={() => setState("open")}>
+            <Btn $type="default" $width={260} onClick={onOpen}>
               투표 시작
             </Btn>
           </>
@@ -693,6 +875,80 @@ export default function Home() {
               <OpenTopText>총 {countAllVotes()}표</OpenTopText>
               <OpenTopText>{convertSecondsToHMS(time)}</OpenTopText>
             </OpenTop>
+            <Description>
+              <DescriptionTitle>
+                투표금액 {donationOption.price}원 / 복수투표{" "}
+                {donationOption.plural ? "허용됨" : "허용 안됨"}
+              </DescriptionTitle>
+              {donationOption.description ? (
+                <DescriptionList>
+                  <li>
+                    복수투표가{" "}
+                    {donationOption.plural
+                      ? "허용되었습니다"
+                      : "허용되지 않았습니다"}
+                    {donationOption.plural ? (
+                      <DescriptionList>
+                        <li>
+                          {donationOption.price}원 - 1표 /{" "}
+                          {donationOption.price * 2}원 - 2표 /{" "}
+                          {donationOption.price * 3}원 - 3표 /{" "}
+                          {donationOption.price * 4}원 - 4표 ... 와 같이 금액에
+                          따라 복수로 투표됩니다
+                        </li>
+                        <li>
+                          남는 금액은 내림으로 계산되며, 버려진 금액은 다음 도네
+                          {` `}
+                          금액와 합산되지 않습니다
+                        </li>
+                        <li>
+                          추가 도네 시 기존 투표는 유지되며, 복수로 추가로{` `}
+                          투표됩니다
+                        </li>
+                      </DescriptionList>
+                    ) : (
+                      <DescriptionList>
+                        <li>
+                          얼마를 투표하던 투표 수 하나로 고정됩니다 (최소 투표
+                          금액을 넘지 않을 경우 투표되지 않습니다)
+                        </li>
+                        <li>
+                          추가 도네 시 해당 투표자의 기존 투표를 지우고 새로운
+                          투표로 취급됩니다
+                        </li>
+                      </DescriptionList>
+                    )}
+                  </li>
+                  <li>
+                    도네 시 반드시 <DB>메시지 가장 앞</DB>에 <DB>'!투표1'</DB>{" "}
+                    혹은 <DB>'!투표 1'</DB>과 같이 입력해주세요
+                  </li>
+                  <li>
+                    <DB>익명 도네 시 투표가 들어가지 않습니다. 주의하세요!</DB>
+                  </li>
+                </DescriptionList>
+              ) : null}
+              <DescriptionButton
+                onClick={() => {
+                  setDonationOption((prev) => ({
+                    ...prev,
+                    description: !prev.description,
+                  }));
+                }}
+              >
+                {donationOption.description ? (
+                  <>
+                    안내사항 접기
+                    <i className="fa-sharp fa-solid fa-chevron-up" />
+                  </>
+                ) : (
+                  <>
+                    안내사항 열기
+                    <i className="fa-sharp fa-solid fa-chevron-down" />
+                  </>
+                )}
+              </DescriptionButton>
+            </Description>
             <OpenList>
               {list.map((e, i) => (
                 <OpenItem key={`list_open_${i}`}>
