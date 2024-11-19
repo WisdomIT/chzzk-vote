@@ -411,6 +411,8 @@ const Patchnote = (props: { onClose: () => void }) => {
         <p>- 메인 페이지 툴팁 추가</p>
         <p>- 도네 투표 항목 추가 (양아지님 요청)</p>
         <p>- 투표 시 항목 갯수가 화면을 초과할 때 스크롤바가 나타나도록 수정</p>
+        <PatchDate>2024-11-20</PatchDate>
+        <p>- 투표 결과 룰렛 이전기능 추가 (양아지님 요청)</p>
         <PatchnoteClose
           className="fa-sharp fa-solid fa-xmark"
           onClick={onClose}

@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import ChatSlot from "@/components/ChatSlot";
 import { PopupBackground } from "@/components/Popup";
 import Chat from "@/components/Chat";
+import voteToRoulette from "@/lib/voteToRoulette";
 
 const Frame = styled.div`
   display: flex;
@@ -794,6 +795,18 @@ export default function Home() {
     setState("open");
   };
 
+  const toRoulette = () => {
+    const mapped = list.map((item, index) => ({
+      name: item,
+      size: vote[index].length,
+    }));
+    const encoded = voteToRoulette(mapped);
+    if (!encoded) {
+      return;
+    }
+    router.push(encoded);
+  };
+
   return (
     <>
       <Head>
@@ -1019,6 +1032,9 @@ export default function Home() {
             <BtnFrame>
               <Btn $type="default" $width={260} onClick={onReset}>
                 투표 다시 시작하기
+              </Btn>
+              <Btn $type="line" $width={300} onClick={toRoulette}>
+                투표결과로 룰렛 돌리기
               </Btn>
             </BtnFrame>
           </>

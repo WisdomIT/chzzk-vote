@@ -1,6 +1,7 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/lib/style";
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Input from "@/components/Input";
@@ -8,10 +9,12 @@ import Btn from "@/components/Btn";
 import deepCopy from "@/lib/deepcopy";
 import dynamic from "next/dynamic";
 import ConfettiExplosion from "react-confetti-explosion";
-const Wheel = dynamic(() => 
-  import('react-custom-roulette').then<
-  typeof import('react-custom-roulette').Wheel
-  >((mod) => mod.Wheel), {
+const Wheel = dynamic(
+  () =>
+    import("react-custom-roulette").then<
+      typeof import("react-custom-roulette").Wheel
+    >((mod) => mod.Wheel),
+  {
     ssr: false, // 서버 사이드 렌더링 비활성화
   }
 );
@@ -27,14 +30,14 @@ const Frame = styled.div`
   align-items: center;
   padding: 20px;
 
-  animation: appearUp .3s;
+  animation: appearUp 0.3s;
 
   @media ${device.mobile} {
     padding: 80px 10px;
     flex-direction: column;
     gap: 20px;
   }
-`
+`;
 
 const SetList = styled.div`
   display: flex;
@@ -50,7 +53,7 @@ const SetList = styled.div`
     overflow-y: unset;
     gap: 10px;
   }
-`
+`;
 
 const SetItem = styled.div`
   display: flex;
@@ -61,7 +64,7 @@ const SetItem = styled.div`
   @media ${device.mobile} {
     gap: 4px;
   }
-`
+`;
 
 const SetNum = styled.p`
   font: 600 36px/1 var(--font-default);
@@ -71,7 +74,7 @@ const SetNum = styled.p`
     font: 600 14px/1 var(--font-default);
     width: 40px;
   }
-`
+`;
 
 const SetName = styled(Input)`
   flex: 1;
@@ -82,7 +85,7 @@ const SetName = styled(Input)`
     min-width: 100px;
     padding: 16px 10px;
   }
-`
+`;
 
 const SetSize = styled(Input)`
   width: 100px;
@@ -93,7 +96,7 @@ const SetSize = styled(Input)`
     width: 50px;
     padding: 16px 10px;
   }
-`
+`;
 
 const ViewSize = styled.p`
   font: 400 20px/1 var(--font-default);
@@ -103,7 +106,7 @@ const ViewSize = styled.p`
     font: 600 14px/1 var(--font-default);
     width: 60px;
   }
-`
+`;
 
 const SetDelete = styled.i`
   font-size: 40px;
@@ -116,7 +119,7 @@ const SetDelete = styled.i`
   .light & {
     color: var(--color-black-20);
   }
-  
+
   &:hover {
     color: var(--color-red);
   }
@@ -124,7 +127,7 @@ const SetDelete = styled.i`
   @media ${device.mobile} {
     font-size: 28px;
   }
-`
+`;
 
 const SetBtn = styled(Btn)`
   height: 60px;
@@ -132,7 +135,7 @@ const SetBtn = styled(Btn)`
   @media ${device.mobile} {
     height: 48px;
   }
-`
+`;
 
 const SetDeleteDummy = styled.div`
   width: 30px;
@@ -140,10 +143,9 @@ const SetDeleteDummy = styled.div`
   @media ${device.mobile} {
     width: 21px;
   }
-`
+`;
 
 const WheelFrame = styled.div<{ $size: number }>`
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,7 +163,7 @@ const WheelFrame = styled.div<{ $size: number }>`
       max-height: 100%;
     }
   }
-`
+`;
 
 const BtnFrame = styled.div`
   display: flex;
@@ -175,7 +177,7 @@ const BtnFrame = styled.div`
     gap: 20px;
     flex-direction: column;
   }
-`
+`;
 
 const EndFrame = styled.div`
   display: flex;
@@ -189,61 +191,46 @@ const EndFrame = styled.div`
   align-items: center;
   font: 800 4vw/1 var(--font-default);
   color: var(--color-white);
-  text-shadow: 0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black),
-               0 0 5px var(--color-black);
+  text-shadow: 0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black),
+    0 0 5px var(--color-black), 0 0 5px var(--color-black);
   z-index: 10;
   transform: translateZ(1);
   pointer-events: none;
-  animation: appearUp .2s;
-`
+  animation: appearUp 0.2s;
+`;
 
 const backgroundColors = [
-  '#3f297e',
-  '#175fa9',
-  '#169ed8',
-  '#239b63',
-  '#64b031',
-  '#efe61f',
-  '#f7a416',
-  '#e6471d',
-  '#dc0936',
-  '#e5177b',
-  '#be1180',
-  '#871f7f',
-]
+  "#3f297e",
+  "#175fa9",
+  "#169ed8",
+  "#239b63",
+  "#64b031",
+  "#efe61f",
+  "#f7a416",
+  "#e6471d",
+  "#dc0936",
+  "#e5177b",
+  "#be1180",
+  "#871f7f",
+];
 
 type RouletteType = {
-  name: string,
-  size: number | null
-}
+  name: string;
+  size: number | null;
+};
 
 type OptionItem = {
   option: string;
@@ -254,101 +241,104 @@ type OptionItem = {
 };
 
 export default function Home() {
-
-  const [ state, setState ] = useState('before')
-  const [ list, setList ] = useState<RouletteType[]>([
-    { name: '', size: 1 },
-    { name: '', size: 1 },
-  ])
+  const [state, setState] = useState("before");
+  const [list, setList] = useState<RouletteType[]>([
+    { name: "", size: 1 },
+    { name: "", size: 1 },
+  ]);
   const [mustSpin, setMustSpin] = useState(false);
   const [target, setTarget] = useState(0);
   const [end, setEnd] = useState<null | string>(null);
 
   const changeName = (number: number, value: string) => {
-    if(list.length <= number) return ''
-    let tempList = deepCopy(list)
+    if (list.length <= number) return "";
+    let tempList = deepCopy(list);
 
-    tempList[number].name = value
+    tempList[number].name = value;
 
-    setList(tempList)
-  }
+    setList(tempList);
+  };
 
   const changeNumber = (number: number, value: string) => {
-    if(list.length <= number) return ''
-    let tempList = deepCopy(list)
+    if (list.length <= number) return "";
+    let tempList = deepCopy(list);
 
-    if(value === '') tempList[number].size = null
-    else tempList[number].size = parseInt(value)
+    if (value === "") tempList[number].size = null;
+    else tempList[number].size = parseInt(value);
 
-    setList(tempList)
-  }
+    setList(tempList);
+  };
 
   const getAllSize = () => {
-    return list.reduce((total, currentList) => currentList.size ? total + currentList.size : total, 0)
-  }
+    return list.reduce(
+      (total, currentList) =>
+        currentList.size ? total + currentList.size : total,
+      0
+    );
+  };
 
   const addList = () => {
-    setList(Array.from([...list, { name: '', size: 1 }]))
-  }
+    setList(Array.from([...list, { name: "", size: 1 }]));
+  };
 
   const deleteList = (number: number) => {
-    if(number >= list.length) return
+    if (number >= list.length) return;
 
-    let tempList = deepCopy(list)
-    tempList.splice(number, 1)
+    let tempList = deepCopy(list);
+    tempList.splice(number, 1);
 
-    setList(tempList)
-  }
+    setList(tempList);
+  };
 
   const onOpen = () => {
-
-    if(list.length < 2){
-      alert('최소 두개 이상의 항목이 있어야 합니다')
-      return
+    if (list.length < 2) {
+      alert("최소 두개 이상의 항목이 있어야 합니다");
+      return;
     }
 
-    if(!list.every(e => e.size !== null)){
-      alert('모든 항목에는 확률이 설정되어야 합니다')
-      return
+    if (!list.every((e) => e.size !== null)) {
+      alert("모든 항목에는 확률이 설정되어야 합니다");
+      return;
     }
 
-    setState('open')
-  }
-  
+    setState("open");
+  };
+
   const getRandomItemIndex = (): number => {
     const totalSize = getAllSize();
     let randomNum = Math.random() * totalSize;
-    
+
     for (let i = 0; i < list.length; i++) {
       randomNum -= list[i].size!;
       if (randomNum < 0) return i;
     }
-  
+
     // 마지막 인덱스를 반환, 이 경우에는 일반적으로 발생하지 않음
     return list.length - 1;
   };
 
   const onSpin = () => {
+    if (end !== null) return;
 
-    if(end !== null) return
-
-    const getRandom = getRandomItemIndex()
-    setTarget(getRandom)
-    setMustSpin(true)
+    const getRandom = getRandomItemIndex();
+    setTarget(getRandom);
+    setMustSpin(true);
 
     setTimeout(() => {
-      setEnd(list[getRandom].name)
-    }, 6000)
+      setEnd(list[getRandom].name);
+    }, 6000);
     setTimeout(() => {
-      setEnd(null)
-    }, 10000)
-
-  }
+      setEnd(null);
+    }, 10000);
+  };
 
   const [boxSize, setBoxSize] = useState<number>(0);
 
   const updateSize = () => {
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vw = Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    );
     let size: number;
 
     if (vw <= 800) {
@@ -356,7 +346,10 @@ export default function Home() {
     } else if (vw <= 1300) {
       size = vw - 500; // 1300px 이하일 경우
     } else {
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      const vh = Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0
+      );
       const maxWidth = vw - 800;
       const maxHeight = vh - 500;
       size = Math.min(maxWidth, maxHeight, vw - 200); // 기본 조건
@@ -366,22 +359,60 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (state !== "open") return;
+    if (typeof window === "undefined") return;
 
-    if(state !== 'open') return
-    if (typeof window === 'undefined') return;
-
-    window.addEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
     updateSize(); // 초기 사이즈 설정
 
-    return () => { window.removeEventListener('resize', updateSize) }
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
   }, [state]);
 
   const onReset = () => {
-    setState('before')
-    setMustSpin(false)
-    setTarget(0)
-    setEnd(null)
+    setState("before");
+    setMustSpin(false);
+    setTarget(0);
+    setEnd(null);
+  };
+
+  function validateQueryArray(queryStr: string): boolean {
+    try {
+      const data = JSON.parse(decodeURIComponent(queryStr));
+
+      if (!Array.isArray(data)) return false;
+      if (data.length === 0) return false;
+
+      return data.every(
+        (item) =>
+          typeof item === "object" &&
+          "name" in item &&
+          "size" in item &&
+          typeof item.name === "string" &&
+          typeof item.size === "number"
+      );
+    } catch {
+      return false;
+    }
   }
+
+  const router = useRouter();
+  const query = router.query.data;
+  useEffect(() => {
+    if (!query || typeof query !== "string") return;
+    if (!validateQueryArray(query)) return;
+
+    try {
+      const parsed = JSON.parse(decodeURIComponent(query)) as {
+        name: string;
+        size: number;
+      }[];
+      setList(parsed);
+    } catch {
+      return;
+    }
+  }, [query]);
 
   return (
     <>
@@ -392,55 +423,63 @@ export default function Home() {
       </Head>
       <Frame>
         <Breadcrumbs icon="slot-machine" text="룰렛" href="/roulette" />
-        {
-          state === 'before' &&
+        {state === "before" && (
           <>
-          <SetList>
-            {
-              list.map((e,i) => 
-              <SetItem key={`list_${i}`}>
-                <SetNum>항목 {i + 1}</SetNum>
-                <SetName placeholder="항목 이름" value={e.name} onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeName(i, event.target.value)} />
-                <SetSize placeholder="확률" value={e.size ? e.size : ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeNumber(i, event.target.value)} />
-                <ViewSize>{e.size ? (e.size / getAllSize() * 100).toFixed(2) : '0'}%</ViewSize>
-                <SetDelete className="fa-sharp fa-solid fa-xmark" onClick={() => deleteList(i)} />
+            <SetList>
+              {list.map((e, i) => (
+                <SetItem key={`list_${i}`}>
+                  <SetNum>항목 {i + 1}</SetNum>
+                  <SetName
+                    placeholder="항목 이름"
+                    value={e.name}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      changeName(i, event.target.value)
+                    }
+                  />
+                  <SetSize
+                    placeholder="확률"
+                    value={e.size ? e.size : ""}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      changeNumber(i, event.target.value)
+                    }
+                  />
+                  <ViewSize>
+                    {e.size ? ((e.size / getAllSize()) * 100).toFixed(2) : "0"}%
+                  </ViewSize>
+                  <SetDelete
+                    className="fa-sharp fa-solid fa-xmark"
+                    onClick={() => deleteList(i)}
+                  />
+                </SetItem>
+              ))}
+              <SetItem>
+                <SetNum />
+                <SetBtn $type="line" style={{ flex: 1 }} onClick={addList}>
+                  항목 추가
+                </SetBtn>
+                <SetDeleteDummy />
               </SetItem>
-              )
-            }
-            <SetItem>
-              <SetNum />
-              <SetBtn
-                $type="line"
-                style={{flex: 1}}
-                onClick={addList}
-              >항목 추가</SetBtn>
-              <SetDeleteDummy />
-            </SetItem>
-          </SetList>
-          <Btn
-            $type="default"
-            $width={260}
-            onClick={onOpen}
-          >룰렛 시작</Btn>
+            </SetList>
+            <Btn $type="default" $width={260} onClick={onOpen}>
+              룰렛 시작
+            </Btn>
           </>
-        }
-        {
-          state === 'open' &&
+        )}
+        {state === "open" && (
           <>
             <WheelFrame $size={boxSize}>
               <Wheel
                 mustStartSpinning={mustSpin}
                 spinDuration={0.5}
                 prizeNumber={target}
-                data={
-                  list.map((item, index) => ({
+                data={list.map((item, index) => ({
                   option: item.name,
                   optionSize: item.size ?? 1, // size가 null일 경우 1로 설정
                   style: {
-                    backgroundColor: backgroundColors[index % backgroundColors.length] // 순환 방식으로 색상 할당
-                  }
-                  }))
-                }
+                    backgroundColor:
+                      backgroundColors[index % backgroundColors.length], // 순환 방식으로 색상 할당
+                  },
+                }))}
                 outerBorderColor={"#ccc"}
                 outerBorderWidth={10}
                 radiusLineColor={"tranparent"}
@@ -452,26 +491,22 @@ export default function Home() {
               />
             </WheelFrame>
             <BtnFrame>
-              <Btn
-                $type="line"
-                $width={200}
-                onClick={onReset}
-              >돌아가기</Btn>
-              <Btn
-                $type="default"
-                $width={260}
-                onClick={onSpin}
-              >돌려!</Btn>
+              <Btn $type="line" $width={200} onClick={onReset}>
+                돌아가기
+              </Btn>
+              <Btn $type="default" $width={260} onClick={onSpin}>
+                돌려!
+              </Btn>
             </BtnFrame>
           </>
-        }
-        {
-          end && <EndFrame>
+        )}
+        {end && (
+          <EndFrame>
             <ConfettiExplosion force={0.5} width={2000} zIndex={10} />
             {end}
           </EndFrame>
-        }
+        )}
       </Frame>
     </>
-  )
+  );
 }
