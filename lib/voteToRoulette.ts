@@ -8,7 +8,8 @@ export default function voteToRoulette(data: { name: string; size: number }[]) {
       return;
   }
   const filtered = data.filter((item) => item.size !== 0);
-  const sliced = filtered.slice(0, 19);
+  const sorted = filtered.sort((a, b) => b.size - a.size);
+  const sliced = sorted.slice(0, 19);
   const mapped = sliced.map((item) => ({
     name: item.name.length > 20 ? `${item.name.slice(19)}...` : item.name,
     size: item.size,

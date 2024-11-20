@@ -605,6 +605,7 @@ export default function Home() {
     plural: false,
     description: true,
   });
+  const [sort, setSort] = useState(false);
 
   const addList = () => {
     setList(Array.from([...list, ""]));
@@ -753,6 +754,7 @@ export default function Home() {
       duplicate: false,
     });
     setDrawn([]);
+    setSort(false);
   };
 
   const onSlot = (number: number) => {
@@ -1010,25 +1012,57 @@ export default function Home() {
               <OpenTopText>{convertSecondsToHMS(time)}</OpenTopText>
             </OpenTop>
             <OpenList>
-              {list.map((e, i) => (
-                <OpenItem key={`list_closed_${i}`}>
-                  <OpenItemText>
-                    <OpenItemNum>!투표{i + 1}</OpenItemNum>
-                    <OpenItemName>{e}</OpenItemName>
-                  </OpenItemText>
-                  <OpenItemBar onClick={() => setDetail(i)}>
-                    <OpenItemBarInner $width={getVotePercentage(i)}>
-                      <OpenItemBarNum>
-                        {vote[i].length}표
-                        <OpenItemBarNumPercentage>
-                          {getVotePercentage(i)}%
-                        </OpenItemBarNumPercentage>
-                      </OpenItemBarNum>
-                    </OpenItemBarInner>
-                  </OpenItemBar>
-                </OpenItem>
-              ))}
+              {sort
+                ? list
+                    .map((e, i) => ({
+                      number: i,
+                      string: e,
+                      voted: vote[i].length,
+                    }))
+                    .sort((a, b) => b.voted - a.voted)
+                    .map((e) => (
+                      <OpenItem key={`list_closed_${e.number}`}>
+                        <OpenItemText>
+                          <OpenItemNum>!투표{e.number + 1}</OpenItemNum>
+                          <OpenItemName>{e.string}</OpenItemName>
+                        </OpenItemText>
+                        <OpenItemBar onClick={() => setDetail(e.number)}>
+                          <OpenItemBarInner
+                            $width={getVotePercentage(e.number)}
+                          >
+                            <OpenItemBarNum>
+                              {e.voted}표
+                              <OpenItemBarNumPercentage>
+                                {getVotePercentage(e.number)}%
+                              </OpenItemBarNumPercentage>
+                            </OpenItemBarNum>
+                          </OpenItemBarInner>
+                        </OpenItemBar>
+                      </OpenItem>
+                    ))
+                : list.map((e, i) => (
+                    <OpenItem key={`list_closed_${i}`}>
+                      <OpenItemText>
+                        <OpenItemNum>!투표{i + 1}</OpenItemNum>
+                        <OpenItemName>{e}</OpenItemName>
+                      </OpenItemText>
+                      <OpenItemBar onClick={() => setDetail(i)}>
+                        <OpenItemBarInner $width={getVotePercentage(i)}>
+                          <OpenItemBarNum>
+                            {vote[i].length}표
+                            <OpenItemBarNumPercentage>
+                              {getVotePercentage(i)}%
+                            </OpenItemBarNumPercentage>
+                          </OpenItemBarNum>
+                        </OpenItemBarInner>
+                      </OpenItemBar>
+                    </OpenItem>
+                  ))}
             </OpenList>
+            <OptionBtn $active={sort} onClick={() => setSort((prev) => !prev)}>
+              <OptionBtnIcon className="fa-sharp fa-solid fa-check" />
+              투표수가 높은 순으로 표시하기
+            </OptionBtn>
             <BtnFrame>
               <Btn $type="default" $width={260} onClick={onReset}>
                 투표 다시 시작하기
