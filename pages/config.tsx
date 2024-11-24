@@ -195,6 +195,7 @@ export default function Home() {
     const utterance = new SpeechSynthesisUtterance("움성 테스트 메시지입니다");
     utterance.voice = selected;
 
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   };
 
