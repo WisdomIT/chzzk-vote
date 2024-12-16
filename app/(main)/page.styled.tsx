@@ -97,4 +97,5 @@ export const BtnTooltip = styled.span`
   line-height: ${({ theme }) => theme.fonts.lineHeight.tight};
   border-radius: ${({ theme }) => theme.rounded.base};
   animation: ${({ theme }) => theme.animation.appearUp} 0.3s;
+  white-space: pre-wrap;
 `;
