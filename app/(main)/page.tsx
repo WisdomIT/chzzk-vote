@@ -1,5 +1,3 @@
-"use client";
-
 import Head from "next/head";
 import { Container, Btn, BtnIcon, BtnText, BtnTooltip } from "./page.styled";
 import {
