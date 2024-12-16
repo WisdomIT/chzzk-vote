@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { size, device, truncate } from "@/lib/style";
+import { size, device, truncate } from "@/styles/style";
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Input from "@/components/Input";
