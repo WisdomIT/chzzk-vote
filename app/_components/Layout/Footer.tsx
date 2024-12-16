@@ -1,16 +1,20 @@
+"use client";
+
 import {
   Container,
-  Left,
+  Inner,
   Copyright,
   Thirdparty,
   SpecialThanks,
   FooterLink,
+  Github,
 } from "./Footer.styled";
+import { faGithub } from "@awesome.me/kit-8710ef4103/icons/classic/brands";
 
 export default function Footer() {
   return (
     <Container>
-      <Left>
+      <Inner>
         <Copyright>
           ©{" "}
           <FooterLink
@@ -29,22 +33,30 @@ export default function Footer() {
           <br />
           “치지직”은 NAVER Corp.의 등록 상표입니다
         </Thirdparty>
-      </Left>
-      <SpecialThanks>
-        Special thanks to.{" "}
+      </Inner>
+      <Inner>
+        <SpecialThanks>
+          Special thanks to.{" "}
+          <FooterLink
+            href="https://chzzk.naver.com/ca1850b2eceb7f86146695fd9bb9cefc"
+            target="_blank"
+          >
+            빅헤드
+          </FooterLink>{" "}
+          <FooterLink
+            href="https://chzzk.naver.com/219d8e65810a77d6e42c7df018d9632b"
+            target="_blank"
+          >
+            마뫄
+          </FooterLink>
+        </SpecialThanks>
         <FooterLink
-          href="https://chzzk.naver.com/ca1850b2eceb7f86146695fd9bb9cefc"
+          href="https://github.com/WisdomIT/chzzk-vote"
           target="_blank"
         >
-          빅헤드
-        </FooterLink>{" "}
-        <FooterLink
-          href="https://chzzk.naver.com/219d8e65810a77d6e42c7df018d9632b"
-          target="_blank"
-        >
-          마뫄
+          <Github icon={faGithub} height={20} />
         </FooterLink>
-      </SpecialThanks>
+      </Inner>
     </Container>
   );
 }

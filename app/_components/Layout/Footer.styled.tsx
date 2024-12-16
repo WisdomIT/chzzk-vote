@@ -1,3 +1,6 @@
+"use client";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { styled } from "styled-components";
 
@@ -19,7 +22,7 @@ export const Container = styled.footer`
   }
 `;
 
-export const Left = styled.div`
+export const Inner = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 20px;
@@ -57,4 +60,8 @@ export const FooterLink = styled(Link)`
     color: ${({ theme }) => theme.colors.brand};
     font-weight: ${({ theme }) => theme.fonts.weight.semibold};
   }
+`;
+
+export const Github = styled(FontAwesomeIcon)`
+  height: 20px;
 `;
