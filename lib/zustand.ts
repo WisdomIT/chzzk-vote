@@ -1,11 +1,11 @@
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
-import { ChannelType } from './types';
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { ChannelType } from "./types";
 
 interface GlobalOptionState {
   channel: ChannelType;
   voice: string;
-  theme: string;
+  theme: "dark" | "light";
 }
 
 interface GlobalOptionActions {
@@ -14,27 +14,33 @@ interface GlobalOptionActions {
   setTheme: () => void;
 }
 
-export const useGlobalOptionStore = create<GlobalOptionState & GlobalOptionActions>()(
+export const useGlobalOptionStore = create<
+  GlobalOptionState & GlobalOptionActions
+>()(
   devtools(
     persist(
       (set) => ({
         channel: {
-          channelId: '',
-          channelImageUrl: '',
-          channelName: '',
+          channelId: "",
+          channelImageUrl: "",
+          channelName: "",
           verifiedMark: false,
-          followerCount: 0
+          followerCount: 0,
         },
-        voice: '',
-        theme: 'dark',
+        voice: "",
+        theme: "dark",
 
         setChannel: (channel: ChannelType) => set({ channel }),
         setVoice: (voice: string) => set({ voice }),
-        setTheme: () => set(prev => ({ ...prev, theme: prev.theme === 'dark' ? 'light' : 'dark' })),
+        setTheme: () =>
+          set((prev) => ({
+            ...prev,
+            theme: prev.theme === "dark" ? "light" : "dark",
+          })),
       }),
       {
-        name: 'globalOption' // localStorage에 저장될 이름
-      },
-    ),
-  ),
+        name: "globalOption", // localStorage에 저장될 이름
+      }
+    )
+  )
 );
