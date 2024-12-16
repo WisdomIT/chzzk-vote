@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/styles/style";
 
 export const PopupBackground = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const PopupBackground = styled.div`
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
-  animation: .3s appear;
+  animation: 0.3s appear;
 
   .dark & {
     background-color: var(--color-background-01-transparent);
@@ -21,4 +21,4 @@ export const PopupBackground = styled.div`
   .light & {
     background-color: var(--color-white-50);
   }
-`
+`;

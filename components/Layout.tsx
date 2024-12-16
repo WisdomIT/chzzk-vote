@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/styles/style";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { useGlobalOptionStore } from "@/lib/zustand";
 
 const Frame = styled.div`
   display: block;
-`
+`;
 
 const Nav = styled.nav`
   display: flex;
@@ -29,7 +29,7 @@ const Nav = styled.nav`
   @media ${device.mobile} {
     padding: 0px 10px;
   }
-`
+`;
 
 const NavTitle = styled(Link)`
   font: 800 20px/1 var(--font-default);
@@ -49,15 +49,14 @@ const NavTitle = styled(Link)`
       background-color: var(--color-black-10);
     }
   }
-
-`
+`;
 
 const NavInner = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
-`
+`;
 
 const NavBtn = styled.a`
   width: 36px;
@@ -77,7 +76,7 @@ const NavBtn = styled.a`
       background-color: var(--color-black-10);
     }
   }
-`
+`;
 
 const NavIcon = styled.i`
   font-size: 20px;
@@ -85,7 +84,7 @@ const NavIcon = styled.i`
   .dark & {
     color: var(--color-white);
   }
-`
+`;
 
 const NavChannel = styled.div`
   display: flex;
@@ -113,7 +112,7 @@ const NavChannel = styled.div`
   @media ${device.mobile} {
     display: none;
   }
-`
+`;
 
 const NavChannelImg = styled.img`
   width: 36px;
@@ -128,46 +127,49 @@ const NavChannelImg = styled.img`
   .light & {
     border: 2px solid var(--color-stroke-light-02);
   }
-`
+`;
 
 const NavChannelName = styled.p`
   font: 800 14px/1 var(--font-default);
-  ${ truncate }
-`
+  ${truncate}
+`;
 
 const NavChannelVerified = styled.img`
   width: 14px;
   height: 14px;
-`
+`;
 
 const GNB = () => {
+  const { channel, theme, setTheme } = useGlobalOptionStore();
+  const router = useRouter();
 
-  const { channel, theme, setTheme } = useGlobalOptionStore()
-  const router = useRouter()
-
-  return <Nav>
-    <NavInner>
-      <NavTitle href="/">치지직 투표 추첨기</NavTitle>
-      {
-        channel.channelId !== "" && <NavChannel onClick={() => router.push('/config')}>
-        <NavChannelImg src={channel.channelImageUrl} />
-        <NavChannelName>{channel.channelName}</NavChannelName>
-        {
-          channel.verifiedMark && <NavChannelVerified src="/verified.png" />
-        }
-      </NavChannel>
-      }
-      
-    </NavInner>
-    <NavInner>
-      <NavBtn onClick={setTheme}>{ theme === 'dark'
-        ? <NavIcon className="fa-sharp fa-regular fa-sun-bright" />
-        : <NavIcon className="fa-sharp fa-regular fa-moon" />
-      }</NavBtn>
-      <NavBtn onClick={() => router.push('/config')}><NavIcon className="fa-sharp fa-regular fa-gear" /></NavBtn>
-    </NavInner>
-  </Nav>
-}
+  return (
+    <Nav>
+      <NavInner>
+        <NavTitle href="/">치지직 투표 추첨기</NavTitle>
+        {channel.channelId !== "" && (
+          <NavChannel onClick={() => router.push("/config")}>
+            <NavChannelImg src={channel.channelImageUrl} />
+            <NavChannelName>{channel.channelName}</NavChannelName>
+            {channel.verifiedMark && <NavChannelVerified src="/verified.png" />}
+          </NavChannel>
+        )}
+      </NavInner>
+      <NavInner>
+        <NavBtn onClick={setTheme}>
+          {theme === "dark" ? (
+            <NavIcon className="fa-sharp fa-regular fa-sun-bright" />
+          ) : (
+            <NavIcon className="fa-sharp fa-regular fa-moon" />
+          )}
+        </NavBtn>
+        <NavBtn onClick={() => router.push("/config")}>
+          <NavIcon className="fa-sharp fa-regular fa-gear" />
+        </NavBtn>
+      </NavInner>
+    </Nav>
+  );
+};
 
 const Main = styled.main`
   width: 100%;
@@ -176,7 +178,7 @@ const Main = styled.main`
   @media ${device.mobile} {
     height: auto;
   }
-`
+`;
 
 const FooterFrame = styled.footer`
   display: flex;
@@ -200,7 +202,7 @@ const FooterFrame = styled.footer`
     height: auto;
     padding: 40px 10px;
   }
-`
+`;
 
 const FooterLeft = styled.div`
   display: flex;
@@ -210,10 +212,9 @@ const FooterLeft = styled.div`
   @media ${device.mobile} {
     flex-direction: column;
   }
-`
+`;
 
 const Copyright = styled.p`
-
   .dark & {
     font: 600 12px/1.5 var(--font-default);
     color: var(--color-white);
@@ -223,7 +224,7 @@ const Copyright = styled.p`
     font: 800 12px/1.5 var(--font-default);
     color: var(--color-black);
   }
-`
+`;
 
 const Thirdparty = styled.p`
   font: 600 12px/1.5 var(--font-default);
@@ -235,7 +236,7 @@ const Thirdparty = styled.p`
   .light & {
     color: var(--color-black-50);
   }
-`
+`;
 
 const SpecialThanks = styled.p`
   font: 600 12px/1.5 var(--font-default);
@@ -247,7 +248,7 @@ const SpecialThanks = styled.p`
   .light & {
     color: var(--color-black-50);
   }
-`
+`;
 
 const FooterLink = styled(Link)`
   &:hover {
@@ -262,42 +263,71 @@ const FooterLink = styled(Link)`
       font-weight: 800;
     }
   }
-`
+`;
 
 const Footer = () => {
-  return <FooterFrame>
-    <FooterLeft>
-      <Copyright>© <FooterLink href="https://www.discord.com/users/901304044767834123" target="_blank">WisdomIT</FooterLink></Copyright>
-      <Thirdparty>치지직 투표 추첨기는 <FooterLink href="https://chzzk.naver.com/" target="_blank">치지직</FooterLink>의 써드파티 사이트로, 치지직에서 운영하는 사이트가 아닙니다<br/>“치지직”은 NAVER Corp.의 등록 상표입니다</Thirdparty>
-    </FooterLeft>
-    <SpecialThanks>Special thanks to. <FooterLink href="https://chzzk.naver.com/ca1850b2eceb7f86146695fd9bb9cefc" target="_blank">빅헤드</FooterLink> <FooterLink href="https://chzzk.naver.com/219d8e65810a77d6e42c7df018d9632b" target="_blank">마뫄</FooterLink></SpecialThanks>
-  </FooterFrame>
-}
+  return (
+    <FooterFrame>
+      <FooterLeft>
+        <Copyright>
+          ©{" "}
+          <FooterLink
+            href="https://www.discord.com/users/901304044767834123"
+            target="_blank"
+          >
+            WisdomIT
+          </FooterLink>
+        </Copyright>
+        <Thirdparty>
+          치지직 투표 추첨기는{" "}
+          <FooterLink href="https://chzzk.naver.com/" target="_blank">
+            치지직
+          </FooterLink>
+          의 써드파티 사이트로, 치지직에서 운영하는 사이트가 아닙니다
+          <br />
+          “치지직”은 NAVER Corp.의 등록 상표입니다
+        </Thirdparty>
+      </FooterLeft>
+      <SpecialThanks>
+        Special thanks to.{" "}
+        <FooterLink
+          href="https://chzzk.naver.com/ca1850b2eceb7f86146695fd9bb9cefc"
+          target="_blank"
+        >
+          빅헤드
+        </FooterLink>{" "}
+        <FooterLink
+          href="https://chzzk.naver.com/219d8e65810a77d6e42c7df018d9632b"
+          target="_blank"
+        >
+          마뫄
+        </FooterLink>
+      </SpecialThanks>
+    </FooterFrame>
+  );
+};
 
 type LayoutProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const Layout = (props: LayoutProps) => {
-
-  const router = useRouter()
-  const { channel } = useGlobalOptionStore()
+  const router = useRouter();
+  const { channel } = useGlobalOptionStore();
 
   useEffect(() => {
-
-    if(channel.channelId === '' && router.asPath !== '/sign'){
-      router.push('/sign')
+    if (channel.channelId === "" && router.asPath !== "/sign") {
+      router.push("/sign");
     }
+  }, [router.asPath]);
 
-  },[router.asPath])
+  return (
+    <Frame>
+      <GNB />
+      <Main>{props.children}</Main>
+      <Footer />
+    </Frame>
+  );
+};
 
-  return <Frame>
-    <GNB />
-    <Main>
-      {props.children}
-    </Main>
-    <Footer />
-  </Frame>
-}
-
-export default Layout
+export default Layout;

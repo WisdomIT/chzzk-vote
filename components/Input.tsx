@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/styles/style";
 
 const Input = styled.input`
   font: 400 20px/1 var(--font-default);
@@ -11,7 +11,7 @@ const Input = styled.input`
     background-color: var(--color-background-02);
     color: var(--color-white);
 
-    &::placeholder{
+    &::placeholder {
       color: var(--color-white-20);
     }
   }
@@ -20,7 +20,7 @@ const Input = styled.input`
     background-color: var(--color-black-10);
     color: var(--color-black);
 
-    &::placeholder{
+    &::placeholder {
       color: var(--color-black-20);
     }
   }
@@ -28,6 +28,6 @@ const Input = styled.input`
   @media ${device.mobile} {
     font: 400 14px/1 var(--font-default);
   }
-`
+`;
 
-export default Input
+export default Input;

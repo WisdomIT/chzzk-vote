@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { size, device, truncate } from "@/lib/style";
+import { size, device, truncate } from "@/styles/style";
 import { PopupBackground } from "@/components/Popup";
 import Btn from "@/components/Btn";
 import { ViewerType } from "@/lib/types";

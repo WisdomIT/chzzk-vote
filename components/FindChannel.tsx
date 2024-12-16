@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/styles/style";
 import { PopupBackground } from "@/components/Popup";
 import Btn from "@/components/Btn";
 import { ChannelType } from "@/lib/types";
 
 const Background = styled(PopupBackground)`
   gap: 100px;
-`
+`;
 
 const Block = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Block = styled.div`
     padding: 10px 20px;
     gap: 20px;
   }
-`
+`;
 
 const ChannelImage = styled.div`
   width: 120px;
@@ -54,19 +54,19 @@ const ChannelImage = styled.div`
     width: 100px;
     height: 100px;
   }
-`
+`;
 
 const Image = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-`
+`;
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
+`;
 
 const Name = styled.p`
   font: 800 48px/1 var(--font-default);
@@ -74,7 +74,7 @@ const Name = styled.p`
   @media ${device.mobile} {
     font: 800 20px/1 var(--font-default);
   }
-`
+`;
 
 const Verified = styled.img`
   width: 32px;
@@ -85,7 +85,7 @@ const Verified = styled.img`
     width: 14px;
     height: 14px;
   }
-`
+`;
 
 const Followers = styled.p`
   font: 600 20px/1 var(--font-default);
@@ -93,12 +93,12 @@ const Followers = styled.p`
   @media ${device.mobile} {
     font: 800 14px/1 var(--font-default);
   }
-`
+`;
 
 const Btns = styled.div`
   display: flex;
   gap: 20px;
-`
+`;
 
 function formatNumber(number: number): string {
   if (number <= 10000) {
@@ -110,35 +110,38 @@ function formatNumber(number: number): string {
 }
 
 type FindChannelType = {
-  find: ChannelType,
-  onCancel: () => void,
-  onAccept: (find: ChannelType) => void
-}
+  find: ChannelType;
+  onCancel: () => void;
+  onAccept: (find: ChannelType) => void;
+};
 
 const FindChannel = (props: FindChannelType) => {
+  const { find, onCancel, onAccept } = props;
 
-  const { find, onCancel, onAccept } = props
+  return (
+    <Background>
+      <Block>
+        <ChannelImage>
+          <Image src={find.channelImageUrl} />
+        </ChannelImage>
+        <Info>
+          <Name>
+            {find.channelName}
+            {find.verifiedMark && <Verified src="/verified.png" />}
+          </Name>
+          <Followers>팔로워 {formatNumber(find.followerCount)}명</Followers>
+        </Info>
+      </Block>
+      <Btns>
+        <Btn $type="line" $width={260} onClick={onCancel}>
+          다시 검색하기
+        </Btn>
+        <Btn $type="default" $width={260} onClick={() => onAccept(find)}>
+          등록하기
+        </Btn>
+      </Btns>
+    </Background>
+  );
+};
 
-  return <Background>
-    <Block>
-      <ChannelImage>
-        <Image src={find.channelImageUrl} />
-      </ChannelImage>
-      <Info>
-        <Name>
-          {find.channelName}
-          {
-            find.verifiedMark && <Verified src="/verified.png" />
-          }
-        </Name>
-        <Followers>팔로워 {formatNumber(find.followerCount)}명</Followers>
-      </Info>
-    </Block>
-    <Btns>
-      <Btn $type="line" $width={260} onClick={onCancel}>다시 검색하기</Btn>
-      <Btn $type="default" $width={260} onClick={() => onAccept(find)}>등록하기</Btn>
-    </Btns>
-  </Background>
-}
-
-export default FindChannel
+export default FindChannel;

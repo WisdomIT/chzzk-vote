@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { size, device, truncate } from '@/lib/style'
+import { size, device, truncate } from "@/styles/style";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,7 @@ const Frame = styled.div`
     top: 10px;
     left: 10px;
   }
-`
+`;
 
 const Breadcrumb = styled(Link)`
   padding: 8px 12px;
@@ -26,12 +26,12 @@ const Breadcrumb = styled(Link)`
     .dark & {
       background-color: var(--color-white-10);
     }
-    
+
     .light & {
       background-color: var(--color-black-10);
     }
   }
-`
+`;
 
 const BreadcrumbIcon = styled.i`
   font-size: 14px;
@@ -40,11 +40,11 @@ const BreadcrumbIcon = styled.i`
   .dark & {
     color: var(--color-brand);
   }
-  
+
   .light & {
     color: var(--color-black);
   }
-`
+`;
 
 const BreadcrumbText = styled.p`
   display: inline-block;
@@ -57,7 +57,7 @@ const BreadcrumbText = styled.p`
   .light & {
     color: var(--color-black);
   }
-`
+`;
 
 const BreadcrumbNext = styled.i`
   font-size: 12px;
@@ -69,30 +69,31 @@ const BreadcrumbNext = styled.i`
   .light & {
     color: var(--color-black);
   }
-`
+`;
 
 type BreadcrumbsType = {
-  icon: string,
-  text: string,
-  href: string
-}
+  icon: string;
+  text: string;
+  href: string;
+};
 
 const Breadcrumbs = (props: BreadcrumbsType) => {
+  const { icon, text, href } = props;
+  const router = useRouter();
 
-  const { icon, text, href } = props
-  const router = useRouter()
+  return (
+    <Frame>
+      <Breadcrumb href="/">
+        <BreadcrumbIcon className="fa-sharp fa-light fa-home" />
+        <BreadcrumbText>홈</BreadcrumbText>
+      </Breadcrumb>
+      <BreadcrumbNext className="fa-sharp fa-solid fa-chevron-right" />
+      <Breadcrumb href={href}>
+        <BreadcrumbIcon className={`fa-sharp fa-light fa-${icon}`} />
+        <BreadcrumbText>{text}</BreadcrumbText>
+      </Breadcrumb>
+    </Frame>
+  );
+};
 
-  return <Frame>
-    <Breadcrumb href="/">
-      <BreadcrumbIcon className="fa-sharp fa-light fa-home" />
-      <BreadcrumbText>홈</BreadcrumbText>
-    </Breadcrumb>
-    <BreadcrumbNext className="fa-sharp fa-solid fa-chevron-right" />
-    <Breadcrumb href={href} >
-      <BreadcrumbIcon className={`fa-sharp fa-light fa-${icon}`} />
-      <BreadcrumbText>{text}</BreadcrumbText>
-    </Breadcrumb>
-  </Frame>
-}
-
-export default Breadcrumbs
+export default Breadcrumbs;
