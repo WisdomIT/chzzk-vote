@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import StyledComponentsRegistry from "@/app/_components/StyledProvider";
+import StyledComponentsRegistry from "@/app/_components/Layout/Styled/StyledProvider";
 import Layout from "@/components/Layout";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import { useEffect } from "react";

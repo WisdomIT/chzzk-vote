@@ -10,5 +10,5 @@ const TestDiv = styled.div`
 `;
 
 export default function Page() {
-  return <TestDiv />;
+  return <TestDiv>가나다라</TestDiv>;
 }

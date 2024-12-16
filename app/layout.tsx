@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import StyledProvider from "@/app/_components/StyledProvider";
-import StyledThemeProvider from "./_components/StyledThemeProvider";
+import StyledProvider from "@/app/_components/Layout/Styled/StyledProvider";
+import StyledThemeProvider from "./_components/Layout/Styled/StyledThemeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "@/styles/globals.css";
 

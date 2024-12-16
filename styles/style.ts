@@ -7,9 +7,9 @@ export const size = {
 };
 
 export const device = {
-  mobile: `(max-width: ${size.mobile}px)`,
-  tablet: `(max-width: ${size.tablet}px)`,
-  desktop: `(min-width: ${size.tablet + 1}px)`,
+  mobile: `@media (max-width: ${size.mobile}px)`,
+  tablet: `@media (max-width: ${size.tablet}px)`,
+  desktop: `@media (min-width: ${size.tablet + 1}px)`,
 };
 
 export const truncate = css`
@@ -86,7 +86,7 @@ const fonts = {
     relaxed: 1.75,
     loose: 2,
   },
-  fontWeight: {
+  weight: {
     regular: 400,
     semibold: 600,
     extrabold: 800,
@@ -197,16 +197,20 @@ const animation = {
 
 export const lightTheme = {
   colors: lightColors,
-  fonts: fonts,
-  rounded: rounded,
-  animation: animation,
+  fonts,
+  rounded,
+  animation,
+  device,
+  truncate,
 } as const;
 
 export const darkTheme = {
   colors: darkColors,
-  fonts: fonts,
-  rounded: rounded,
-  animation: animation,
+  fonts,
+  rounded,
+  animation,
+  device,
+  truncate,
 };
 
 export type Theme = typeof lightTheme;

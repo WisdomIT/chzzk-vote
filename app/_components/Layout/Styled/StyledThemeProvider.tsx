@@ -3,6 +3,7 @@
 import { ThemeProvider } from "styled-components";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import { darkTheme, lightTheme } from "@/styles/style";
+import { StyledGlobalProvider } from "./StyledGlobalProvider";
 
 export default function StyledThemeProvider({
   children,
@@ -13,6 +14,7 @@ export default function StyledThemeProvider({
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       {children}
+      <StyledGlobalProvider />
     </ThemeProvider>
   );
 }
