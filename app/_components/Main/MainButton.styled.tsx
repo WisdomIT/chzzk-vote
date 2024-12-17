@@ -61,8 +61,8 @@ export const style = css<{
   }
 
   ${({ theme }) => theme.device.mobile} {
-    font-size: ${({ theme }) => theme.fonts.size.sm};
-    height: 48px;
+    font-size: ${({ theme }) => theme.fonts.size.base};
+    height: 60px;
     width: 100% !important;
   }
 `;

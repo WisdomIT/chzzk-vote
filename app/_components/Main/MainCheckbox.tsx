@@ -16,7 +16,7 @@ export default function MainCheckbox({
 }) {
   return (
     <Button $active={value} onClick={onClick}>
-      <Icon icon={faCheck} />
+      <Icon icon={faCheck} height={20} />
       {title}
     </Button>
   );

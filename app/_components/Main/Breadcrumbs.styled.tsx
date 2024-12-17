@@ -11,6 +11,7 @@ export const Container = styled.div`
   left: 40px;
   gap: 10px;
   align-items: center;
+  z-index: 2;
 
   ${({ theme }) => theme.device.mobile} {
     top: 10px;

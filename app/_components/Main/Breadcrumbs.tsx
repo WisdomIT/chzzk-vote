@@ -15,12 +15,12 @@ export default function Breadcrumbs({
   return (
     <Container>
       <Breadcrumb href="/">
-        <Icon icon={faHome} />
+        <Icon icon={faHome} height={14} />
         <Text>홈</Text>
       </Breadcrumb>
-      <Next icon={faChevronRight} />
+      <Next icon={faChevronRight} height={12} />
       <Breadcrumb href={href}>
-        <Icon icon={icon} />
+        <Icon icon={icon} height={14} />
         <Text>{text}</Text>
       </Breadcrumb>
     </Container>

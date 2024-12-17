@@ -25,6 +25,6 @@ export const Button = styled.button<{ $active: boolean }>`
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
-  font-size: 20px;
+  height: 20px;
   margin-right: 10px;
 `;
