@@ -123,59 +123,43 @@ export default function useChzzkChat({
   },
   pollInterval = 30 * 1000,
 }: UseChzzkChatProps) {
-  const handleChatEvent = useCallback(
-    (chat: ChatEvent) => {
-      if (!onChat) return;
-      const viewer = profileToViewer(chat.profile);
-      const { message, messageVoice } = chatToMessage(chat);
-      onChat(viewer, message, messageVoice);
-    },
-    [onChat]
-  );
+  const handleChatEvent = (chat: ChatEvent) => {
+    if (!onChat) return;
+    const viewer = profileToViewer(chat.profile);
+    const { message, messageVoice } = chatToMessage(chat);
+    onChat(viewer, message, messageVoice);
+  };
 
-  const handleDonationEvent = useCallback(
-    (chat: DonationEvent) => {
-      if (!onDonation || !chat.profile) return;
-      const viewer = profileToViewer(chat.profile);
-      const { message, messageVoice } = chatToMessage(chat);
-      onDonation(viewer, message, messageVoice);
-    },
-    [onDonation]
-  );
+  const handleDonationEvent = (chat: DonationEvent) => {
+    if (!onDonation || !chat.profile) return;
+    const viewer = profileToViewer(chat.profile);
+    const { message, messageVoice } = chatToMessage(chat);
+    onDonation(viewer, message, messageVoice);
+  };
 
-  useEffect(() => {
-    const options = {
-      channelId,
-      pollInterval,
-      baseUrls,
-    };
-
-    const client = new ChzzkChat(options);
-
-    client.on("connect", () => {
-      console.log("[chzzk] Chat Connected");
-    });
-
-    if (onChat) {
-      client.on("chat", handleChatEvent);
-    }
-
-    if (onDonation) {
-      client.on("donation", handleDonationEvent);
-    }
-
-    client.connect();
-
-    return () => {
-      client.disconnect();
-    };
-  }, [
+  const options = {
     channelId,
-    onChat,
-    onDonation,
-    handleChatEvent,
-    handleDonationEvent,
-    baseUrls,
     pollInterval,
-  ]);
+    baseUrls,
+  };
+
+  const client = new ChzzkChat(options);
+
+  client.on("connect", () => {
+    console.log("[chzzk] Chat Connected");
+  });
+
+  if (onChat) {
+    client.on("chat", handleChatEvent);
+  }
+
+  if (onDonation) {
+    client.on("donation", handleDonationEvent);
+  }
+
+  client.connect();
+
+  return () => {
+    client.disconnect();
+  };
 }
