@@ -28,9 +28,9 @@ export const ViewerBadge = styled.img`
 `;
 
 export const ViewerName = styled.p`
-  font-weight: 1px solid ${({ theme }) => theme.fonts.weight.extrabold};
-  font-size: 1px solid ${({ theme }) => theme.fonts.size["5xl"]};
-  line-height: 1px solid ${({ theme }) => theme.fonts.lineHeight.none};
+  font-weight: ${({ theme }) => theme.fonts.weight.extrabold};
+  font-size: ${({ theme }) => theme.fonts.size["5xl"]};
+  line-height: ${({ theme }) => theme.fonts.lineHeight.none};
 
   ${({ theme }) => theme.truncate};
 `;

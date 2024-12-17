@@ -23,7 +23,7 @@ type ChatType = {
 };
 
 export default function Chat({ viewer, onClose }: ChatType) {
-  const { channel } = useGlobalOptionStore();
+  const { channel, voice } = useGlobalOptionStore();
   const [chat, setChat] = useState<JSX.Element[]>([]);
   const [state, setState] = useState(false);
 
@@ -34,7 +34,7 @@ export default function Chat({ viewer, onClose }: ChatType) {
   ) {
     if (viewer.userIdHash !== getViewer.userIdHash) return;
     setChat((prev) => [...prev, message]);
-    useVoice(messageVoice);
+    useVoice(voice, messageVoice);
   }
 
   useEffect(() => {
