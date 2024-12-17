@@ -113,7 +113,7 @@ function chatToMessage(chat: ChatEvent | DonationEvent): ChatMessageResult {
   };
 }
 
-export function useChzzkChat({
+export default function useChzzkChat({
   channelId,
   onChat,
   onDonation,
