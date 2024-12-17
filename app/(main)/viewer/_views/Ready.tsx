@@ -1,8 +1,8 @@
 "use client";
 
 import MainButton from "@/app/_components/Main/MainButton";
-import { Config, Container } from "./index.styled";
-import MainCheckbox from "@/app/_components/Main/MainCheckbox";
+import { Container } from "./index.styled";
+import Config from "../_components/Config";
 
 export default function Ready({
   config,
@@ -19,22 +19,7 @@ export default function Ready({
   return (
     <Container>
       <MainButton onClick={onStart}>참여자 모집 시작</MainButton>
-      <Config>
-        <MainCheckbox
-          title="구독자만 추첨하기"
-          value={config.subscribe}
-          onClick={() => {
-            setConfig("subscribe");
-          }}
-        />
-        <MainCheckbox
-          title="이미 뽑힌 참여자 제외하기"
-          value={config.duplicate}
-          onClick={() => {
-            setConfig("duplicate");
-          }}
-        />
-      </Config>
+      <Config config={config} setConfig={setConfig} />
     </Container>
   );
 }
