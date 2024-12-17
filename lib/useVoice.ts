@@ -1,5 +1,3 @@
-import { useGlobalOptionStore } from "./zustand";
-
 //window.speechSynthesis는 비동기 함수가 아니나, 브라우저에 따라 딜레이가 있을 수 있어 비동기 처리하도록 함수를 만들어준다
 export const getSystemVoices = (): Promise<SpeechSynthesisVoice[]> => {
   return new Promise((resolve, reject) => {
@@ -16,9 +14,7 @@ export const getSystemVoices = (): Promise<SpeechSynthesisVoice[]> => {
 };
 
 //zustand로 저장된 보이스를 가져옴
-const getStoredVoice = async () => {
-  const { voice } = useGlobalOptionStore();
-
+const getVoiceModel = async (voice: string) => {
   const voices = await getSystemVoices();
   const filter = voices.filter((voice) => voice.lang === "ko-KR");
   const findSettedVoice = filter.find((e) => e.name === voice);
@@ -28,9 +24,9 @@ const getStoredVoice = async () => {
   return findSettedVoice;
 };
 
-export default async function useVoice(message: string) {
+export default async function useVoice(voice: string, message: string) {
   const utterance = new SpeechSynthesisUtterance(message);
-  utterance.voice = await getStoredVoice();
+  utterance.voice = await getVoiceModel(voice);
 
   //일부 환경에서 백그라운드에서 돌아가는 보이스가 있을 때 재생되지 않는 문제 해결
   window.speechSynthesis.cancel();
