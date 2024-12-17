@@ -7,10 +7,9 @@ import type { ViewerType } from "@/lib/types";
 import Breadcrumbs from "@/app/_components/Main/Breadcrumbs";
 import { faUsers } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
+import Running from "./_views/Running";
 
 export default function Page() {
-  const { channel } = useGlobalOptionStore();
-
   const [state, setState] = useState<"ready" | "running" | "completed">(
     "ready"
   );
@@ -51,6 +50,17 @@ export default function Page() {
           setConfig={handleConfig}
           onStart={() => {
             setState("running");
+          }}
+        />
+      ) : null}
+      {state === "running" ? (
+        <Running
+          config={config}
+          setConfig={handleConfig}
+          viewers={viewers}
+          setViewers={setViewers}
+          onStop={() => {
+            setState("completed");
           }}
         />
       ) : null}

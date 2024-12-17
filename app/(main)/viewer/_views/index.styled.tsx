@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  gap: 60px;
+  gap: 40px;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -18,11 +18,4 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 20px;
   }
-`;
-
-export const Config = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 40px;
 `;
