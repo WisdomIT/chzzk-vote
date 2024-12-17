@@ -29,10 +29,12 @@ export default function Running({
   const { channel } = useGlobalOptionStore();
 
   function handleOnChat(viewer: ViewerType) {
-    const find = viewers.find((item) => item.userIdHash === viewer.userIdHash);
-    if (find) return;
+    setViewers((prev) => {
+      const find = prev.find((item) => item.userIdHash === viewer.userIdHash);
+      if (find) return prev;
 
-    setViewers((prev) => [...prev, viewer]);
+      return [...prev, viewer];
+    });
   }
 
   useEffect(() => {
