@@ -17,6 +17,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
+  position: relative;
 `;
 
 export default function Layout({
