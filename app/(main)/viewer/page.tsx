@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import useChzzkChat from "@/lib/useChzzkChat";
-import { useGlobalOptionStore } from "@/lib/zustand";
+import { useState } from "react";
 import type { ViewerType } from "@/lib/types";
 import Breadcrumbs from "@/app/_components/Main/Breadcrumbs";
 import { faUsers } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
@@ -19,16 +17,6 @@ export default function Page() {
   });
   const [viewers, setViewers] = useState<ViewerType[]>([]);
   const [drawn, setDrawn] = useState<ViewerType[]>([]);
-
-  /*
-  if (channel.channelId) {
-    useChzzkChat({
-      channelId: channel.channelId,
-      onChat: console.log,
-      onDonation: console.log,
-    });
-  }
-  */
 
   function handleReset() {
     setState("ready");
