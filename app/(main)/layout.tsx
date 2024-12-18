@@ -3,6 +3,7 @@
 import Header from "../_components/Layout/Header";
 import Footer from "../_components/Layout/Footer";
 import { styled } from "styled-components";
+import ProtectedRoute from "../_components/Layout/ProtectedRoute";
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +29,9 @@ export default function Layout({
   return (
     <Container>
       <Header />
-      <Main>{children}</Main>
+      <Main>
+        <ProtectedRoute>{children}</ProtectedRoute>
+      </Main>
       <Footer />
     </Container>
   );

@@ -24,11 +24,11 @@ body {
 }
 
 ::-moz-selection {
-  background: var(--color-brand-tranparent);
+  background: ${({ theme }) => theme.colors.content50};
   color: inherit;
 }
 ::selection {
-  background: var(--color-brand-tranparent);
+  background: ${({ theme }) => theme.colors.content50};
   color: inherit;
 }
 
