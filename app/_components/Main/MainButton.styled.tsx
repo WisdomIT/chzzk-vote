@@ -6,19 +6,49 @@ import { css, styled } from "styled-components";
 export const style = css<{
   $fill: "primary" | "secondary";
   $fillType: "filled" | "outlined";
+  $size: "normal" | "small";
 }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: ${({ theme }) => theme.fonts.size["2xl"]};
   font-weight: ${({ theme }) => theme.fonts.weight.extrabold};
   line-height: ${({ theme }) => theme.fonts.lineHeight.none};
-  height: 80px;
-  padding-left: 40px;
-  padding-right: 40px;
   border-radius: ${({ theme }) => theme.rounded.base};
   cursor: pointer;
   animation: ${({ theme }) => theme.animation.appear} 0.2s;
+
+  height: ${({ $size }) => {
+    switch ($size) {
+      case "normal":
+        return "80px";
+      case "small":
+        return "60px";
+      default:
+        return "80px";
+    }
+  }};
+
+  font-size: ${({ $size, theme }) => {
+    switch ($size) {
+      case "normal":
+        return theme.fonts.size["2xl"];
+      case "small":
+        return theme.fonts.size.xl;
+      default:
+        return theme.fonts.size["2xl"];
+    }
+  }};
+
+  padding: ${({ $size }) => {
+    switch ($size) {
+      case "normal":
+        return "0px 40px";
+      case "small":
+        return "0px 28px";
+      default:
+        return "0px 40px";
+    }
+  }};
 
   background-color: ${({ $fillType, $fill, theme }) => {
     if ($fillType === "outlined") return "transparent";
@@ -60,6 +90,10 @@ export const style = css<{
     opacity: 0.5;
   }
 
+  &:focus {
+    outline: 6px double ${({ theme }) => theme.colors.brand};
+  }
+
   ${({ theme }) => theme.device.mobile} {
     font-size: ${({ theme }) => theme.fonts.size.base};
     height: 60px;
@@ -70,6 +104,7 @@ export const style = css<{
 export const StyledButton = styled.button<{
   $fill: "primary" | "secondary";
   $fillType: "filled" | "outlined";
+  $size: "normal" | "small";
 }>`
   ${style}
 `;
@@ -77,6 +112,7 @@ export const StyledButton = styled.button<{
 export const StyledLink = styled(Link)<{
   $fill: "primary" | "secondary";
   $fillType: "filled" | "outlined";
+  $size: "normal" | "small";
 }>`
   ${style}
 `;
