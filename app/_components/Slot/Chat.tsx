@@ -38,12 +38,16 @@ export default function Chat({ viewer, onClose }: ChatType) {
   }
 
   useEffect(() => {
-    if (state) {
-      useChzzkChat({
-        channelId: channel.channelId,
-        onChat: handleOnChat,
-      });
-    }
+    if (!state) return;
+
+    const client = useChzzkChat({
+      channelId: channel.channelId,
+      onChat: handleOnChat,
+    });
+
+    return () => {
+      client.disconnect();
+    };
   }, [state]);
 
   useEffect(() => {

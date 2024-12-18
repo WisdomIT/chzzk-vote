@@ -159,7 +159,5 @@ export default function useChzzkChat({
 
   client.connect();
 
-  return () => {
-    client.disconnect();
-  };
+  return client;
 }
