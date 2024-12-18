@@ -55,9 +55,9 @@ export const ChatBox = styled.div`
 export const Balloon = styled.p`
   display: inline-block;
   padding: 20px 14px;
-  font-weight: 1px solid ${({ theme }) => theme.fonts.weight.semibold};
-  font-size: 1px solid ${({ theme }) => theme.fonts.size.xl};
-  line-height: 1px solid ${({ theme }) => theme.fonts.lineHeight.none};
+  font-weight: ${({ theme }) => theme.fonts.weight.semibold};
+  font-size: ${({ theme }) => theme.fonts.size.xl};
+  line-height: ${({ theme }) => theme.fonts.lineHeight.none};
   border-radius: ${({ theme }) => theme.rounded.base};
   border-top-left-radius: 0px;
   background-color: ${({ theme }) => theme.colors.brand};

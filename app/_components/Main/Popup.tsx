@@ -14,6 +14,7 @@ export const PopupBackground = styled.div`
   align-items: center;
   backdrop-filter: blur(10px);
   animation: 0.3s ${({ theme }) => theme.animation.appear};
+  z-index: 10;
 
   background-color: ${({ theme }) => theme.colors.background01Transparent};
 `;
