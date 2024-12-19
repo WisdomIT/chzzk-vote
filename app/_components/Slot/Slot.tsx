@@ -1,3 +1,5 @@
+"use client";
+
 import { ViewerType } from "@/lib/types";
 import { useEffect, useState } from "react";
 import {
@@ -14,14 +16,14 @@ import ConfettiExplosion from "react-confetti-explosion";
 const height = 100;
 
 export default function Slot({
-  data,
+  list,
   duration,
   onEnd,
   initialTarget,
 }: {
-  data: ViewerType[];
+  list: ViewerType[];
   duration: number;
-  onEnd: (item: ViewerType, target: number) => void;
+  onEnd: (item: ViewerType, index: number) => void;
   initialTarget: ViewerType | null;
 }) {
   const [items, setItems] = useState<ViewerType[]>([]);
@@ -29,7 +31,7 @@ export default function Slot({
   const [initAnimation, setInitAnimation] = useState(true);
 
   useEffect(() => {
-    if (data.length === 0) {
+    if (list.length === 0) {
       setItems([]);
       return;
     }
@@ -38,28 +40,28 @@ export default function Slot({
       return;
     }
 
-    const target = Math.floor(Math.random() * data.length);
-    const targetViewer = data[target];
+    const target = Math.floor(Math.random() * list.length);
+    const targetViewer = list[target];
 
     // 데이터 반복 로직으로 충분히 길이를 확보하여 최소 2바퀴 회전이 가능하게 함
-    const minimumRepeats = Math.ceil(20 / data.length);
+    const minimumRepeats = Math.ceil(20 / list.length);
     const repeatsNeededForTwoRotations = 2;
     const totalRepeats = Math.max(minimumRepeats, repeatsNeededForTwoRotations);
-    const repeatedData = Array(totalRepeats)
-      .fill([...data])
+    const repeatedlist = Array(totalRepeats)
+      .fill([...list])
       .flat();
 
     // 최종 데이터에 target 위치까지 반영
-    let processedData = [...repeatedData, ...repeatedData.slice(0, target + 1)];
+    let processedlist = [...repeatedlist, ...repeatedlist.slice(0, target + 1)];
 
-    setItems(processedData);
+    setItems(processedlist);
     setInitAnimation(true);
     setTranslateY(0); // 위치 초기화
 
     requestAnimationFrame(() => {
       setInitAnimation(false);
       // 슬롯의 전체 회전을 위한 정확한 translateY 계산
-      const rotationsHeight = height * repeatedData.length; // 최소 2바퀴 회전
+      const rotationsHeight = height * repeatedlist.length; // 최소 2바퀴 회전
       const targetHeight = height * target; // target 위치까지 이동
       setTranslateY(rotationsHeight + targetHeight);
     });
@@ -69,7 +71,7 @@ export default function Slot({
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [data, initialTarget]);
+  }, [list, initialTarget]);
 
   //initialTarget이 없을때는 슬롯이 돌아감감
   if (!initialTarget) {
