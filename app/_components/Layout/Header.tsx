@@ -27,7 +27,7 @@ export default function Header() {
       <NavInner>
         <Title href="/">치지직 투표 추첨기</Title>
         {channel.channelId !== "" && (
-          <Channel onClick={() => router.push("/config")}>
+          <Channel href="/config">
             <ChannelImg src={channel.channelImageUrl} />
             <ChannelName>{channel.channelName}</ChannelName>
             {channel.verifiedMark && <ChannelVerified src="/verified.png" />}

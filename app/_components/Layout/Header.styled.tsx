@@ -29,7 +29,8 @@ export const Title = styled(Link)`
   border-radius: ${({ theme }) => theme.rounded.base};
   color: ${({ theme }) => theme.colors.content};
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 `;
@@ -50,7 +51,8 @@ const BtnStyle = css`
   border: none;
   border-radius: ${({ theme }) => theme.rounded.base};
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 `;
@@ -68,7 +70,7 @@ export const Icon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.colors.content};
 `;
 
-export const Channel = styled.div`
+export const Channel = styled(Link)`
   display: flex;
   flex-direction: row;
   gap: 4px;
@@ -79,7 +81,8 @@ export const Channel = styled.div`
   border-radius: ${({ theme }) => theme.rounded.base};
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 

@@ -11,11 +11,15 @@ export const Button = styled.button<{ $active: boolean }>`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 10px;
+  border-radius: ${({ theme }) => theme.rounded.base};
 
   opacity: ${({ $active }) => ($active ? "1" : "0.2")};
 
-  &:hover {
+  &:hover,
+  &:focus {
     opacity: ${({ $active }) => ($active ? "1" : "0.5")};
+    background-color: ${({ theme }) => theme.colors.content10};
   }
 
   ${({ theme }) => theme.device.mobile} {

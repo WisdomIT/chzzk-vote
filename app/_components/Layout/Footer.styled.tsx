@@ -54,7 +54,8 @@ export const SpecialThanks = styled.p`
 `;
 
 export const FooterLink = styled(Link)`
-  &:hover {
+  &:hover,
+  &:focus {
     text-decoration: underline;
 
     color: ${({ theme }) => theme.colors.brand};

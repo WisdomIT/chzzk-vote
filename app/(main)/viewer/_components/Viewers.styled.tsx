@@ -20,7 +20,7 @@ export const ViewersContainer = styled.div<{ $active?: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.border01};
 `;
 
-export const Viewer = styled.a<{ $active: boolean }>`
+export const Viewer = styled.button<{ $active: boolean }>`
   display: inline-block;
   padding: 12px 20px;
   border-radius: ${({ theme }) => theme.rounded.sm};
@@ -32,10 +32,13 @@ export const Viewer = styled.a<{ $active: boolean }>`
   cursor: pointer;
   animation: ${({ theme }) => theme.animation.appearUp} 0.2s;
   opacity: ${({ $active }) => ($active ? "1" : "0.3")};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.content};
 
   border: 1px solid ${({ theme }) => theme.colors.border01};
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 

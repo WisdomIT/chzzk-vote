@@ -24,7 +24,8 @@ export const Breadcrumb = styled(Link)`
   border-radius: ${({ theme }) => theme.rounded.base};
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 `;
