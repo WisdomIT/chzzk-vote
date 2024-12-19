@@ -24,6 +24,7 @@ export const List = styled.div`
 
   ${({ theme }) => theme.device.mobile} {
     grid-template-columns: 1fr;
+    width: 100%;
   }
 `;
 

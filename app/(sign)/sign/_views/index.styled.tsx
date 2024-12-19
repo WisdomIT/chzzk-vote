@@ -16,7 +16,7 @@ export const Container = styled.main`
     justify-content: initial;
     align-items: center;
     overflow-y: auto;
-    padding: 60px 0px;
+    padding: 80px 20px;
   }
 
   ${({ theme }) => theme.device.tablet} {
@@ -25,11 +25,27 @@ export const Container = styled.main`
     justify-content: initial;
     align-items: center;
     overflow-y: auto;
-    padding: 60px 0px;
+    padding: 80px 20px;
   }
 `;
 
 export const Btns = styled.div`
   display: flex;
   gap: 20px;
+  width: 100%;
+  justify-content: center;
+
+  ${({ theme }) => theme.device.mobile} {
+    flex-direction: column;
+  }
+`;
+
+export const ContainerCenter = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 `;

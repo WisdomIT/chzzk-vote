@@ -36,4 +36,8 @@ export const Inputs = styled.div`
   gap: 10px;
   width: 100%;
   max-width: 800px;
+
+  ${({ theme }) => theme.device.mobile} {
+    flex-direction: column;
+  }
 `;

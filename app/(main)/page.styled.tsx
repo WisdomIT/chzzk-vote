@@ -59,14 +59,19 @@ export const Btn = styled(Link)`
     width: 100%;
     height: 100px;
     flex-direction: row;
+
+    &:hover span {
+      display: none;
+    }
   }
 `;
 
 export const BtnIcon = styled(FontAwesomeIcon)`
   height: 80px;
 
-  color: ${({ theme }) => theme.colors.content}
-    ${({ theme }) => theme.device.tablet} {
+  color: ${({ theme }) => theme.colors.content};
+
+  ${({ theme }) => theme.device.tablet} {
     height: 60px;
   }
 
@@ -85,7 +90,7 @@ export const BtnText = styled.p`
 export const BtnTooltip = styled.span`
   display: none;
   position: absolute;
-  bottom: -80px;
+  top: 310px;
   left: -4px;
   right: -4px;
   background-color: ${({ theme }) => theme.colors.brand};
@@ -98,4 +103,8 @@ export const BtnTooltip = styled.span`
   border-radius: ${({ theme }) => theme.rounded.base};
   animation: ${({ theme }) => theme.animation.appearUp} 0.3s;
   white-space: pre-wrap;
+
+  ${({ theme }) => theme.device.tablet} {
+    top: 260px;
+  }
 `;
