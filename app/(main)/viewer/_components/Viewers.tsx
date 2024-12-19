@@ -23,12 +23,12 @@ export default function Viewers({
     subscribe: boolean;
     duplicate: boolean;
   };
-  active: boolean;
+  active?: boolean;
   onSelect: (viewer: ViewerType) => void;
 }) {
   return (
     <Container>
-      <ViewersContainer>
+      <ViewersContainer $active={active}>
         {viewers.map((e) => (
           <Viewer
             key={`viewer_${e.userIdHash}`}

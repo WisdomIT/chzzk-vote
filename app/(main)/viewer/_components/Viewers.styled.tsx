@@ -5,13 +5,14 @@ export const Container = styled.div`
   max-width: 1000px;
 `;
 
-export const ViewersContainer = styled.div`
+export const ViewersContainer = styled.div<{ $active?: boolean }>`
   width: 100%;
   max-width: 1000px;
   height: 400px;
   padding: 20px;
   border-radius: ${({ theme }) => theme.rounded.base};
-  animation: ${({ theme }) => theme.animation.viewers} 0.5s;
+  animation-name: ${({ theme }) => theme.animation.viewers};
+  animation-duration: ${({ $active }) => ($active ? "0.5s" : "0s")};
   overflow-y: auto;
   padding-right: 10px;
   padding-bottom: 10px;
