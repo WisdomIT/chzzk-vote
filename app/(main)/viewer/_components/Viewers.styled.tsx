@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { keyframes, styled } from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -20,6 +20,17 @@ export const ViewersContainer = styled.div<{ $active?: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.border01};
 `;
 
+const AppearUpOpacity = keyframes`
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 0.3;
+      transform: translateY(0px);
+    }
+  `;
+
 export const Viewer = styled.button<{ $active: boolean }>`
   display: inline-block;
   padding: 12px 20px;
@@ -30,7 +41,9 @@ export const Viewer = styled.button<{ $active: boolean }>`
   margin-bottom: 10px;
   margin-right: 10px;
   cursor: pointer;
-  animation: ${({ theme }) => theme.animation.appearUp} 0.2s;
+  animation: ${({ $active, theme }) =>
+      $active ? theme.animation.appearUp : AppearUpOpacity}
+    0.2s;
   opacity: ${({ $active }) => ($active ? "1" : "0.3")};
   background-color: transparent;
   color: ${({ theme }) => theme.colors.content};
