@@ -37,16 +37,20 @@ export const Btn = styled(Link)`
 
   border: 1px solid ${({ theme }) => theme.colors.border01};
 
-  &:hover {
+  &:hover,
+  &:focus {
     border: 3px solid ${({ theme }) => theme.colors.brand};
   }
 
   &:hover svg,
-  &:hover p {
+  &:focus svg,
+  &:hover p,
+  &:focus p {
     color: ${({ theme }) => theme.colors.brand};
   }
 
-  &:hover span {
+  &:hover span,
+  &:focus span {
     display: block;
   }
 
@@ -60,7 +64,8 @@ export const Btn = styled(Link)`
     height: 100px;
     flex-direction: row;
 
-    &:hover span {
+    &:hover span,
+    &:focus span {
       display: none;
     }
   }
