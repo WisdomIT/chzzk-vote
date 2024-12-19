@@ -100,8 +100,8 @@ export default function Slot({
   return (
     <CompleteFrame>
       <ConfettiFrame>
-        <ConfettiExplosion force={0.5} width={2000} />
-        <ConfettiExplosion force={0.5} width={2000} />
+        <ConfettiExplosion force={0.5} width={2000} zIndex={11} />
+        <ConfettiExplosion force={0.5} width={2000} zIndex={11} />
       </ConfettiFrame>
       <Viewer>
         {initialTarget.badges.map((e, i) => (

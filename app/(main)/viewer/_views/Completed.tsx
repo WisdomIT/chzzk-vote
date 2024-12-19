@@ -40,6 +40,12 @@ export default function Completed({
           ? !drawn.find((drawnItem) => item.userIdHash === drawnItem.userIdHash)
           : true)
     );
+
+    if (slotList.length === 0) {
+      alert("추첨 가능한 인원이 없습니다");
+      return;
+    }
+
     setSlotList(slotList);
     setSlot((prev) => !prev);
   }
