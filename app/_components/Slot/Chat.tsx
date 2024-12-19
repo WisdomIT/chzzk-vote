@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Btn from "@/components/Btn";
 import { ViewerType } from "@/lib/types";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
 import useVoice from "@/lib/useVoice";
+import MainButton from "../Main/MainButton";
 import {
   Container,
   Viewer,
@@ -15,7 +15,6 @@ import {
   Balloon,
   ChatBottom,
 } from "./Chat.styled";
-import MainButton from "../Main/MainButton";
 
 type ChatType = {
   viewer: ViewerType;
