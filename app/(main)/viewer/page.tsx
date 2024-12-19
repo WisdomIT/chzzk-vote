@@ -6,6 +6,7 @@ import Breadcrumbs from "@/app/_components/Main/Breadcrumbs";
 import { faUsers } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
 import Running from "./_views/Running";
+import Completed from "./_views/Completed";
 
 export default function Page() {
   const [state, setState] = useState<"ready" | "running" | "completed">(
@@ -50,6 +51,16 @@ export default function Page() {
           onStop={() => {
             setState("completed");
           }}
+        />
+      ) : null}
+      {state === "completed" ? (
+        <Completed
+          config={config}
+          setConfig={handleConfig}
+          viewers={viewers}
+          drawn={drawn}
+          setDrawn={setDrawn}
+          onReset={handleReset}
         />
       ) : null}
     </>
