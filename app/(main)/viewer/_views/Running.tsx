@@ -44,12 +44,16 @@ export default function Running({
       return;
     }
 
-    useChzzkChat({
+    const client = useChzzkChat({
       channelId: channel.channelId,
       onChat: (viewer) => {
         handleOnChat(viewer);
       },
     });
+
+    return () => {
+      client.disconnect();
+    };
   }, []);
 
   const [chat, setChat] = useState<ViewerType | null>(null);
