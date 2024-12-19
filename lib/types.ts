@@ -1,15 +1,20 @@
-export type ChannelType = {
-  channelId: string,
-  channelImageUrl: string,
-  channelName: string,
-  verifiedMark: boolean,
-  followerCount: number
+export interface ChannelType {
+  channelId: string;
+  channelImageUrl: string;
+  channelName: string;
+  verifiedMark: boolean;
+  followerCount: number;
 }
 
-export type ViewerType = {
-  userIdHash: string,
-  badges: string[],
-  nickname: string,
-  subscribe: boolean
+export interface ViewerType {
+  userIdHash: string;
+  badges: string[];
+  nickname: string;
+  subscribe: boolean;
 }
 
+export interface VoteType {
+  id: number;
+  name: string;
+  viewers: ViewerType[];
+}
