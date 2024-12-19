@@ -18,3 +18,8 @@ export interface VoteType {
   name: string;
   viewers: ViewerType[];
 }
+
+export interface TimeType {
+  start: Date | null;
+  end: Date | null;
+}
