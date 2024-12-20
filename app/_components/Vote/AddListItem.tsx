@@ -1,18 +1,13 @@
-import { Container, Title, DeleteDummy } from "./SetListItem.styled";
-import MainButton from "../Main/MainButton";
+import { Container } from "./SetListItem.styled";
+import { Button, DeleteDummy, TitleDummy } from "./AddListItem.styled";
 
 export default function AddListItem({ onAdd }: { onAdd: () => void }) {
   return (
     <Container>
-      <Title />
-      <MainButton
-        fillType="outlined"
-        size="small"
-        style={{ flex: 1 }}
-        onClick={onAdd}
-      >
+      <TitleDummy />
+      <Button fillType="outlined" size="small" onClick={onAdd}>
         항목 추가
-      </MainButton>
+      </Button>
       <DeleteDummy />
     </Container>
   );

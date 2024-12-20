@@ -19,6 +19,10 @@ const Container = styled.div`
 const Main = styled.main`
   flex: 1;
   position: relative;
+
+  ${({ theme }) => theme.device.mobile} {
+    min-height: calc(100vh - (60px + 240px));
+  }
 `;
 
 export default function Layout({

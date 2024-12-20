@@ -28,6 +28,10 @@ export const Container = styled.div`
   line-height: ${({ theme }) => theme.fonts.lineHeight.none};
   display: flex;
   gap: 0px;
+
+  ${({ theme }) => theme.device.mobile} {
+    font-size: ${({ theme }) => theme.fonts.size["2xl"]};
+  }
 `;
 
 export const DigitContainer = styled.div`

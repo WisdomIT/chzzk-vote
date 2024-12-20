@@ -55,7 +55,7 @@ export default function Ready({
           {vote.map((item, index) => (
             <SetListItem
               key={`vote_${item.id}`}
-              index={index}
+              index={item.id}
               value={item.name}
               setValue={(value) => {
                 handleChange(index, value);
@@ -69,7 +69,7 @@ export default function Ready({
         </ListScroll>
         <AddListItem onAdd={handleAdd} />
       </List>
-      <MainButton onClick={onStart}>참여자 모집 시작</MainButton>
+      <MainButton onClick={onStart}>투표 시작</MainButton>
     </Container>
   );
 }

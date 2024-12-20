@@ -5,6 +5,7 @@ import {
   Title,
   DeleteContainer,
   DeleteIcon,
+  MobileRow,
 } from "./SetListItem.styled";
 
 export default function SetListItem({
@@ -21,18 +22,20 @@ export default function SetListItem({
   return (
     <Container>
       <Title>항목 {index + 1}</Title>
-      <MainInput
-        type="text"
-        placeholder="투표 이름"
-        value={value}
-        onChange={(event) => {
-          setValue(event.target.value);
-        }}
-        style={{ flex: 1 }}
-      />
-      <DeleteContainer onClick={onDelete}>
-        <DeleteIcon icon={faXmark} />
-      </DeleteContainer>
+      <MobileRow>
+        <MainInput
+          type="text"
+          placeholder="투표 이름"
+          value={value}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
+          style={{ flex: 1 }}
+        />
+        <DeleteContainer onClick={onDelete}>
+          <DeleteIcon icon={faXmark} />
+        </DeleteContainer>
+      </MobileRow>
     </Container>
   );
 }

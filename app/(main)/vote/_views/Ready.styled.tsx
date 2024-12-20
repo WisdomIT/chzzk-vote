@@ -14,6 +14,10 @@ export const ListScroll = styled.div`
   gap: 20px;
   max-height: 400px;
   overflow-y: auto;
+
+  ${({ theme }) => theme.device.mobile} {
+    max-height: fit-content;
+  }
 `;
 
 export const ListScrollEnd = styled.div`

@@ -6,7 +6,11 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+
+  ${({ theme }) => theme.device.mobile} {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 export const Title = styled.p`
@@ -15,6 +19,18 @@ export const Title = styled.p`
   font-size: ${({ theme }) => theme.fonts.size["4xl"]};
   line-height: ${({ theme }) => theme.fonts.lineHeight.none};
   color: ${({ theme }) => theme.colors.content};
+
+  ${({ theme }) => theme.device.mobile} {
+    font-size: ${({ theme }) => theme.fonts.size["2xl"]};
+    width: 100%;
+  }
+`;
+
+export const MobileRow = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const DeleteContainer = styled.button`
@@ -31,8 +47,4 @@ export const DeleteContainer = styled.button`
 
 export const DeleteIcon = styled(FontAwesomeIcon)`
   height: 52px;
-`;
-
-export const DeleteDummy = styled.div`
-  width: 39px;
 `;

@@ -16,7 +16,7 @@ export const Container = styled.footer`
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
     height: auto;
     padding: 40px 10px;
   }
@@ -29,6 +29,7 @@ export const Inner = styled.div`
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
+    gap: 10px;
   }
 `;
 
