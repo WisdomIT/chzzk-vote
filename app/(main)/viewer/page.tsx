@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ViewerType } from "@/lib/types";
+import type { ViewersConfigType, ViewerType } from "@/lib/types";
 import Breadcrumbs from "@/app/_components/Main/Breadcrumbs";
 import { faUsers } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
@@ -12,7 +12,7 @@ export default function Page() {
   const [state, setState] = useState<"ready" | "running" | "completed">(
     "ready"
   );
-  const [config, setConfig] = useState({
+  const [config, setConfig] = useState<ViewersConfigType>({
     subscribe: false,
     duplicate: false,
   });

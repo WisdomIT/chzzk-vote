@@ -1,5 +1,6 @@
 "use client";
 
+import { ViewersConfigType } from "@/lib/types";
 import { Container } from "./Config.styled";
 import MainCheckbox from "@/app/_components/Main/MainCheckbox";
 
@@ -7,11 +8,8 @@ export default function Config({
   config,
   setConfig,
 }: {
-  config: {
-    subscribe: boolean;
-    duplicate: boolean;
-  };
-  setConfig: (type: "subscribe" | "duplicate") => void;
+  config: ViewersConfigType;
+  setConfig: (type: keyof ViewersConfigType) => void;
 }) {
   return (
     <Container>

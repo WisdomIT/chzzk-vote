@@ -19,6 +19,11 @@ export interface VoteType {
   viewers: ViewerType[];
 }
 
+export interface ViewersConfigType {
+  subscribe: boolean;
+  duplicate: boolean;
+}
+
 export interface TimeType {
   start: Date | null;
   end: Date | null;

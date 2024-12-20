@@ -2,10 +2,10 @@
 
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
-import { ViewerType } from "@/lib/types";
+import { ViewersConfigType, ViewerType } from "@/lib/types";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import Config from "../_components/Config";
-import Viewers from "../_components/Viewers";
+import Viewers from "../../../_components/Viewer/Viewers";
 import Chat from "@/app/_components/Slot/Chat";
 import { Btns } from "./Completed.styled";
 import SlotChat from "@/app/_components/Slot/SlotChat";
@@ -18,11 +18,8 @@ export default function Completed({
   setDrawn,
   onReset,
 }: {
-  config: {
-    subscribe: boolean;
-    duplicate: boolean;
-  };
-  setConfig: (type: "subscribe" | "duplicate") => void;
+  config: ViewersConfigType;
+  setConfig: (type: keyof ViewersConfigType) => void;
   viewers: ViewerType[];
   drawn: ViewerType[];
   setDrawn: Dispatch<SetStateAction<ViewerType[]>>;

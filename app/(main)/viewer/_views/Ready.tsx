@@ -3,17 +3,15 @@
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
 import Config from "../_components/Config";
+import { ViewersConfigType } from "@/lib/types";
 
 export default function Ready({
   config,
   setConfig,
   onStart,
 }: {
-  config: {
-    subscribe: boolean;
-    duplicate: boolean;
-  };
-  setConfig: (type: "subscribe" | "duplicate") => void;
+  config: ViewersConfigType;
+  setConfig: (type: keyof ViewersConfigType) => void;
   onStart: () => void;
 }) {
   return (

@@ -2,10 +2,10 @@
 
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
-import { ViewerType } from "@/lib/types";
+import { ViewersConfigType, ViewerType } from "@/lib/types";
 import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
 import Config from "../_components/Config";
-import Viewers from "../_components/Viewers";
+import Viewers from "../../../_components/Viewer/Viewers";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
 import Chat from "@/app/_components/Slot/Chat";
@@ -17,11 +17,8 @@ export default function Running({
   setViewers,
   onStop,
 }: {
-  config: {
-    subscribe: boolean;
-    duplicate: boolean;
-  };
-  setConfig: (type: "subscribe" | "duplicate") => void;
+  config: ViewersConfigType;
+  setConfig: (type: keyof ViewersConfigType) => void;
   viewers: ViewerType[];
   setViewers: Dispatch<SetStateAction<ViewerType[]>>;
   onStop: () => void;
@@ -69,7 +66,8 @@ export default function Running({
         onSelect={(viewer) => {
           setChat(viewer);
         }}
-        active
+        message="채팅창에 아무 말이나 입력하시면 참여됩니다!"
+        animation
       />
       {chat !== null ? (
         <Chat
