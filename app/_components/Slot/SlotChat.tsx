@@ -31,13 +31,13 @@ const SlotChat = memo(({ list, duration, onEnd, onClose }: SlotChatProps) => {
   function handleOnChat(
     getViewer: ViewerType,
     message: JSX.Element,
-    messageVoice: string
+    messageString: string
   ) {
     if (!viewer) return;
 
     if (viewer.userIdHash !== getViewer.userIdHash) return;
     setChat((prev) => [...prev, message]);
-    useVoice(voice, messageVoice);
+    useVoice(voice, messageString);
   }
 
   useEffect(() => {

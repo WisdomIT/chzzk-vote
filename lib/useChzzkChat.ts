@@ -9,12 +9,12 @@ import { styled } from "styled-components";
 type EventHandler = (
   viewer: ViewerType,
   message: JSX.Element,
-  messageVoice: string
+  messageString: string
 ) => void;
 
 type ChatMessageResult = {
   message: JSX.Element;
-  messageVoice: string;
+  messageString: string;
 };
 
 type UseChzzkChatProps = {
@@ -109,7 +109,7 @@ function chatToMessage(chat: ChatEvent | DonationEvent): ChatMessageResult {
 
   return {
     message: React.createElement("span", {}, elements),
-    messageVoice: voice.join(" "),
+    messageString: voice.join(" "),
   };
 }
 
@@ -126,15 +126,15 @@ export default function useChzzkChat({
   const handleChatEvent = (chat: ChatEvent) => {
     if (!onChat) return;
     const viewer = profileToViewer(chat.profile);
-    const { message, messageVoice } = chatToMessage(chat);
-    onChat(viewer, message, messageVoice);
+    const { message, messageString } = chatToMessage(chat);
+    onChat(viewer, message, messageString);
   };
 
   const handleDonationEvent = (chat: DonationEvent) => {
     if (!onDonation || !chat.profile) return;
     const viewer = profileToViewer(chat.profile);
-    const { message, messageVoice } = chatToMessage(chat);
-    onDonation(viewer, message, messageVoice);
+    const { message, messageString } = chatToMessage(chat);
+    onDonation(viewer, message, messageString);
   };
 
   const options = {
