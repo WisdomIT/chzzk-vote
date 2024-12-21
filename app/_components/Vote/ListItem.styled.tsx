@@ -93,6 +93,8 @@ export const PercentageCurrentText = styled.p`
   font-size: ${({ theme }) => theme.fonts.size["3xl"]};
   line-height: ${({ theme }) => theme.fonts.lineHeight.none};
   color: ${({ theme }) => theme.colors.black};
+  width: 400px;
+  height: 100%;
 
   ${({ theme }) => theme.device.mobile} {
     padding: 10px;
