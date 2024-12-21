@@ -34,11 +34,10 @@ const description: DescriptionType[] = [
       },
     ],
     list: [
-      [{ bold: false, text: "투표자 리스트를 확인할 수 있습니다" }],
       [
         {
           bold: false,
-          text: "해당 항목에 투표한 사람 중에서 추첨을 진행할 수 있습니다",
+          text: "투표자 리스트를 확인하고, 그 중에서 추첨을 진행할 수 있습니다",
         },
       ],
       [

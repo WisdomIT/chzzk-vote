@@ -1,7 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Container, Title, List, Bold, HideButton } from "./Description.styled";
+import {
+  Container,
+  Title,
+  List,
+  Bold,
+  HideButton,
+  Icon,
+} from "./Description.styled";
+import {
+  faChevronDown,
+  faChevronUp,
+} from "@awesome.me/kit-8710ef4103/icons/sharp/solid";
 
 interface BodyItemType {
   bold: boolean;
@@ -62,7 +73,17 @@ export default function Description({
           setView((prev) => !prev);
         }}
       >
-        안내사항 접기
+        {view ? (
+          <>
+            안내사항 접기
+            <Icon icon={faChevronUp} />
+          </>
+        ) : (
+          <>
+            안내사항 열기
+            <Icon icon={faChevronDown} />
+          </>
+        )}
       </HideButton>
     </Container>
   );

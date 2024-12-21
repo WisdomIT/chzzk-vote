@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
 
 export const Container = styled.div`
@@ -67,4 +68,8 @@ export const HideButton = styled.button`
   ${({ theme }) => theme.device.mobile} {
     font-size: ${({ theme }) => theme.fonts.size.xs};
   }
+`;
+
+export const Icon = styled(FontAwesomeIcon)`
+  height: ${({ theme }) => theme.fonts.size.lg};
 `;
