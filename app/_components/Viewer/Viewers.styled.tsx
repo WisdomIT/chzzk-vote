@@ -20,6 +20,7 @@ export const ViewersContainer = styled.div<{ $animation?: boolean }>`
 
   ${({ theme }) => theme.device.mobile} {
     height: fit-content;
+    animation-duration: 0s;
   }
 `;
 
