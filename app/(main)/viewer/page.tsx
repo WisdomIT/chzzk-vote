@@ -31,7 +31,7 @@ export default function Page() {
 
   return (
     <>
-      <Breadcrumbs icon={faUsers} text="시청자 추첨" href="/viewer" />
+      <Breadcrumbs icon={faUsers} text="시청자 추첨" />
       {state === "ready" ? (
         <Ready
           config={config}

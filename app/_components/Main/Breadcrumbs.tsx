@@ -1,28 +1,37 @@
 import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faHome } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
-import { Container, Breadcrumb, Icon, Text, Next } from "./Breadcrumbs.styled";
+import {
+  Container,
+  BreadcrumbLink,
+  BreadcrumbButton,
+  Icon,
+  Text,
+  Next,
+} from "./Breadcrumbs.styled";
 import { faChevronRight } from "@awesome.me/kit-8710ef4103/icons/sharp/solid";
 
 export default function Breadcrumbs({
   icon,
   text,
-  href,
 }: {
   icon: IconDefinition;
   text: string;
-  href: string;
 }) {
+  function handleClickSelf() {
+    location.reload();
+  }
+
   return (
     <Container>
-      <Breadcrumb href="/">
+      <BreadcrumbLink href="/">
         <Icon icon={faHome} height={14} />
         <Text>홈</Text>
-      </Breadcrumb>
+      </BreadcrumbLink>
       <Next icon={faChevronRight} height={12} />
-      <Breadcrumb href={href}>
+      <BreadcrumbButton onClick={handleClickSelf}>
         <Icon icon={icon} height={14} />
         <Text>{text}</Text>
-      </Breadcrumb>
+      </BreadcrumbButton>
     </Container>
   );
 }

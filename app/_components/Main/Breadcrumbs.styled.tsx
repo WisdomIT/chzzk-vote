@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -19,15 +19,25 @@ export const Container = styled.div`
   }
 `;
 
-export const Breadcrumb = styled(Link)`
+const Breadcrumb = css`
   padding: 8px 12px;
   border-radius: ${({ theme }) => theme.rounded.base};
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 
   &:hover,
   &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
+`;
+
+export const BreadcrumbLink = styled(Link)`
+  ${Breadcrumb}
+`;
+
+export const BreadcrumbButton = styled.button`
+  ${Breadcrumb}
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
