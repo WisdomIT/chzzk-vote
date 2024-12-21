@@ -33,20 +33,18 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 5px; /* 세로축 스크롤바 길이 */
-  height: 5px; /* 가로축 스크롤바 길이 */
+  width: 10px; /* 세로축 스크롤바 길이 */
+  height: 10px; /* 가로축 스크롤바 길이 */
+  background-color: ${({ theme }) => theme.colors.background01};
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background-color: var(--color-white-10);
-}
-
-.light ::-webkit-scrollbar-thumb {
-  background-color: var(--color-black-10);
+::-webkit-scrollbar-thumb {
+  background-color: ${({ theme }) => theme.colors.content10};
+  box-shadow: inset 0 0 0 2.5px ${({ theme }) => theme.colors.background01};
 }
 
 input {
