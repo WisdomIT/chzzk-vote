@@ -4,7 +4,7 @@ import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
 import { ViewersConfigType, ViewerType } from "@/lib/types";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import Config from "../_components/Config";
+import Config from "../../../_components/Viewer/Config";
 import Viewers from "../../../_components/Viewer/Viewers";
 import Chat from "@/app/_components/Slot/Chat";
 import { Btns } from "./Completed.styled";

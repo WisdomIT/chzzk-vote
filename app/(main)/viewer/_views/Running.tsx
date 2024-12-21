@@ -4,7 +4,7 @@ import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
 import { ViewersConfigType, ViewerType } from "@/lib/types";
 import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
-import Config from "../_components/Config";
+import Config from "../../../_components/Viewer/Config";
 import Viewers from "../../../_components/Viewer/Viewers";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
