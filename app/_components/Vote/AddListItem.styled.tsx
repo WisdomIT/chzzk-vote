@@ -11,7 +11,7 @@ export const TitleDummy = styled.div`
 `;
 
 export const DeleteDummy = styled.div`
-  width: 49px;
+  width: 39px;
 
   ${({ theme }) => theme.device.mobile} {
     display: none;

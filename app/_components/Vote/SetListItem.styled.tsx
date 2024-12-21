@@ -6,10 +6,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
-    gap: 10px;
   }
 `;
 
