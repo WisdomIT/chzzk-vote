@@ -26,7 +26,6 @@ export default function Page() {
   }
 
   function handleConfig(type: keyof typeof config) {
-    console.log(type);
     setConfig((prev) => ({ ...prev, [type]: !prev[type] }));
   }
 

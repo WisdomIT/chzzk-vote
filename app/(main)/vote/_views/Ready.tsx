@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import type { VoteType } from "@/lib/types";
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
