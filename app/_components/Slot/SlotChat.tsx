@@ -1,7 +1,13 @@
 "use client";
 
-import { ViewerType } from "@/lib/types";
-import { memo, useEffect, useState } from "react";
+import { ViewersConfigType, ViewerType } from "@/lib/types";
+import {
+  type Dispatch,
+  memo,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import Slot from "./Slot";
 import { Container, ChatBox, Balloon, ChatBottom } from "./Chat.styled";
@@ -14,6 +20,30 @@ interface SlotChatProps {
   duration: number;
   onEnd?: (viewer: ViewerType, index: number) => void;
   onClose: () => void;
+}
+
+export function handleSlotStart(
+  viewers: ViewerType[],
+  drawn: ViewerType[],
+  config: ViewersConfigType,
+  setSlot: Dispatch<SetStateAction<boolean>>,
+  setSlotList: Dispatch<SetStateAction<ViewerType[]>>
+) {
+  const slotList = viewers.filter(
+    (item) =>
+      (config.subscribe ? item.subscribe : true) &&
+      (config.duplicate
+        ? !drawn.find((drawnItem) => item.userIdHash === drawnItem.userIdHash)
+        : true)
+  );
+
+  if (slotList.length === 0) {
+    alert("추첨 가능한 인원이 없습니다");
+    return;
+  }
+
+  setSlotList(slotList);
+  setSlot(true);
 }
 
 const SlotChat = memo(({ list, duration, onEnd, onClose }: SlotChatProps) => {

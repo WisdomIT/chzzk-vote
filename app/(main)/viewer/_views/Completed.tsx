@@ -8,7 +8,7 @@ import Config from "../../../_components/Viewer/Config";
 import Viewers from "../../../_components/Viewer/Viewers";
 import Chat from "@/app/_components/Slot/Chat";
 import { Btns } from "./Completed.styled";
-import SlotChat from "@/app/_components/Slot/SlotChat";
+import SlotChat, { handleSlotStart } from "@/app/_components/Slot/SlotChat";
 
 export default function Completed({
   config,
@@ -29,22 +29,12 @@ export default function Completed({
   const [slot, setSlot] = useState(false);
   const [slotList, setSlotList] = useState<ViewerType[]>([]);
 
-  function handleSlotStart() {
-    const slotList = viewers.filter(
-      (item) =>
-        (config.subscribe ? item.subscribe : true) &&
-        (config.duplicate
-          ? !drawn.find((drawnItem) => item.userIdHash === drawnItem.userIdHash)
-          : true)
-    );
-
-    if (slotList.length === 0) {
-      alert("추첨 가능한 인원이 없습니다");
-      return;
-    }
-
-    setSlotList(slotList);
-    setSlot((prev) => !prev);
+  function handleSetDrawn(viewer: ViewerType) {
+    setDrawn((prev) => {
+      const find = prev.find((item) => item.userIdHash === viewer.userIdHash);
+      if (find) return prev;
+      return [...prev, viewer];
+    });
   }
 
   return (
@@ -53,7 +43,13 @@ export default function Completed({
         <MainButton fillType="outlined" onClick={onReset}>
           참여자 다시 모집하기
         </MainButton>
-        <MainButton onClick={handleSlotStart}>추첨하기</MainButton>
+        <MainButton
+          onClick={() => {
+            handleSlotStart(viewers, drawn, config, setSlot, setSlotList);
+          }}
+        >
+          추첨하기
+        </MainButton>
       </Btns>
       <Config config={config} setConfig={setConfig} />
       <Viewers
@@ -77,7 +73,7 @@ export default function Completed({
           list={slotList}
           duration={3000}
           onEnd={(item, target) => {
-            setDrawn((prev) => [...prev, item]);
+            handleSetDrawn(item);
           }}
           onClose={() => {
             setSlot(false);
