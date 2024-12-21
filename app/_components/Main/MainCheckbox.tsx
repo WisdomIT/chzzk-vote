@@ -1,21 +1,22 @@
 "use client";
 
-import { MouseEventHandler } from "react";
 import { Button, Icon } from "./MainCheckbox.styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { ButtonHTMLAttributes } from "react";
 import { faCheck } from "@awesome.me/kit-8710ef4103/icons/sharp/solid";
+
+interface CustomButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "title" | "value"> {
+  title: string | JSX.Element;
+  value: boolean;
+}
 
 export default function MainCheckbox({
   title,
   value,
-  onClick,
-}: {
-  title: string | JSX.Element;
-  value: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-}) {
+  ...buttonProps
+}: CustomButtonProps) {
   return (
-    <Button $active={value} onClick={onClick}>
+    <Button $active={value} {...buttonProps}>
       <Icon icon={faCheck} height={20} />
       {title}
     </Button>
