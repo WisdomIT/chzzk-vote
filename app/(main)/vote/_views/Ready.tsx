@@ -26,7 +26,10 @@ export default function Ready({
   }
 
   function handleDelete(index: number) {
-    const newArr = [...vote.slice(0, index), ...vote.slice(index + 1)];
+    const newArr = [
+      ...vote.slice(0, index),
+      ...vote.slice(index + 1).map((item) => ({ ...item, id: item.id - 1 })),
+    ];
 
     setVote(newArr);
   }
