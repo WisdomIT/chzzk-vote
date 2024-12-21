@@ -96,6 +96,7 @@ const fonts = {
 const rounded = {
   sm: "4px",
   base: "8px",
+  lg: "16px",
   full: "100%",
   half: "50%",
 };
