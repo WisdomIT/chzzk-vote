@@ -30,7 +30,7 @@ export default function SetListItem({
           onChange={(event) => {
             setValue(event.target.value);
           }}
-          style={{ flex: 1 }}
+          style={{ flex: 1, minWidth: 1 }}
         />
         <DeleteContainer onClick={onDelete}>
           <DeleteIcon icon={faXmark} />

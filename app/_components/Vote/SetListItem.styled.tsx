@@ -31,6 +31,10 @@ export const MobileRow = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  ${({ theme }) => theme.device.mobile} {
+    width: 100%;
+  }
 `;
 
 export const DeleteContainer = styled.button`

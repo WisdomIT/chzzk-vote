@@ -1,7 +1,6 @@
 "use client";
 
 import { styled } from "styled-components";
-import MainButton from "../Main/MainButton";
 
 export const TitleDummy = styled.div`
   width: 120px;
@@ -19,10 +18,11 @@ export const DeleteDummy = styled.div`
   }
 `;
 
-export const Button = styled(MainButton)`
+export const ButtonContainer = styled.div`
   flex: 1;
 
   ${({ theme }) => theme.device.mobile} {
     flex: auto;
+    width: 100%;
   }
 `;
