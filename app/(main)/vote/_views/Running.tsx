@@ -8,8 +8,7 @@ import ListItem from "@/app/_components/Vote/ListItem";
 import MainCheckbox from "@/app/_components/Main/MainCheckbox";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
-import { Container } from "./index.styled";
-import { Bottom, List, Top, Total } from "./Running.styled";
+import { Container, Top, Total, Bottom, List } from "./index.styled";
 import { extractVoteNumber } from "@/lib/vote";
 
 export default function Running({
