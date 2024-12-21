@@ -6,6 +6,7 @@ import Breadcrumbs from "@/app/_components/Main/Breadcrumbs";
 import { faCheckToSlot } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
 import Running from "./_views/Running";
+import Completed from "./_views/Completed";
 
 export default function Page() {
   const [state, setState] = useState<"ready" | "running" | "completed">(
@@ -29,9 +30,21 @@ export default function Page() {
     });
   }
 
+  function handleReset() {
+    const newVote = [...vote].map((item) => ({ ...item, viewers: [] }));
+
+    setState("ready");
+    setVote(newVote);
+    setDrawn([]);
+    setTime((prev) => ({
+      start: null,
+      end: null,
+    }));
+  }
+
   return (
     <>
-      <Breadcrumbs icon={faCheckToSlot} text="숫자 투표" href="/viewer" />
+      <Breadcrumbs icon={faCheckToSlot} text="숫자 투표" />
       {state === "ready" ? (
         <Ready
           vote={vote}
@@ -59,6 +72,15 @@ export default function Page() {
               end: new Date(),
             }));
           }}
+        />
+      ) : null}
+      {state === "completed" ? (
+        <Completed
+          vote={vote}
+          drawn={drawn}
+          setDrawn={handleSetDrawn}
+          time={time}
+          onReset={handleReset}
         />
       ) : null}
     </>
