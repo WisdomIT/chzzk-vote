@@ -1,15 +1,21 @@
 "use client";
 
 import React from "react";
-import { useCallback, useEffect } from "react";
 import { ChatEvent, ChzzkChat, DonationEvent, type Profile } from "chzzk";
 import { ViewerType } from "@/lib/types";
 import { styled } from "styled-components";
 
-type EventHandler = (
+type ChatHandler = (
   viewer: ViewerType,
   message: JSX.Element,
   messageString: string
+) => void;
+
+type DonationHandler = (
+  viewer: ViewerType,
+  message: JSX.Element,
+  messageString: string,
+  price: number
 ) => void;
 
 type ChatMessageResult = {
@@ -19,8 +25,8 @@ type ChatMessageResult = {
 
 type UseChzzkChatProps = {
   channelId: string;
-  onChat?: EventHandler;
-  onDonation?: EventHandler;
+  onChat?: ChatHandler;
+  onDonation?: DonationHandler;
   baseUrls?: {
     chzzkBaseUrl: string;
     gameBaseUrl: string;
@@ -134,7 +140,8 @@ export default function useChzzkChat({
     if (!onDonation || !chat.profile) return;
     const viewer = profileToViewer(chat.profile);
     const { message, messageString } = chatToMessage(chat);
-    onDonation(viewer, message, messageString);
+    const price = chat.extras.payAmount;
+    onDonation(viewer, message, messageString, price);
   };
 
   const options = {
