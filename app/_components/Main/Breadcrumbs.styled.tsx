@@ -16,6 +16,7 @@ export const Container = styled.div`
   ${({ theme }) => theme.device.mobile} {
     top: 10px;
     left: 10px;
+    gap: 4px;
   }
 `;
 
@@ -30,6 +31,10 @@ const Breadcrumb = css`
   &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
+
+  ${({ theme }) => theme.device.mobile} {
+    padding: 4px 8px;
+  }
 `;
 
 export const BreadcrumbLink = styled(Link)`
@@ -43,8 +48,11 @@ export const BreadcrumbButton = styled.button`
 export const Icon = styled(FontAwesomeIcon)`
   height: 14px;
   margin-right: 4px;
-
   color: ${({ theme }) => theme.colors.brand};
+
+  ${({ theme }) => theme.device.mobile} {
+    height: 12px;
+  }
 `;
 
 export const Text = styled.p`
@@ -52,12 +60,18 @@ export const Text = styled.p`
   font-size: ${({ theme }) => theme.fonts.size.sm};
   font-weight: ${({ theme }) => theme.fonts.weight.semibold};
   line-height: ${({ theme }) => theme.fonts.lineHeight.none};
-
   color: ${({ theme }) => theme.colors.brand};
+
+  ${({ theme }) => theme.device.mobile} {
+    font-size: ${({ theme }) => theme.fonts.size.xs};
+  }
 `;
 
 export const Next = styled(FontAwesomeIcon)`
   height: 12px;
-
   color: ${({ theme }) => theme.colors.brand};
+
+  ${({ theme }) => theme.device.mobile} {
+    height: 10px;
+  }
 `;
