@@ -36,11 +36,7 @@ export default function Completed({
   const router = useRouter();
 
   const handleToRoulette = () => {
-    const mapped = vote.map((item) => ({
-      name: item.name,
-      size: item.viewers.length,
-    }));
-    const encoded = voteToRoulette(mapped);
+    const encoded = voteToRoulette(vote);
     if (!encoded) {
       return;
     }
