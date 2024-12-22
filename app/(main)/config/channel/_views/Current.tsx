@@ -1,7 +1,11 @@
 "use client";
 
 import { type Dispatch, type SetStateAction, useState } from "react";
-import { Container, ContainerCenter, Btns } from "./index.styled";
+import {
+  Container,
+  ContainerCenter,
+  Btns,
+} from "../../_components/index.styled";
 import MainButton from "@/app/_components/Main/MainButton";
 import MainInput from "@/app/_components/Main/MainInput";
 import { ChannelType } from "@/lib/types";
