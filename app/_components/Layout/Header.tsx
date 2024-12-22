@@ -1,5 +1,4 @@
 import { useGlobalOptionStore } from "@/lib/zustand";
-import { useRouter } from "next/navigation";
 import {
   Container,
   Title,
@@ -20,14 +19,13 @@ import {
 
 export default function Header() {
   const { channel, theme, setTheme } = useGlobalOptionStore();
-  const router = useRouter();
 
   return (
     <Container>
       <NavInner>
         <Title href="/">치지직 투표 추첨기</Title>
         {channel.channelId !== "" && (
-          <Channel href="/config">
+          <Channel href="/config/channel">
             <ChannelImg src={channel.channelImageUrl} />
             <ChannelName>{channel.channelName}</ChannelName>
             {channel.verifiedMark && <ChannelVerified src="/verified.png" />}

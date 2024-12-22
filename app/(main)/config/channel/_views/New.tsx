@@ -1,8 +1,11 @@
 "use client";
 
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { Container, ContainerCenter, Btns } from "./index.styled";
 import MainButton from "@/app/_components/Main/MainButton";
+import MainInput from "@/app/_components/Main/MainInput";
 import { ChannelType } from "@/lib/types";
-import { Container, Btns, ContainerCenter } from "./index.styled";
+import chzzkFind from "@/lib/chzzkFind";
 import {
   Text,
   ChannelContainer,
@@ -12,26 +15,24 @@ import {
   Name,
   Verified,
   Followers,
-} from "./ChannelFind.styled";
+} from "@/app/(sign)/sign/_views/ChannelFind.styled";
+import { formatNumber } from "@/app/(sign)/sign/_views/ChannelFind";
 
-export function formatNumber(number: number): string {
-  if (number <= 10000) {
-    return number.toString();
-  } else {
-    const tenThousands = number / 10000;
-    return `${tenThousands.toFixed(1)}만`;
-  }
-}
-
-export default function ChannelFind({
+export default function New({
   channel,
+  setChannel,
   onReset,
-  onNext,
 }: {
   channel: ChannelType;
+  setChannel: (channel: ChannelType) => void;
   onReset: () => void;
-  onNext: () => void;
 }) {
+  function handleSubmit() {
+    setChannel(channel);
+    alert("채널이 등록되었습니다.");
+    location.reload();
+  }
+
   return (
     <Container>
       <ContainerCenter>
@@ -54,7 +55,7 @@ export default function ChannelFind({
           <MainButton fillType="outlined" onClick={onReset}>
             다시 검색하기
           </MainButton>
-          <MainButton onClick={onNext}>다음으로</MainButton>
+          <MainButton onClick={handleSubmit}>등록하기</MainButton>
         </Btns>
       </ContainerCenter>
     </Container>
