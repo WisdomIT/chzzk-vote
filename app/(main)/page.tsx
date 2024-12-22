@@ -1,3 +1,5 @@
+"use client";
+
 import IndexButton, { IndexButtonType } from "./_components/IndexButton";
 import { Container } from "./page.styled";
 import {
