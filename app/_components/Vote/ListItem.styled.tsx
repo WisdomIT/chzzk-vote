@@ -51,7 +51,8 @@ export const Percentage = styled.button`
   border: none;
   text-align: left;
 
-  &:hover {
+  &:hover,
+  &:focus {
     opacity: 0.7;
   }
 

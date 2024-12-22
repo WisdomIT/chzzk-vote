@@ -61,7 +61,8 @@ export const HideButton = styled.button`
   background-color: transparent;
   border: 0px;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.content10};
   }
 
