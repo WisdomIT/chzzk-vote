@@ -2,12 +2,14 @@ import React from "react";
 import type { HTMLAttributes } from "react";
 import { StyledLink } from "./MainButton.styled";
 
-type LinkProps = HTMLAttributes<HTMLAnchorElement> & {
+interface CustomLinkProps
+  extends Omit<HTMLAttributes<HTMLAnchorElement>, "href"> {
   href: string;
+  target?: string;
   fill?: "primary" | "secondary";
   fillType?: "filled" | "outlined";
   size?: "normal" | "small";
-};
+}
 
 export default function MainLink({
   children,
@@ -16,7 +18,7 @@ export default function MainLink({
   size = "normal",
   className,
   ...linkProps
-}: LinkProps) {
+}: CustomLinkProps) {
   return (
     <StyledLink $fill={fill} $fillType={fillType} $size={size} {...linkProps}>
       {children}
