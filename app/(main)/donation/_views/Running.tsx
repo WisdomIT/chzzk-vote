@@ -12,7 +12,14 @@ import { extractVoteNumber } from "@/lib/vote";
 import Description, {
   DescriptionType,
 } from "@/app/_components/Vote/Description";
-import { Container, Top, Total, Bottom, List } from "./index.styled";
+import {
+  Container,
+  Top,
+  Total,
+  Bottom,
+  List,
+  ContainerCenter,
+} from "./index.styled";
 import { DoneConfigType } from "../page";
 
 export default function Running({
@@ -187,43 +194,54 @@ export default function Running({
         },
       ],
     },
+
+    {
+      body: [
+        {
+          bold: false,
+          text: "투표율 바를 클릭하면 상세 정보를 확인할 수 있습니다",
+        },
+      ],
+    },
   ];
 
   return (
     <Container>
-      <Top>
-        <Total>총 {total}표</Total>
-        <TimeElapsed {...time} />
-      </Top>
-      <Description
-        title={`투표금액 ${doneConfig.price}원 / 복수투표 ${
-          doneConfig.plural ? "허용됨" : "허용 안됨"
-        }`}
-        body={description}
-      />
-      <List>
-        {vote.map((item) => (
-          <ListItem
-            index={item.id}
-            name={item.name}
-            total={total}
-            viewers={item.viewers}
-            drawn={drawn}
-            setDrawn={setDrawn}
-            hidden={hidden}
-          />
-        ))}
-      </List>
-      <Bottom>
-        <MainCheckbox
-          title="투표 내용 가리기"
-          value={hidden}
-          onClick={() => {
-            setHidden((prev) => !prev);
-          }}
+      <ContainerCenter>
+        <Top>
+          <Total>총 {total}표</Total>
+          <TimeElapsed {...time} />
+        </Top>
+        <Description
+          title={`투표금액 ${doneConfig.price}원 / 복수투표 ${
+            doneConfig.plural ? "허용됨" : "허용 안됨"
+          }`}
+          body={description}
         />
-        <MainButton onClick={onStop}>투표 종료</MainButton>
-      </Bottom>
+        <List>
+          {vote.map((item) => (
+            <ListItem
+              index={item.id}
+              name={item.name}
+              total={total}
+              viewers={item.viewers}
+              drawn={drawn}
+              setDrawn={setDrawn}
+              hidden={hidden}
+            />
+          ))}
+        </List>
+        <Bottom>
+          <MainCheckbox
+            title="투표 내용 가리기"
+            value={hidden}
+            onClick={() => {
+              setHidden((prev) => !prev);
+            }}
+          />
+          <MainButton onClick={onStop}>투표 종료</MainButton>
+        </Bottom>
+      </ContainerCenter>
     </Container>
   );
 }

@@ -3,7 +3,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import type { VoteType } from "@/lib/types";
 import MainButton from "@/app/_components/Main/MainButton";
-import { Container } from "./index.styled";
+import { Container, ContainerCenter } from "./index.styled";
 import SetListItem from "@/app/_components/Vote/SetListItem";
 import deepCopy from "@/lib/deepcopy";
 import { List, ListScroll, ListScrollEnd } from "./Ready.styled";
@@ -60,52 +60,54 @@ export default function Ready({
 
   return (
     <Container>
-      <List>
-        <SetListItemCustom
-          type="number"
-          title="금액"
-          value={doneConfig.price.toString()}
-          step={1}
-          min={1}
-          onChange={(event) => {
-            setDoneConfig((prev) => ({
-              ...prev,
-              price: parseInt(event.target.value),
-            }));
-          }}
-        />
-        <MainCheckbox
-          title="복수투표 허용 (금액만큼 배수 투표됩니다)"
-          value={doneConfig.plural}
-          onClick={() => {
-            setDoneConfig((prev) => ({
-              ...prev,
-              plural: !prev.plural,
-            }));
-          }}
-          style={{ alignSelf: "center" }}
-        />
-      </List>
-      <List>
-        <ListScroll>
-          {vote.map((item, index) => (
-            <SetListItem
-              key={`vote_${item.id}`}
-              index={item.id}
-              value={item.name}
-              setValue={(value) => {
-                handleChange(index, value);
-              }}
-              onDelete={() => {
-                handleDelete(index);
-              }}
-            />
-          ))}
-          <ListScrollEnd id="scrollEnd" />
-        </ListScroll>
-        <AddListItem onAdd={handleAdd} />
-      </List>
-      <MainButton onClick={onStart}>투표 시작</MainButton>
+      <ContainerCenter>
+        <List>
+          <SetListItemCustom
+            type="number"
+            title="금액"
+            value={doneConfig.price.toString()}
+            step={1}
+            min={1}
+            onChange={(event) => {
+              setDoneConfig((prev) => ({
+                ...prev,
+                price: parseInt(event.target.value),
+              }));
+            }}
+          />
+          <MainCheckbox
+            title="복수투표 허용 (금액만큼 배수 투표됩니다)"
+            value={doneConfig.plural}
+            onClick={() => {
+              setDoneConfig((prev) => ({
+                ...prev,
+                plural: !prev.plural,
+              }));
+            }}
+            style={{ alignSelf: "center" }}
+          />
+        </List>
+        <List>
+          <ListScroll>
+            {vote.map((item, index) => (
+              <SetListItem
+                key={`vote_${item.id}`}
+                index={item.id}
+                value={item.name}
+                setValue={(value) => {
+                  handleChange(index, value);
+                }}
+                onDelete={() => {
+                  handleDelete(index);
+                }}
+              />
+            ))}
+            <ListScrollEnd id="scrollEnd" />
+          </ListScroll>
+          <AddListItem onAdd={handleAdd} />
+        </List>
+        <MainButton onClick={onStart}>투표 시작</MainButton>
+      </ContainerCenter>
     </Container>
   );
 }

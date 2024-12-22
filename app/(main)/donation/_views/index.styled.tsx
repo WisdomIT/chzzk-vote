@@ -5,13 +5,11 @@ import { styled } from "styled-components";
 export const Container = styled.div`
   display: flex;
   position: relative;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: 40px;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  width: 100%;
+  height: 100%;
 
   animation: ${({ theme }) => theme.animation.appearUp} 0.3s;
 
@@ -19,6 +17,20 @@ export const Container = styled.div`
     padding: 80px 20px;
     flex-direction: column;
     gap: 20px;
+  }
+`;
+
+export const ContainerCenter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  max-height: calc(100vh - 320px);
+  gap: 40px;
+
+  ${({ theme }) => theme.device.mobile} {
+    max-height: fit-content;
   }
 `;
 
@@ -37,7 +49,6 @@ export const Top = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1000px;
 `;
 
 export const Bottom = styled.div`
@@ -45,7 +56,6 @@ export const Bottom = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1000px;
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
@@ -59,8 +69,6 @@ export const List = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 1000px;
-  max-height: 400px;
   overflow-y: auto;
 
   ${({ theme }) => theme.device.mobile} {

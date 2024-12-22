@@ -12,7 +12,7 @@ export const ListScroll = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: 400px;
+  max-height: calc(100vh - 600px);
   overflow-y: auto;
 
   ${({ theme }) => theme.device.mobile} {

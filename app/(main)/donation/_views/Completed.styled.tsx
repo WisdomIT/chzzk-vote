@@ -8,5 +8,6 @@ export const BottomBtns = styled.div`
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
+    width: 100%;
   }
 `;

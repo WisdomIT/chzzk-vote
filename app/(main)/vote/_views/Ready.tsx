@@ -3,7 +3,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import type { VoteType } from "@/lib/types";
 import MainButton from "@/app/_components/Main/MainButton";
-import { Container } from "./index.styled";
+import { Container, ContainerCenter } from "./index.styled";
 import SetListItem from "@/app/_components/Vote/SetListItem";
 import deepCopy from "@/lib/deepcopy";
 import { List, ListScroll, ListScrollEnd } from "./Ready.styled";
@@ -53,26 +53,28 @@ export default function Ready({
 
   return (
     <Container>
-      <List>
-        <ListScroll>
-          {vote.map((item, index) => (
-            <SetListItem
-              key={`vote_${item.id}`}
-              index={item.id}
-              value={item.name}
-              setValue={(value) => {
-                handleChange(index, value);
-              }}
-              onDelete={() => {
-                handleDelete(index);
-              }}
-            />
-          ))}
-          <ListScrollEnd id="scrollEnd" />
-        </ListScroll>
-        <AddListItem onAdd={handleAdd} />
-      </List>
-      <MainButton onClick={onStart}>투표 시작</MainButton>
+      <ContainerCenter>
+        <List>
+          <ListScroll>
+            {vote.map((item, index) => (
+              <SetListItem
+                key={`vote_${item.id}`}
+                index={item.id}
+                value={item.name}
+                setValue={(value) => {
+                  handleChange(index, value);
+                }}
+                onDelete={() => {
+                  handleDelete(index);
+                }}
+              />
+            ))}
+            <ListScrollEnd id="scrollEnd" />
+          </ListScroll>
+          <AddListItem onAdd={handleAdd} />
+        </List>
+        <MainButton onClick={onStart}>투표 시작</MainButton>
+      </ContainerCenter>
     </Container>
   );
 }
