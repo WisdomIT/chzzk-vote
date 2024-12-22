@@ -1,4 +1,5 @@
-import { Container, Btn, BtnIcon, BtnText, BtnTooltip } from "./page.styled";
+import IndexButton, { IndexButtonType } from "./_components/IndexButton";
+import { Container } from "./page.styled";
 import {
   faCheckToSlot,
   faCheeseSwiss,
@@ -7,7 +8,7 @@ import {
 } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 
 export default function Page() {
-  const btns = [
+  const btns: IndexButtonType[] = [
     {
       href: "/viewer",
       icon: faUsers,
@@ -38,11 +39,7 @@ export default function Page() {
     <>
       <Container>
         {btns.map((item) => (
-          <Btn key={item.href} href={item.href}>
-            <BtnIcon icon={item.icon} />
-            <BtnText>{item.text}</BtnText>
-            <BtnTooltip>{item.tooltip}</BtnTooltip>
-          </Btn>
+          <IndexButton key={item.href} {...item} />
         ))}
       </Container>
     </>
