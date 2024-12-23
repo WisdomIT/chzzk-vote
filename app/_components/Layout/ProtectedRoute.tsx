@@ -50,15 +50,13 @@ export default function ProtectedRoute({
   useEffect(() => {
     if (channel.channelId !== "" && window.gtag) {
       window.gtag("set", {
-        user_id: channel.channelId,
-        user_name: channel.channelName,
+        user_id: channel.channelName,
       });
       window.gtag("event", "page_view", {
-        user_id: channel.channelId,
-        user_name: channel.channelName,
+        user_id: channel.channelName,
       });
     }
-  }, [channel.channelId]);
+  }, [channel.channelName]);
 
   // hydration이 완료되지 않았다면 로딩 상태를 보여줄 수 있습니다
   if (!hydrated) {
