@@ -84,7 +84,10 @@ export default function Running({
 
     for (let i = 0; i < roulette.length; i++) {
       randomNum -= roulette[i].size;
-      if (randomNum < 0) newTarget = i;
+      if (randomNum < 0) {
+        newTarget = i;
+        break;
+      }
     }
 
     setTarget(newTarget);
@@ -124,7 +127,7 @@ export default function Running({
       </WheelContainer>
       <BottomBtns>
         <MainButton fillType="outlined" onClick={onReset}>
-          돌아가기
+          항목 다시 설정하기
         </MainButton>
         <MainButton onClick={handleSpin}>돌려!</MainButton>
       </BottomBtns>
