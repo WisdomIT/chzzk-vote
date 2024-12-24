@@ -20,6 +20,7 @@ import {
   List,
   ContainerCenter,
 } from "./index.styled";
+import { webhook } from "../../_api/webhook";
 
 const description: DescriptionType[] = [
   {
@@ -97,6 +98,8 @@ export default function Running({
   }
 
   useEffect(() => {
+    void webhook("🔢 숫자 투표", channel);
+
     if (channel.channelId === "") {
       alert("채널ID가 정상적으로 인식되지 않습니다. 다시 시도해주세요.");
       location.reload();

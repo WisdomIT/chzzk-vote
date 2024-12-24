@@ -49,7 +49,7 @@ export default function Page() {
         <Btns>
           <MainLink
             size="small"
-            href="https://www.discord.com/users/901304044767834123"
+            href="https://discord.gg/6nnJMe2gxD"
             target="_blank"
           >
             개발자에게 건의하기 (디스코드)

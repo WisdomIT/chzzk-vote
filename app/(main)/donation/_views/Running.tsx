@@ -21,6 +21,7 @@ import {
   ContainerCenter,
 } from "./index.styled";
 import { DoneConfigType } from "../page";
+import { webhook } from "../../_api/webhook";
 
 export default function Running({
   doneConfig,
@@ -84,6 +85,8 @@ export default function Running({
   }
 
   useEffect(() => {
+    void webhook("💸 도네 투표", channel);
+
     if (channel.channelId === "") {
       alert("채널ID가 정상적으로 인식되지 않습니다. 다시 시도해주세요.");
       location.reload();

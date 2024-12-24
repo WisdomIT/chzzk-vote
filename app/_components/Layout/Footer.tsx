@@ -15,10 +15,7 @@ export default function Footer() {
       <Inner>
         <Copyright>
           ©{" "}
-          <FooterLink
-            href="https://www.discord.com/users/901304044767834123"
-            target="_blank"
-          >
+          <FooterLink href="https://github.com/WisdomIT" target="_blank">
             WisdomIT
           </FooterLink>
         </Copyright>
