@@ -6,6 +6,7 @@ import {
   SpecialThanks,
   FooterLink,
   Github,
+  Terms,
 } from "./Footer.styled";
 import { faGithub } from "@awesome.me/kit-8710ef4103/icons/classic/brands";
 
@@ -30,6 +31,11 @@ export default function Footer() {
         </Thirdparty>
       </Inner>
       <Inner>
+        <Terms>
+          <FooterLink href="/terms/privacy" target="_blank">
+            개인정보처리방침
+          </FooterLink>
+        </Terms>
         <SpecialThanks>
           Special thanks to.{" "}
           <FooterLink
