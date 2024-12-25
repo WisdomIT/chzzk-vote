@@ -47,6 +47,13 @@ export const Thirdparty = styled.p`
   color: ${({ theme }) => theme.colors.content50};
 `;
 
+export const Terms = styled.p`
+  font-size: ${({ theme }) => theme.fonts.size.xs};
+  line-height: ${({ theme }) => theme.fonts.lineHeight.normal};
+  font-weight: ${({ theme }) => theme.fonts.weight.semibold};
+  color: ${({ theme }) => theme.colors.content};
+`;
+
 export const SpecialThanks = styled.p`
   font-size: ${({ theme }) => theme.fonts.size.xs};
   line-height: ${({ theme }) => theme.fonts.lineHeight.normal};

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { styled } from "styled-components";
 
 export const Text1 = styled.p`
@@ -39,5 +40,22 @@ export const Inputs = styled.div`
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
+  }
+`;
+
+export const Terms = styled(Link)`
+  text-align: center;
+  font-weight: ${({ theme }) => theme.fonts.weight.semibold};
+  font-size: ${({ theme }) => theme.fonts.size.base};
+  line-height: ${({ theme }) => theme.fonts.lineHeight.none};
+  color: ${({ theme }) => theme.colors.brand};
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+
+  ${({ theme }) => theme.device.mobile} {
+    font-size: ${({ theme }) => theme.fonts.size.lg};
   }
 `;

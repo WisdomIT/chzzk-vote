@@ -4,7 +4,7 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import { Container, ContainerCenter } from "./index.styled";
 import MainButton from "@/app/_components/Main/MainButton";
 import MainInput from "@/app/_components/Main/MainInput";
-import { Text1, Text2, TopText, Inputs } from "./Channel.styled";
+import { Text1, Text2, TopText, Inputs, Terms } from "./Channel.styled";
 import { ChannelType } from "@/lib/types";
 import chzzkFind from "@/lib/chzzkFind";
 
@@ -65,8 +65,11 @@ export default function Channel({
           <br />
           등록된 채널ID는 이후 설정 메뉴에서 변경 가능합니다
           <br />
-          데이터는 컴퓨터에 저장되며, 서버에는 전송되지 않습니다
+          설정 데이터는 컴퓨터에 저장됩니다
         </Text1>
+        <Terms href="/terms/privacy" target="_blank">
+          개인정보처리방침 안내
+        </Terms>
       </ContainerCenter>
     </Container>
   );
