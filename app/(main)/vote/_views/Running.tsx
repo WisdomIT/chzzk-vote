@@ -91,7 +91,8 @@ export default function Running({
     if (!voteSet.current || !voteBuffer.current) return;
 
     const onlyNumber = extractVoteNumber(message);
-    if (!onlyNumber) return;
+    if (!onlyNumber || onlyNumber > vote.length) return;
+
     const number = onlyNumber - 1;
 
     //이미 투표한 적 있는 사용자라면
