@@ -38,7 +38,7 @@ export default function Running({
   const bufferTimeout = useRef<NodeJS.Timeout>();
 
   function handleOnChat(viewer: ViewerType) {
-    if (!viewerSet.current) return;
+    if (!viewerSet.current || !viewerBuffer.current) return;
 
     if (!viewerSet.current.has(viewer.userIdHash)) {
       viewerSet.current.add(viewer.userIdHash);

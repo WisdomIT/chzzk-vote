@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import type { TimeType, ViewerType, VoteType } from "@/lib/types";
 import MainButton from "@/app/_components/Main/MainButton";
 import TimeElapsed from "@/app/_components/Vote/TimeElapsed";
@@ -76,25 +82,40 @@ export default function Running({
   const { channel } = useGlobalOptionStore();
   const [hidden, setHidden] = useState<boolean>(false);
 
+  // 데이터를 버퍼링하기 위한 ref
+  const voteSet = useRef(new Set<string>());
+  const voteBuffer = useRef<VoteType[]>([...vote]);
+  const bufferTimeout = useRef<NodeJS.Timeout>();
+
   function handleOnChat(viewer: ViewerType, message: string) {
+    if (!voteSet.current || !voteBuffer.current) return;
+
     const onlyNumber = extractVoteNumber(message);
     if (!onlyNumber) return;
     const number = onlyNumber - 1;
 
-    setVote((prev) => {
-      const thisVote = prev[number];
-      if (!thisVote) return prev;
-
-      const newVote = [...prev].map((item) => ({
+    //이미 투표한 적 있는 사용자라면
+    if (voteSet.current.has(viewer.userIdHash)) {
+      //해당 사용자의 전 투표 기록을 삭제
+      voteBuffer.current = [...voteBuffer.current].map((item) => ({
         ...item,
         viewers: item.viewers.filter(
           (viewersItem) => viewersItem.userIdHash !== viewer.userIdHash
         ),
       }));
+    } else voteSet.current.add(viewer.userIdHash);
 
-      newVote[number].viewers.push(viewer);
-      return newVote;
-    });
+    //버퍼에 데이터 넣기
+    voteBuffer.current[number].viewers.push(viewer);
+
+    // 버퍼링된 데이터를 일정 주기로 한번에 업데이트
+    if (!bufferTimeout.current) {
+      setVote([...voteBuffer.current]);
+
+      bufferTimeout.current = setTimeout(() => {
+        bufferTimeout.current = undefined;
+      }, 500); // 500ms마다 업데이트
+    }
   }
 
   useEffect(() => {
