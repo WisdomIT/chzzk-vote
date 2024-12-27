@@ -45,7 +45,7 @@ export default function Chat({ viewer, onClose }: ChatType) {
     });
 
     return () => {
-      client.disconnect();
+      if (client) client.disconnect();
     };
   }, [state]);
 

@@ -79,7 +79,7 @@ const SlotChat = memo(({ list, duration, onEnd, onClose }: SlotChatProps) => {
     });
 
     return () => {
-      client.disconnect();
+      if (client) client.disconnect();
     };
   }, [viewer]);
 
