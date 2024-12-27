@@ -3,7 +3,13 @@
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container } from "./index.styled";
 import { ViewersConfigType, ViewerType } from "@/lib/types";
-import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+  useRef,
+} from "react";
 import Config from "../../../_components/Viewer/Config";
 import Viewers from "../../../_components/Viewer/Viewers";
 import { useGlobalOptionStore } from "@/lib/zustand";
@@ -26,13 +32,27 @@ export default function Running({
 }) {
   const { channel } = useGlobalOptionStore();
 
-  function handleOnChat(viewer: ViewerType) {
-    setViewers((prev) => {
-      const find = prev.find((item) => item.userIdHash === viewer.userIdHash);
-      if (find) return prev;
+  // 데이터를 버퍼링하기 위한 ref
+  const viewerSet = useRef(new Set<string>());
+  const viewerBuffer = useRef<ViewerType[]>([]);
+  const bufferTimeout = useRef<NodeJS.Timeout>();
 
-      return [...prev, viewer];
-    });
+  function handleOnChat(viewer: ViewerType) {
+    if (!viewerSet.current || !viewerBuffer.current) return;
+
+    if (!viewerSet.current.has(viewer.userIdHash)) {
+      viewerSet.current.add(viewer.userIdHash);
+      viewerBuffer.current.push(viewer);
+
+      // 버퍼링된 데이터를 일정 주기로 한번에 업데이트
+      if (!bufferTimeout.current) {
+        setViewers([...viewerBuffer.current]);
+
+        bufferTimeout.current = setTimeout(() => {
+          bufferTimeout.current = undefined;
+        }, 500); // 500ms마다 업데이트
+      }
+    }
   }
 
   useEffect(() => {
