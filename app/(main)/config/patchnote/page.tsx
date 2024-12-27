@@ -39,6 +39,10 @@ export default function Page() {
         "전체 페이지 접근성 향상 및 모바일 뷰 대폭 수정",
       ],
     },
+    {
+      date: new Date("2024-12-27"),
+      body: ["추첨 및 투표참여 성능 최적화", "채팅 에러 안내 문구 추가"],
+    },
   ];
 
   return (
