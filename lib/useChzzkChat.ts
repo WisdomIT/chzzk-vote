@@ -23,10 +23,13 @@ type ChatMessageResult = {
   messageString: string;
 };
 
+type ErrorHandler = (error: Error) => void;
+
 type UseChzzkChatProps = {
   channelId: string;
   onChat?: ChatHandler;
   onDonation?: DonationHandler;
+  onError?: ErrorHandler;
   baseUrls?: {
     chzzkBaseUrl: string;
     gameBaseUrl: string;
@@ -123,6 +126,7 @@ export default function useChzzkChat({
   channelId,
   onChat,
   onDonation,
+  onError,
   baseUrls = {
     chzzkBaseUrl: "/api/proxy/chzzkBase",
     gameBaseUrl: "/api/proxy/gameBase",
@@ -150,21 +154,35 @@ export default function useChzzkChat({
     baseUrls,
   };
 
-  const client = new ChzzkChat(options);
+  try {
+    const client = new ChzzkChat(options);
 
-  client.on("connect", () => {
-    console.log("[chzzk] Chat Connected");
-  });
+    client.on("connect", () => {
+      console.log("[chzzk] Chat Connected");
+    });
 
-  if (onChat) {
-    client.on("chat", handleChatEvent);
+    if (onChat) {
+      client.on("chat", handleChatEvent);
+    }
+
+    if (onDonation) {
+      client.on("donation", handleDonationEvent);
+    }
+
+    client.connect().catch((error) => {
+      onError?.(
+        error instanceof Error ? error : new Error("Failed to connect to chat")
+      );
+    });
+
+    return client;
+  } catch (error) {
+    onError?.(
+      error instanceof Error
+        ? error
+        : new Error("Failed to initialize chat client")
+    );
+    // 에러가 발생해도 일단 null을 반환하여 앱이 크래시되지 않도록 함
+    return null;
   }
-
-  if (onDonation) {
-    client.on("donation", handleDonationEvent);
-  }
-
-  client.connect();
-
-  return client;
 }

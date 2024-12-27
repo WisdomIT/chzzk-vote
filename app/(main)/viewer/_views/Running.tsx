@@ -16,6 +16,7 @@ import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
 import Chat from "@/app/_components/Slot/Chat";
 import { webhook } from "../../_api/webhook";
+import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 
 export default function Running({
   config,
@@ -31,6 +32,7 @@ export default function Running({
   onStop: () => void;
 }) {
   const { channel } = useGlobalOptionStore();
+  const [chzzkError, setChzzkError] = useState(false);
 
   // 데이터를 버퍼링하기 위한 ref
   const viewerSet = useRef(new Set<string>());
@@ -69,10 +71,14 @@ export default function Running({
       onChat: (viewer) => {
         handleOnChat(viewer);
       },
+      onError: (error) => {
+        setChzzkError(true);
+        setInterval(onStop, 10000);
+      },
     });
 
     return () => {
-      client.disconnect();
+      if (client) client.disconnect();
     };
   }, []);
 
@@ -82,6 +88,7 @@ export default function Running({
     <Container>
       <MainButton onClick={onStop}>참여자 모집 종료</MainButton>
       <Config config={config} setConfig={setConfig} />
+      {chzzkError ? <ChzzkError /> : null}
       <Viewers
         viewers={viewers}
         drawn={[]}

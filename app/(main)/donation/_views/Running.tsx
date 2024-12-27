@@ -28,6 +28,7 @@ import {
 } from "./index.styled";
 import { DoneConfigType } from "../page";
 import { webhook } from "../../_api/webhook";
+import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 
 export default function Running({
   doneConfig,
@@ -48,6 +49,7 @@ export default function Running({
 }) {
   const { channel } = useGlobalOptionStore();
   const [hidden, setHidden] = useState<boolean>(false);
+  const [chzzkError, setChzzkError] = useState(false);
 
   // 데이터를 버퍼링하기 위한 ref
   const voteSet = useRef(new Set<string>());
@@ -114,10 +116,14 @@ export default function Running({
       onDonation: (viewer, message, messageString, price) => {
         handleOnDonation(viewer, messageString, price);
       },
+      onError: (error) => {
+        setChzzkError(true);
+        setInterval(onStop, 10000);
+      },
     });
 
     return () => {
-      client.disconnect();
+      if (client) client.disconnect();
     };
   }, []);
 
@@ -231,6 +237,7 @@ export default function Running({
           <Total>총 {total}표</Total>
           <TimeElapsed {...time} />
         </Top>
+        {chzzkError ? <ChzzkError /> : null}
         <Description
           title={`투표금액 ${doneConfig.price}원 / 복수투표 ${
             doneConfig.plural ? "허용됨" : "허용 안됨"
