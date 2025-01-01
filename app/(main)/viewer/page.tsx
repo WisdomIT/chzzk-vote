@@ -20,9 +20,11 @@ export default function Page() {
   const [drawn, setDrawn] = useState<ViewerType[]>([]);
 
   function handleReset() {
+    if (!confirm("추첨 완료된 시청자 목록을 유지하고 다시 추첨하시겠습니까?")) {
+      setDrawn([]);
+    }
     setState("ready");
     setViewers([]);
-    setDrawn([]);
   }
 
   function handleConfig(type: keyof typeof config) {
