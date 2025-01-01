@@ -1,7 +1,7 @@
 "use client";
 
 import MainButton from "@/app/_components/Main/MainButton";
-import { Container } from "./index.styled";
+import { Btns, Container } from "./index.styled";
 import { ViewersConfigType, ViewerType } from "@/lib/types";
 import {
   useState,
@@ -17,18 +17,23 @@ import useChzzkChat from "@/lib/useChzzkChat";
 import Chat from "@/app/_components/Slot/Chat";
 import { webhook } from "../../_api/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
+import SlotChat, { handleSlotStart } from "@/app/_components/Slot/SlotChat";
 
 export default function Running({
   config,
   setConfig,
   viewers,
   setViewers,
+  drawn,
+  setDrawn,
   onStop,
 }: {
   config: ViewersConfigType;
   setConfig: (type: keyof ViewersConfigType) => void;
   viewers: ViewerType[];
   setViewers: Dispatch<SetStateAction<ViewerType[]>>;
+  drawn: ViewerType[];
+  setDrawn: Dispatch<SetStateAction<ViewerType[]>>;
   onStop: () => void;
 }) {
   const { channel } = useGlobalOptionStore();
@@ -83,15 +88,35 @@ export default function Running({
   }, []);
 
   const [chat, setChat] = useState<ViewerType | null>(null);
+  const [slot, setSlot] = useState(false);
+  const [slotList, setSlotList] = useState<ViewerType[]>([]);
+
+  function handleSetDrawn(viewer: ViewerType) {
+    setDrawn((prev) => {
+      const find = prev.find((item) => item.userIdHash === viewer.userIdHash);
+      if (find) return prev;
+      return [...prev, viewer];
+    });
+  }
 
   return (
     <Container>
-      <MainButton onClick={onStop}>참여자 모집 종료</MainButton>
+      <Btns>
+        <MainButton
+          fillType="outlined"
+          onClick={() => {
+            handleSlotStart(viewers, drawn, config, setSlot, setSlotList);
+          }}
+        >
+          추첨하기
+        </MainButton>
+        <MainButton onClick={onStop}>참여자 모집 종료</MainButton>
+      </Btns>
       <Config config={config} setConfig={setConfig} />
       {chzzkError ? <ChzzkError /> : null}
       <Viewers
         viewers={viewers}
-        drawn={[]}
+        drawn={drawn}
         config={config}
         onSelect={(viewer) => {
           setChat(viewer);
@@ -104,6 +129,18 @@ export default function Running({
           viewer={chat}
           onClose={() => {
             setChat(null);
+          }}
+        />
+      ) : null}
+      {slot ? (
+        <SlotChat
+          list={slotList}
+          duration={3000}
+          onEnd={(item, target) => {
+            handleSetDrawn(item);
+          }}
+          onClose={() => {
+            setSlot(false);
           }}
         />
       ) : null}

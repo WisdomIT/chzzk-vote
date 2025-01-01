@@ -19,3 +19,14 @@ export const Container = styled.div`
     gap: 20px;
   }
 `;
+
+export const Btns = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+
+  ${({ theme }) => theme.device.mobile} {
+    flex-direction: column;
+  }
+`;

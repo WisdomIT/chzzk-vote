@@ -47,6 +47,8 @@ export default function Page() {
           setConfig={handleConfig}
           viewers={viewers}
           setViewers={setViewers}
+          drawn={drawn}
+          setDrawn={setDrawn}
           onStop={() => {
             setState("completed");
           }}
