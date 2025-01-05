@@ -26,7 +26,7 @@ export const ContainerCenter = styled.div`
   align-items: center;
   width: 100%;
   max-width: 1000px;
-  max-height: calc(100vh - 320px);
+  max-height: calc(100% - 40px);
   gap: 40px;
 
   ${({ theme }) => theme.device.mobile} {
@@ -56,6 +56,7 @@ export const Bottom = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-shrink: 0;
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
