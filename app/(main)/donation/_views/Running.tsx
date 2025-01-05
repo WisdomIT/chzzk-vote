@@ -29,15 +29,17 @@ import {
 import { DoneConfigType } from "../page";
 import { webhook } from "../../_api/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
+import Timer from "@/app/_components/Vote/Timer";
 
 export default function Running({
   doneConfig,
   vote,
   setVote,
-  onStop,
   drawn,
-  time,
   setDrawn,
+  time,
+  timer,
+  onStop,
 }: {
   doneConfig: DoneConfigType;
   vote: VoteType[];
@@ -45,6 +47,7 @@ export default function Running({
   drawn: ViewerType[];
   setDrawn: (viewer: ViewerType) => void;
   time: TimeType;
+  timer: Date | null;
   onStop: () => void;
 }) {
   const { channel } = useGlobalOptionStore();
@@ -268,6 +271,7 @@ export default function Running({
           <MainButton onClick={onStop}>투표 종료</MainButton>
         </Bottom>
       </ContainerCenter>
+      {timer ? <Timer end={timer} onStop={onStop} /> : null}
     </Container>
   );
 }
