@@ -18,6 +18,7 @@ import Chat from "@/app/_components/Slot/Chat";
 import { webhook } from "../../_api/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 import SlotChat, { handleSlotStart } from "@/app/_components/Slot/SlotChat";
+import Timer from "@/app/_components/Vote/Timer";
 
 export default function Running({
   config,
@@ -26,6 +27,7 @@ export default function Running({
   setViewers,
   drawn,
   setDrawn,
+  timer,
   onStop,
 }: {
   config: ViewersConfigType;
@@ -34,6 +36,7 @@ export default function Running({
   setViewers: Dispatch<SetStateAction<ViewerType[]>>;
   drawn: ViewerType[];
   setDrawn: Dispatch<SetStateAction<ViewerType[]>>;
+  timer: Date | null;
   onStop: () => void;
 }) {
   const { channel } = useGlobalOptionStore();
@@ -144,6 +147,7 @@ export default function Running({
           }}
         />
       ) : null}
+      {timer ? <Timer end={timer} onStop={onStop} /> : null}
     </Container>
   );
 }
