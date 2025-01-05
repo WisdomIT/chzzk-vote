@@ -30,6 +30,7 @@ export default function Page() {
     start: null,
     end: null,
   });
+  const [timer, setTimer] = useState<Date | null>(null);
 
   function handleSetDrawn(viewer: ViewerType) {
     setDrawn((prev) => {
@@ -60,12 +61,17 @@ export default function Page() {
           setVote={setVote}
           doneConfig={doneConfig}
           setDoneConfig={setDoneConfig}
-          onStart={() => {
+          onStart={(timer) => {
             setState("running");
             setTime({
               start: new Date(),
               end: null,
             });
+            if (timer !== null) {
+              const endTime = new Date();
+              endTime.setSeconds(endTime.getSeconds() + timer);
+              setTimer(endTime);
+            }
           }}
         />
       ) : null}
@@ -77,6 +83,7 @@ export default function Page() {
           drawn={drawn}
           setDrawn={handleSetDrawn}
           time={time}
+          timer={timer}
           onStop={() => {
             setState("completed");
             setTime((prev) => ({
