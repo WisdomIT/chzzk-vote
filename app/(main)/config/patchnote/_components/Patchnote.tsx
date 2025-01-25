@@ -1,4 +1,7 @@
+"use client";
+
 import { Container, Item, Title, List } from "./Patchnote.styled";
+import { useGlobalOptionStore } from "@/lib/zustand";
 
 export interface PatchnoteType {
   date: Date;
@@ -14,11 +17,13 @@ function formatKoreanDate(date: Date): string {
 }
 
 export default function Patchnote({ data }: { data: PatchnoteType[] }) {
+  const { zoom } = useGlobalOptionStore();
+
   // 최신 날짜가 먼저 오도록 내림차순 정렬
   const dataSorted = data.sort((a, b) => b.date.getTime() - a.date.getTime());
 
   return (
-    <Container>
+    <Container $zoom={zoom}>
       {dataSorted.map((item, index) => (
         <Item key={`patchnote_${index.toString()}`}>
           <Title>{formatKoreanDate(item.date)}</Title>
