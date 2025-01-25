@@ -11,6 +11,10 @@ export const Container = styled.div`
   border-radius: ${({ theme }) => theme.rounded.base};
   overflow: hidden;
   cursor: pointer;
+
+  ${({ theme }) => theme.device.mobile} {
+    display: none;
+  }
 `;
 
 export const Bar = styled.div<{ $zoom: number }>`

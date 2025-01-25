@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useGlobalOptionStore } from "../../../lib/zustand";
-import { Bar, Container, Icon, NumberStyle } from "./Zoom.styled";
+import { Bar, Container, Icon, NumberStyle } from "./ZoomSlider.styled";
 import { faMagnifyingGlassPlus } from "@awesome.me/kit-8710ef4103/icons/sharp/solid";
 
 export default function ZoomSlider() {
@@ -17,7 +17,10 @@ export default function ZoomSlider() {
     if (isDragging.current && sliderRef.current) {
       const rect = sliderRef.current.getBoundingClientRect();
       const newZoom = Math.min(
-        Math.max(50, ((event.clientX - rect.left) / rect.width) * 100 + 50),
+        Math.max(
+          50,
+          Math.round(((event.clientX - rect.left) / rect.width) * 100 + 50)
+        ),
         150
       );
       setZoom(newZoom);
