@@ -19,12 +19,14 @@ import voteToRoulette from "@/lib/voteToRoulette";
 import { useRouter } from "next/navigation";
 
 export default function Completed({
+  zoom,
   vote,
   drawn,
   time,
   setDrawn,
   onReset,
 }: {
+  zoom: number;
   vote: VoteType[];
   drawn: ViewerType[];
   time: TimeType;
@@ -47,7 +49,7 @@ export default function Completed({
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <Top>
           <Total>총 {total}표</Total>
           <TimeElapsed {...time} />

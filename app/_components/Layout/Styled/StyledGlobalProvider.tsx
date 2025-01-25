@@ -15,7 +15,13 @@ export const StyledGlobalProvider = createGlobalStyle`
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  height: 100vh;
+  overflow: hidden;
+
+  ${({ theme }) => theme.device.mobile} {
+    height: fit-content;
+    overflow: auto;
+  }
 }
 
 body {

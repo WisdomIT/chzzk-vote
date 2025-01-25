@@ -67,6 +67,7 @@ const description: DescriptionType[] = [
 ];
 
 export default function Running({
+  zoom,
   vote,
   setVote,
   drawn,
@@ -75,6 +76,7 @@ export default function Running({
   timer,
   onStop,
 }: {
+  zoom: number;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
   drawn: ViewerType[];
@@ -153,7 +155,7 @@ export default function Running({
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <Top>
           <Total>총 {total}표</Total>
           <TimeElapsed {...time} />

@@ -7,6 +7,7 @@ import { faCheckToSlot } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
 import Running from "./_views/Running";
 import Completed from "./_views/Completed";
+import { useGlobalOptionStore } from "@/lib/zustand";
 
 export default function Page() {
   const [state, setState] = useState<"ready" | "running" | "completed">(
@@ -22,6 +23,7 @@ export default function Page() {
     end: null,
   });
   const [timer, setTimer] = useState<Date | null>(null);
+  const { zoom } = useGlobalOptionStore();
 
   function handleSetDrawn(viewer: ViewerType) {
     setDrawn((prev) => {
@@ -48,6 +50,7 @@ export default function Page() {
       <Breadcrumbs icon={faCheckToSlot} text="숫자 투표" />
       {state === "ready" ? (
         <Ready
+          zoom={zoom}
           vote={vote}
           setVote={setVote}
           onStart={(timer) => {
@@ -66,6 +69,7 @@ export default function Page() {
       ) : null}
       {state === "running" ? (
         <Running
+          zoom={zoom}
           vote={vote}
           setVote={setVote}
           drawn={drawn}
@@ -83,6 +87,7 @@ export default function Page() {
       ) : null}
       {state === "completed" ? (
         <Completed
+          zoom={zoom}
           vote={vote}
           drawn={drawn}
           setDrawn={handleSetDrawn}

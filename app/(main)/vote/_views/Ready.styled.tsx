@@ -8,11 +8,11 @@ export const List = styled.div`
   max-width: 800px;
 `;
 
-export const ListScroll = styled.div`
+export const ListScroll = styled.div<{ $zoom: number }>`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: calc(100vh - 520px);
+  max-height: calc(100vh * ${({ $zoom }) => 100 / $zoom} - 600px);
   overflow-y: auto;
 
   ${({ theme }) => theme.device.mobile} {

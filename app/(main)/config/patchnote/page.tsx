@@ -43,6 +43,14 @@ export default function Page() {
       date: new Date("2024-12-27"),
       body: ["추첨 및 투표참여 성능 최적화", "채팅 에러 안내 문구 추가"],
     },
+    {
+      date: new Date("2025-01-06"),
+      body: ["타이머 기능 추가"],
+    },
+    {
+      date: new Date("2025-01-25"),
+      body: ["채널 정보 자동 업데이트 기능 추가", "줌 기능 추가"],
+    },
   ];
 
   return (

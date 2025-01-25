@@ -10,10 +10,12 @@ import SetListRouletteItem from "../_components/SetListRouletteItem";
 import { useSearchParams } from "next/navigation";
 
 export default function Ready({
+  zoom,
   roulette,
   setRoulette,
   onStart,
 }: {
+  zoom: number;
   roulette: RouletteType[];
   setRoulette: Dispatch<SetStateAction<RouletteType[]>>;
   onStart: () => void;
@@ -60,6 +62,7 @@ export default function Ready({
     setTimeout(() => {
       document.getElementById("scrollEnd")?.scrollIntoView({
         behavior: "smooth",
+        block: "nearest",
       });
     }, 100);
   }
@@ -115,9 +118,9 @@ export default function Ready({
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <List>
-          <ListScroll>
+          <ListScroll $zoom={zoom}>
             {roulette.map((item, index) => (
               <SetListRouletteItem
                 key={`roulette_${item.id}`}
@@ -144,7 +147,9 @@ export default function Ready({
           </ListScroll>
           <AddListItem onAdd={handleAdd} />
         </List>
-        <MainButton onClick={handleOnStart}>룰렛 시작</MainButton>
+        <MainButton onClick={handleOnStart} style={{ flexShrink: 0 }}>
+          룰렛 시작
+        </MainButton>
       </ContainerCenter>
     </Container>
   );

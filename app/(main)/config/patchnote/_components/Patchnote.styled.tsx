@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $zoom: number }>`
   display: flex;
   position: relative;
   flex-direction: column;
   width: 100%;
   max-width: 1000px;
-  max-height: calc(100vh - 480px);
+  max-height: calc(100vh * ${({ $zoom }) => 100 / $zoom} - 480px);
   padding: 40px;
   gap: 40px;
   border: 1px solid ${({ theme }) => theme.colors.border02};

@@ -32,6 +32,7 @@ import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 import Timer from "@/app/_components/Vote/Timer";
 
 export default function Running({
+  zoom,
   doneConfig,
   vote,
   setVote,
@@ -41,6 +42,7 @@ export default function Running({
   timer,
   onStop,
 }: {
+  zoom: number;
   doneConfig: DoneConfigType;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
@@ -235,7 +237,7 @@ export default function Running({
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <Top>
           <Total>총 {total}표</Total>
           <TimeElapsed {...time} />
