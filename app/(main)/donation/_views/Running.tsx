@@ -31,6 +31,7 @@ import { webhook } from "../../_api/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 
 export default function Running({
+  zoom,
   doneConfig,
   vote,
   setVote,
@@ -39,6 +40,7 @@ export default function Running({
   time,
   setDrawn,
 }: {
+  zoom: number;
   doneConfig: DoneConfigType;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
@@ -232,7 +234,7 @@ export default function Running({
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <Top>
           <Total>총 {total}표</Total>
           <TimeElapsed {...time} />

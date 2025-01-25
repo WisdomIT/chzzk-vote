@@ -13,12 +13,14 @@ import SetListItemCustom from "@/app/_components/Vote/SetListItemCustom";
 import MainCheckbox from "@/app/_components/Main/MainCheckbox";
 
 export default function Ready({
+  zoom,
   vote,
   setVote,
   doneConfig,
   setDoneConfig,
   onStart,
 }: {
+  zoom: number;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
   doneConfig: DoneConfigType;
@@ -54,13 +56,14 @@ export default function Ready({
     setTimeout(() => {
       document.getElementById("scrollEnd")?.scrollIntoView({
         behavior: "smooth",
+        block: "nearest",
       });
     }, 100);
   }
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <List>
           <SetListItemCustom
             type="number"
@@ -88,7 +91,7 @@ export default function Ready({
           />
         </List>
         <List>
-          <ListScroll>
+          <ListScroll $zoom={zoom}>
             {vote.map((item, index) => (
               <SetListItem
                 key={`vote_${item.id}`}
@@ -106,7 +109,9 @@ export default function Ready({
           </ListScroll>
           <AddListItem onAdd={handleAdd} />
         </List>
-        <MainButton onClick={onStart}>투표 시작</MainButton>
+        <MainButton onClick={onStart} style={{ flexShrink: 0 }}>
+          투표 시작
+        </MainButton>
       </ContainerCenter>
     </Container>
   );

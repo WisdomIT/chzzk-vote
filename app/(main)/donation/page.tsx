@@ -7,6 +7,7 @@ import { faCheeseSwiss } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import Ready from "./_views/Ready";
 import Running from "./_views/Running";
 import Completed from "./_views/Completed";
+import { useGlobalOptionStore } from "@/lib/zustand";
 
 export interface DoneConfigType {
   price: number;
@@ -30,6 +31,7 @@ export default function Page() {
     start: null,
     end: null,
   });
+  const { zoom } = useGlobalOptionStore();
 
   function handleSetDrawn(viewer: ViewerType) {
     setDrawn((prev) => {
@@ -56,6 +58,7 @@ export default function Page() {
       <Breadcrumbs icon={faCheeseSwiss} text="도네 투표" />
       {state === "ready" ? (
         <Ready
+          zoom={zoom}
           vote={vote}
           setVote={setVote}
           doneConfig={doneConfig}
@@ -71,6 +74,7 @@ export default function Page() {
       ) : null}
       {state === "running" ? (
         <Running
+          zoom={zoom}
           doneConfig={doneConfig}
           vote={vote}
           setVote={setVote}
@@ -88,6 +92,7 @@ export default function Page() {
       ) : null}
       {state === "completed" ? (
         <Completed
+          zoom={zoom}
           vote={vote}
           drawn={drawn}
           setDrawn={handleSetDrawn}
