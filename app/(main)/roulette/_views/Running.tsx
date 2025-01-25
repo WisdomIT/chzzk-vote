@@ -31,9 +31,11 @@ const backgroundColors = [
 ];
 
 export default function Running({
+  zoom,
   roulette,
   onReset,
 }: {
+  zoom: number;
   roulette: RouletteType[];
   onReset: () => void;
 }) {
@@ -42,10 +44,12 @@ export default function Running({
   const [complete, setComplete] = useState(false);
 
   const updateSize = () => {
-    const vw = Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    );
+    const vw =
+      Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      ) *
+      (100 / zoom);
     let size: number;
 
     if (vw <= 800) {
@@ -53,10 +57,12 @@ export default function Running({
     } else if (vw <= 1300) {
       size = vw - 500; // 1300px 이하일 경우
     } else {
-      const vh = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
-      );
+      const vh =
+        Math.max(
+          document.documentElement.clientHeight || 0,
+          window.innerHeight || 0
+        ) *
+        (100 / zoom);
       const maxWidth = vw - 800;
       const maxHeight = vh - 500;
       size = Math.min(maxWidth, maxHeight, vw - 200); // 기본 조건
@@ -72,7 +78,7 @@ export default function Running({
     return () => {
       window.removeEventListener("resize", updateSize);
     };
-  }, []);
+  }, [zoom]);
 
   function handleSpin() {
     if (target !== null) return;

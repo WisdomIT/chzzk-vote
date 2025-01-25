@@ -5,6 +5,7 @@ import { faSlotMachine } from "@awesome.me/kit-8710ef4103/icons/sharp/light";
 import { Suspense, useState } from "react";
 import Ready from "./_views/Ready";
 import Running from "./_views/Running";
+import { useGlobalOptionStore } from "@/lib/zustand";
 
 export interface RouletteType {
   id: number;
@@ -18,6 +19,7 @@ export default function Page() {
     { id: 0, name: "", size: 1 },
     { id: 1, name: "", size: 1 },
   ]);
+  const { zoom } = useGlobalOptionStore();
 
   return (
     <>
@@ -25,6 +27,7 @@ export default function Page() {
       {state === "ready" ? (
         <Suspense>
           <Ready
+            zoom={zoom}
             roulette={roulette}
             setRoulette={setRoulette}
             onStart={() => {
@@ -35,6 +38,7 @@ export default function Page() {
       ) : null}
       {state === "running" ? (
         <Running
+          zoom={zoom}
           roulette={roulette}
           onReset={() => {
             setState("ready");
