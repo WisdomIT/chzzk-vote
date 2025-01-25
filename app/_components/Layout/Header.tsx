@@ -16,6 +16,7 @@ import {
   faMoon,
   faSunBright,
 } from "@awesome.me/kit-8710ef4103/icons/sharp/regular";
+import ZoomSlider from "./Zoom";
 
 export default function Header() {
   const { channel, theme, setTheme } = useGlobalOptionStore();
@@ -33,6 +34,7 @@ export default function Header() {
         )}
       </NavInner>
       <NavInner>
+        <ZoomSlider />
         <NavButton onClick={setTheme}>
           {theme === "dark" ? (
             <Icon icon={faSunBright} />

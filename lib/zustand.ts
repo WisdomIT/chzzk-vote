@@ -7,6 +7,7 @@ interface GlobalOptionState {
   channel: ChannelType;
   voice: string;
   theme: "dark" | "light";
+  zoom: number;
   hydrated: boolean;
 }
 
@@ -14,6 +15,7 @@ interface GlobalOptionActions {
   setChannel: (channel: ChannelType) => void;
   setVoice: (voice: string) => void;
   setTheme: () => void;
+  setZoom: (zoom: number) => void;
   setHydrated: (hydrated: boolean) => void;
   refreshChannel: (channelId: string) => void;
 }
@@ -33,6 +35,7 @@ export const useGlobalOptionStore = create<
         },
         voice: "",
         theme: "dark",
+        zoom: 100,
         hydrated: false,
 
         setChannel: (channel: ChannelType) => set({ channel }),
@@ -42,6 +45,7 @@ export const useGlobalOptionStore = create<
             ...prev,
             theme: prev.theme === "dark" ? "light" : "dark",
           })),
+        setZoom: (zoom: number) => set({ zoom }),
         setHydrated: (hydrated: boolean) => set({ hydrated }),
         refreshChannel: async (channelId: string) => {
           const channel = await chzzkFind(channelId);
