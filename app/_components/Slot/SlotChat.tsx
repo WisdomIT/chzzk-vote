@@ -87,6 +87,7 @@ const SlotChat = memo(({ list, duration, onEnd, onClose }: SlotChatProps) => {
     //chat 업데이트 시 가장 아래 채팅으로 스크롤
     document.querySelector("#chatBottom")?.scrollIntoView({
       behavior: "smooth",
+      block: "nearest",
     });
   }, [chat]);
 
