@@ -10,10 +10,12 @@ import { List, ListScroll, ListScrollEnd } from "./Ready.styled";
 import AddListItem from "@/app/_components/Vote/AddListItem";
 
 export default function Ready({
+  zoom,
   vote,
   setVote,
   onStart,
 }: {
+  zoom: number;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
   onStart: () => void;
@@ -47,15 +49,16 @@ export default function Ready({
     setTimeout(() => {
       document.getElementById("scrollEnd")?.scrollIntoView({
         behavior: "smooth",
+        block: "nearest",
       });
     }, 100);
   }
 
   return (
     <Container>
-      <ContainerCenter>
+      <ContainerCenter $zoom={zoom}>
         <List>
-          <ListScroll>
+          <ListScroll $zoom={zoom}>
             {vote.map((item, index) => (
               <SetListItem
                 key={`vote_${item.id}`}
@@ -73,7 +76,9 @@ export default function Ready({
           </ListScroll>
           <AddListItem onAdd={handleAdd} />
         </List>
-        <MainButton onClick={onStart}>투표 시작</MainButton>
+        <MainButton onClick={onStart} style={{ flexShrink: 0 }}>
+          투표 시작
+        </MainButton>
       </ContainerCenter>
     </Container>
   );

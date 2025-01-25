@@ -20,13 +20,13 @@ export const Container = styled.div`
   }
 `;
 
-export const ContainerCenter = styled.div`
+export const ContainerCenter = styled.div<{ $zoom: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 1000px;
-  max-height: calc(100vh - 320px);
+  max-height: calc(100vh * ${({ $zoom }) => 100 / $zoom} - 320px);
   gap: 40px;
 
   ${({ theme }) => theme.device.mobile} {
