@@ -23,3 +23,18 @@ export const ListScroll = styled.div<{ $zoom: number }>`
 export const ListScrollEnd = styled.div`
   margin-top: -20px;
 `;
+
+export const Timers = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  ${({ theme }) => theme.device.mobile} {
+    flex-direction: column;
+  }
+`;
+
+export const Seconds = styled.p`
+  font-size: ${({ theme }) => theme.fonts.size["2xl"]};
+`;

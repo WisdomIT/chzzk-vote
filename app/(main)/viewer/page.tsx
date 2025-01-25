@@ -18,6 +18,7 @@ export default function Page() {
   });
   const [viewers, setViewers] = useState<ViewerType[]>([]);
   const [drawn, setDrawn] = useState<ViewerType[]>([]);
+  const [timer, setTimer] = useState<Date | null>(null);
 
   function handleReset() {
     if (!confirm("추첨 완료된 시청자 목록을 유지하고 다시 추첨하시겠습니까?")) {
@@ -38,8 +39,13 @@ export default function Page() {
         <Ready
           config={config}
           setConfig={handleConfig}
-          onStart={() => {
+          onStart={(timer) => {
             setState("running");
+            if (timer !== null) {
+              const endTime = new Date();
+              endTime.setSeconds(endTime.getSeconds() + timer);
+              setTimer(endTime);
+            }
           }}
         />
       ) : null}
@@ -51,6 +57,7 @@ export default function Page() {
           setViewers={setViewers}
           drawn={drawn}
           setDrawn={setDrawn}
+          timer={timer}
           onStop={() => {
             setState("completed");
           }}

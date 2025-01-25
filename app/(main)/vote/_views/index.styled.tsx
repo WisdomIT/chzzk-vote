@@ -56,6 +56,7 @@ export const Bottom = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-shrink: 0;
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;

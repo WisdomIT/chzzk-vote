@@ -24,9 +24,14 @@ export const Btns = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+  align-items: center;
   gap: 20px;
 
   ${({ theme }) => theme.device.mobile} {
     flex-direction: column;
   }
+`;
+
+export const Seconds = styled.p`
+  font-size: ${({ theme }) => theme.fonts.size["2xl"]};
 `;

@@ -1,13 +1,21 @@
 "use client";
 
-import { type Dispatch, type SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import type { VoteType } from "@/lib/types";
 import MainButton from "@/app/_components/Main/MainButton";
 import { Container, ContainerCenter } from "./index.styled";
 import SetListItem from "@/app/_components/Vote/SetListItem";
 import deepCopy from "@/lib/deepcopy";
-import { List, ListScroll, ListScrollEnd } from "./Ready.styled";
+import {
+  List,
+  ListScroll,
+  ListScrollEnd,
+  Seconds,
+  Timers,
+} from "./Ready.styled";
 import AddListItem from "@/app/_components/Vote/AddListItem";
+import MainCheckbox from "@/app/_components/Main/MainCheckbox";
+import MainInput from "@/app/_components/Main/MainInput";
 
 export default function Ready({
   zoom,
@@ -18,8 +26,10 @@ export default function Ready({
   zoom: number;
   vote: VoteType[];
   setVote: Dispatch<SetStateAction<VoteType[]>>;
-  onStart: () => void;
+  onStart: (timer: number | null) => void;
 }) {
+  const [timer, setTimer] = useState<number | null>(null);
+
   function handleChange(index: number, value: string) {
     const current = deepCopy(vote);
     current[index].name = value;
@@ -76,9 +86,40 @@ export default function Ready({
           </ListScroll>
           <AddListItem onAdd={handleAdd} />
         </List>
-        <MainButton onClick={onStart} style={{ flexShrink: 0 }}>
-          투표 시작
-        </MainButton>
+        <Timers>
+          <MainCheckbox
+            title="타이머 사용하기"
+            value={timer !== null}
+            onClick={() => {
+              if (timer === null) setTimer(0);
+              else setTimer(null);
+            }}
+          />
+          {timer !== null ? (
+            <>
+              <MainInput
+                type="number"
+                value={timer}
+                onChange={(event) => {
+                  const value = parseInt(event.target.value);
+                  if (value < 0) return;
+                  setTimer(value);
+                }}
+                style={{ width: 100 }}
+                min={1}
+                step={1}
+              />
+              <Seconds>초</Seconds>
+            </>
+          ) : null}
+          <MainButton
+            onClick={() => {
+              onStart(timer);
+            }}
+          >
+            투표 시작
+          </MainButton>
+        </Timers>
       </ContainerCenter>
     </Container>
   );
