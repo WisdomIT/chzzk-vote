@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { ChannelType } from "./types";
+import chzzkFind from "./chzzkFind";
 
 interface GlobalOptionState {
   channel: ChannelType;
@@ -14,6 +15,7 @@ interface GlobalOptionActions {
   setVoice: (voice: string) => void;
   setTheme: () => void;
   setHydrated: (hydrated: boolean) => void;
+  refreshChannel: (channelId: string) => void;
 }
 
 export const useGlobalOptionStore = create<
@@ -41,13 +43,22 @@ export const useGlobalOptionStore = create<
             theme: prev.theme === "dark" ? "light" : "dark",
           })),
         setHydrated: (hydrated: boolean) => set({ hydrated }),
+        refreshChannel: async (channelId: string) => {
+          const channel = await chzzkFind(channelId);
+          if (!channel) return;
+          set({ channel });
+        },
       }),
       {
         name: "globalOption", // localStorage에 저장될 이름
         onRehydrateStorage: () => (state) => {
           // hydration이 완료되면 호출되는 콜백
           setTimeout(() => {
-            useGlobalOptionStore.getState().setHydrated(true);
+            const store = useGlobalOptionStore.getState();
+            store.setHydrated(true);
+            if (store.channel.channelId) {
+              store.refreshChannel(store.channel.channelId);
+            }
           }, 10);
         },
       }
