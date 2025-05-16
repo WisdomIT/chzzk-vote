@@ -1,0 +1,74 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+  "name": "Node.js - v22",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "configureZshAsDefaultShell": "true",
+      "installOhMyZsh": "true",
+      "installOhMyZshConfig": "true"
+    }
+  },
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/usr/bin/zsh"
+          }
+        },
+        "files.eol": "\n",
+        "files.autoSave": "afterDelay",
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.tokenColorCustomizations": {
+          "comments": "#d39e9e"
+        },
+        "typescript.format.enable": false,
+        "typescript.suggest.paths": false,
+        "javascript.format.enable": false,
+        "javascript.suggest.paths": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "EditorConfig.EditorConfig",
+        "oouo-diogo-perdigao.docthis",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "tomasnikl.vscode-vitest-runner-for-pnpm"
+      ]
+    }
+  },
+  "forwardPorts": [3000], // Uncomment the next line to run commands after the container is created.
+  // Use 'portsAttributes' to set default properties for specific forwarded ports.
+  // More info: https://containers.dev/implementors/json_reference/#port-attributes
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "notify",
+      "autoForward": true
+    }
+  },
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "zsh ./install.sh"
+  // "postStartCommand": "pnpm install && pnpm ts-patch install && pnpm build"
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
