@@ -1,0 +1,68 @@
+# 라벨 as-code — 이 파일이 단일 원본(source of truth).
+# 변경 후 dev/master에 반영되면 Sync Labels 워크플로가 자동 동기화한다.
+# (skip-delete: true 이므로 여기 없는 라벨을 삭제하진 않는다 — 정리는 수동)
+
+# ── meta ───────────────────────────────────────────
+- name: roadmap
+  color: "5319e7"
+  description: "로드맵 (상위 트래킹 이슈, 운영자용)"
+- name: task
+  color: "1d76db"
+  description: "작업 단위 (운영자용)"
+- name: epic
+  color: "0052cc"
+  description: "Phase 단위 묶음"
+
+# ── type/ ──────────────────────────────────────────
+- name: type/bug
+  color: "d73a4a"
+  description: "버그"
+- name: type/feature
+  color: "0e8a16"
+  description: "기능 추가 / 제안"
+- name: type/refactor
+  color: "8250df"
+  description: "리팩토링 / 구조 개선"
+- name: type/chore
+  color: "fbca04"
+  description: "빌드 · 설정 · 잡무"
+- name: type/docs
+  color: "0075ca"
+  description: "문서"
+
+# ── area/ ──────────────────────────────────────────
+- name: area/vote
+  color: "006b75"
+  description: "숫자 투표 도메인"
+- name: area/donation
+  color: "006b75"
+  description: "도네 투표 도메인"
+- name: area/viewer
+  color: "006b75"
+  description: "시청자 추첨 도메인"
+- name: area/roulette
+  color: "006b75"
+  description: "룰렛 도메인"
+- name: area/layout
+  color: "006b75"
+  description: "레이아웃 / UI 구조"
+- name: area/auth
+  color: "006b75"
+  description: "인증 / OAuth"
+- name: area/ci
+  color: "006b75"
+  description: "CI / 릴리스 자동화"
+- name: area/infra
+  color: "006b75"
+  description: "인프라 / 저장소 설정"
+
+# ── priority/ ──────────────────────────────────────
+- name: priority/high
+  color: "b60205"
+  description: "높음"
+- name: priority/medium
+  color: "d93f0b"
+  description: "보통"
+- name: priority/low
+  color: "0e8a16"
+  description: "낮음"
