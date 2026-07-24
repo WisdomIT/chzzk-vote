@@ -226,13 +226,14 @@ Phase 0 (개발 인프라) ──┬──> Phase 1 (레이아웃/UX)         �
 
 ---
 
-## 부록 A. GitHub 반영 계획
+## 부록 A. GitHub 반영 현황
 
-초안 확정 후:
-1. **로드맵 트래킹 이슈** 1개 생성 (`roadmap` 라벨, 고정) — 이 문서의 목표·문제·Phase 목록 반영
-2. **마일스톤** 생성: Phase 0 / 0.5 / 1 / 2 / 3
-3. 각 Phase의 작업 단위를 **Sub-issue**로 등록하여 트래킹 이슈에서 진행률 자동 집계
-4. 이 `docs/ROADMAP.md`는 아키텍처 기록으로 레포에 유지
+1. ✅ **로드맵 트래킹 이슈** 생성 완료 → [#24](https://github.com/WisdomIT/chzzk-vote/issues/24) (`roadmap` 라벨)
+2. ✅ **이슈/PR 템플릿** 추가 완료 (`.github/ISSUE_TEMPLATE/` 4종 + `config.yml`, `pull_request_template.md`)
+   - ⚠️ 이슈 템플릿은 **기본 브랜치(master)에 병합된 후** New Issue 선택 화면에 노출됨
+3. ⬜ **마일스톤** 생성 예정: Phase 0 / 0.5 / 1 / 2 / 3
+4. ⬜ 각 Phase의 **작업 단위 이슈**를 생성하여 #24에 Sub-issue로 연결 (진행률 자동 집계)
+5. 이 `docs/ROADMAP.md`는 아키텍처 기록으로 레포에 유지
 
 ---
 
