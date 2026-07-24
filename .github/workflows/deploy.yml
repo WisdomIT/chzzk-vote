@@ -14,6 +14,7 @@ concurrency:
 permissions:
   contents: read
   pull-requests: write
+  deployments: write
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -43,6 +44,16 @@ jobs:
             echo "prod=false" >> "$GITHUB_OUTPUT"
             echo "env=preview" >> "$GITHUB_OUTPUT"
           fi
+
+      # GitHub Deployments 탭에 기록 시작 (Production / Preview)
+      - name: Start GitHub deployment
+        uses: bobheadxi/deployments@v1
+        id: gh_deploy
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ steps.target.outputs.prod == 'true' && 'Production' || 'Preview' }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=${{ steps.target.outputs.env }} --token=${{ secrets.VERCEL_TOKEN }}
@@ -83,3 +94,15 @@ jobs:
                 issue_number: context.issue.number, body,
               });
             }
+
+      # GitHub Deployments 탭에 결과 기록 (성공/실패 + 배포 URL)
+      - name: Finish GitHub deployment
+        if: always() && steps.gh_deploy.outputs.deployment_id
+        uses: bobheadxi/deployments@v1
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: ${{ steps.gh_deploy.outputs.env }}
+          deployment_id: ${{ steps.gh_deploy.outputs.deployment_id }}
+          env_url: ${{ steps.deploy.outputs.url }}
