@@ -1,0 +1,82 @@
+name: "🛠️ [운영자] 로드맵"
+description: "레포 소유자 전용. 여러 작업이 무엇을 위해 진행되는지 방향을 잡는 상위 이슈입니다. (일반 사용자는 버그/기능 제안을 이용해 주세요)"
+title: "[Roadmap] "
+labels: ["roadmap"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **운영자용 템플릿입니다.**
+        > 이 로드맵은 하위 작업 단위 이슈들이 지향하는 목표와 맥락을 정의합니다.
+        > 모든 에이전트/작업은 이 로드맵과 개별 작업 단위 이슈를 **함께** 읽고 시작합니다.
+
+  - type: textarea
+    id: vision
+    attributes:
+      label: 🎯 목표 / 비전
+      description: 이 로드맵이 궁극적으로 달성하려는 것과 방향성. 왜 하는가.
+      placeholder: |
+        - 핵심 목표 1
+        - 핵심 목표 2
+        - 유지할 방향 / 전환할 방향
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 📌 배경 및 문제 정의 (Problem Statement)
+      description: 현재 알려진 문제/한계. 이 로드맵이 해결하려는 대상.
+    validations:
+      required: true
+
+  - type: textarea
+    id: phases
+    attributes:
+      label: 🗺️ Phase 구성 및 의존성
+      description: 단계(Phase)별 계획과 의존 순서. 가능하면 의존성 그래프를 포함하세요.
+      placeholder: |
+        ```
+        Phase 0 ──> Phase 1
+                └─> Phase 2 ──> Phase 3
+        ```
+        - Phase 0: ...
+        - Phase 1: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: 🚫 Non-Goals (범위 밖)
+      description: 스코프 크리프 방지를 위해 명시적으로 제외할 항목.
+    validations:
+      required: true
+
+  - type: textarea
+    id: decisions
+    attributes:
+      label: ✅ 확정된 결정사항 / ⬜ 남은 미결사항
+      description: 로드맵 진행에 영향을 주는 주요 결정. 확정/미결로 구분.
+    validations:
+      required: false
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 📋 작업 단위 (Sub-issues)
+      description: 이 로드맵에 속한 작업 단위 이슈 목록. 작업 단위 이슈를 Sub-issue로 연결하면 진행률이 자동 집계됩니다.
+      placeholder: |
+        - [ ] #00 작업 단위 제목
+        - [ ] #00 작업 단위 제목
+    validations:
+      required: false
+
+  - type: input
+    id: doc-link
+    attributes:
+      label: 📖 관련 문서
+      description: 상세 설계 문서 링크 (예: docs/ROADMAP.md).
+      placeholder: "docs/ROADMAP.md"
+    validations:
+      required: false

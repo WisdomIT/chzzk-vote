@@ -1,0 +1,58 @@
+name: "🐛 버그 리포트"
+description: "서비스 이용 중 발견한 버그를 알려주세요."
+title: "[Bug] "
+labels: ["type/bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "버그를 제보해 주셔서 감사합니다! 재현에 필요한 정보를 최대한 채워 주세요."
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 버그 설명
+      description: 어떤 문제가 발생했나요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 재현 절차
+      description: 문제를 재현하는 단계.
+      placeholder: |
+        1. '...' 페이지로 이동
+        2. '...' 클릭
+        3. 오류 발생
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 동작
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 동작
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: 환경
+      description: 브라우저 / OS / 기기 등.
+      placeholder: "예: Chrome 126, Windows 11 / OBS 브라우저 소스"
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 스크린샷 / 추가 정보
+    validations:
+      required: false
