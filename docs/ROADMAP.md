@@ -66,11 +66,14 @@ Phase 0 (개발 인프라) ──┬──> Phase 1 (레이아웃/UX)         �
 - [ ] 이슈 템플릿 3종 (`.github/ISSUE_TEMPLATE/`): 버그 리포트 / 기능 제안 / 작업(chore)
 - [ ] PR 템플릿 (`.github/pull_request_template.md`)
 - [ ] 라벨 체계 정립 (아래 [라벨 체계](#라벨-체계) 참고)
-- [ ] 검증 CI 워크플로 (`.github/workflows/ci.yml`): `lint` + `build` + `tsc --noEmit`
-  - 현재 자동화 테스트가 없으므로 우선 타입/빌드 검증부터 시작. 테스트 도입은 별도 작업으로 백로그 등록
-- [ ] 릴리스/태그 자동화: **gitmoji + Conventional Commits 병행** 컨벤션 확정(`✨ feat:`, `🐛 fix:` 형태) → release-please 등으로 태그·릴리스 노트 자동 생성
+- [ ] 검증 CI 워크플로 (`.github/workflows/ci.yml`): **`build` + `lint`** (1차 범위)
+  - `next build`가 빌드 과정에서 타입 검증도 수행하므로 별도 `tsc` 단계는 생략
+  - 자동화 테스트는 현재 전무 → 도입은 별도 작업으로 백로그 등록(범위 밖)
+- [ ] 릴리스/태그 자동화: **release-please**(확정) 도입
+  - **gitmoji + Conventional Commits 병행**(`✨ feat:`, `🐛 fix:`) → release-please가 Release PR로 버전·CHANGELOG를 모으고, 머지 시 태그·GitHub Release 자동 생성
+  - ⚠️ 이모지 프리픽스(`✨ feat:`)를 기본 파서가 못 읽으므로 **commit-parser 정규식 커스텀 설정** 필요
 
-**완료 기준(DoD)**: master 직접 push가 차단되고, 모든 PR이 CI를 통과해야 merge되며, dev→master 반영 시 태그와 릴리스 노트가 자동 생성된다.
+**완료 기준(DoD)**: master 직접 push가 차단되고, 모든 PR이 CI(`build`+`lint`)를 통과해야 merge되며, release-please의 Release PR을 master로 머지하면 태그와 릴리스 노트가 자동 생성된다.
 
 ---
 
@@ -112,13 +115,15 @@ Phase 0 (개발 인프라) ──┬──> Phase 1 (레이아웃/UX)         �
 
 > **가장 큰 변곡점.** 채팅 누락·성인 제한 방송·타인 투표 접근 방지를 한 번에 해결하는 근본 대응이며, Phase 3 전체의 전제.
 
+**아키텍처 방향(확정)**: 별도 상시 백엔드를 두지 않고 **Next.js 서버리스 함수(API Routes)만으로 1차 구현**한다. 채팅 집계는 당분간 클라이언트 유지("탭 닫아도 집계"는 필수 요구사항 아님). 상시 집계 워커는 Phase 3에서 실제로 필요해질 때만 분리 검토. DB는 **Supabase**(Realtime 포함)로 확정.
+
 **작업 단위**
 - [ ] `kimcore/chzzk` → `chzzk-open-sdk` 마이그레이션
   - 현재 `next.config.mjs`의 proxy rewrite(`chzzkBase`/`gameBase`)와 `lib/useChzzkChat.ts` 재설계
-- [ ] OAuth 인증 플로우 + 세션 관리 (스트리머가 본인 인증 후 접근)
-- [ ] 서버리스 DB 선정 및 스키마 설계 (계정·인증 토큰)
-- [ ] 백엔드 도입 방식 결정 (`server.js` 커스텀 서버 유지 vs Next API Routes/서버리스 함수)
-- [ ] 본인 외 타인의 투표 접근 방지
+- [ ] OAuth 인증 플로우 + 세션 관리 (스트리머가 본인 인증 후 접근) — Next.js 서버리스 함수 기반
+- [ ] **Supabase** 프로젝트 세팅 + 스키마 설계 (계정·인증 토큰·프리셋·기록)
+  - 서버리스 커넥션 고갈 회피: `supabase-js`(HTTP) 또는 Supavisor 풀러 transaction 모드 사용
+- [ ] 본인 외 타인의 투표 접근 방지 (RLS 등 활용)
 
 **완료 기준**: 스트리머가 OAuth로 인증하고, 공식 API를 통해 채팅 누락 없이/성인 방송 포함하여 투표를 진행할 수 있다.
 
@@ -183,7 +188,8 @@ Phase 0 (개발 인프라) ──┬──> Phase 1 (레이아웃/UX)         �
 ```
 
 - 형식: `<gitmoji> <type>: <설명>`
-- `<type>`이 Conventional Commits 규칙을 따르므로 release-please 등 자동 릴리스 도구가 버전 결정(major/minor/patch) 및 릴리스 노트 생성 가능
+- `<type>`이 Conventional Commits 규칙을 따르므로 **release-please**(확정)가 버전 결정(major/minor/patch) 및 릴리스 노트 생성 가능
+- ⚠️ 이모지 프리픽스를 무시하도록 release-please의 commit-parser 정규식 커스텀 설정 필요
 - 버전은 SemVer 정식 채택. 현재 `0.1.0`을 시작점으로 함
 
 ---
@@ -198,11 +204,16 @@ Phase 0 (개발 인프라) ──┬──> Phase 1 (레이아웃/UX)         �
 
 ---
 
-## 부록 B. 미결 결정사항
+## 부록 B. 결정사항
 
-로드맵 확정 전 못박아야 할 사항:
+### ✅ 확정
+1. **DB** — **Supabase** (Postgres + Realtime + Auth, 무료 티어). Phase 3 OBS 실시간 위젯까지 서버리스만으로 커버 가능한 점이 결정적
+2. **백엔드 방식** — **Next.js 서버리스 함수(API Routes)만으로 1차 구현.** 별도 상시 백엔드 없음. 채팅 집계는 클라이언트 유지("탭 닫아도 집계"는 필수 아님) → 상시 워커는 Phase 3에서 필요 시 분리
+3. **자동 릴리스 도구** — **release-please** (Release PR 방식이 dev→master 릴리스 워크플로와 정합). gitmoji 프리픽스 파싱용 커스텀 설정 동반
+4. **커밋 컨벤션** — gitmoji + Conventional Commits 병행 (`✨ feat:`)
+5. **CI 1차 범위** — `build` + `lint`
 
-1. **서버리스 스택** — DB(Supabase / Vercel Postgres / Turso 등)와 호스팅. 현재 Vercel 배포 중이므로 정합성 고려
-2. **백엔드 도입 방식** — `server.js` 커스텀 서버 유지 vs Next API Routes / 서버리스 함수 전환
-3. **자동 릴리스 도구** — release-please vs semantic-release (gitmoji 병행 설정 필요)
-4. **테스트 전략** — 어느 시점에 어떤 테스트(단위/E2E)를 도입할지 (현재 전무)
+### ⬜ 남은 미결사항
+1. **테스트 전략** — 어느 시점에 어떤 테스트(단위/E2E)를 도입할지 (현재 전무, CI에는 추후 편입)
+2. **호스팅** — Vercel 유지 전제이나, Supabase 도입에 따른 환경변수/배포 파이프라인 정리 필요
+3. **release-please 세부** — 대상 브랜치 구성(dev 감시 vs master 감시) 및 gitmoji 파서 프리셋 구체화 (Phase 0에서 확정)
