@@ -72,11 +72,10 @@ body:
     validations:
       required: false
 
-  - type: input
-    id: doc-link
+  - type: textarea
+    id: references
     attributes:
-      label: 📖 관련 문서
-      description: 상세 설계 문서 링크 (예: docs/ROADMAP.md).
-      placeholder: "docs/ROADMAP.md"
+      label: 📖 참고 링크 (선택)
+      description: 외부 설계 문서, 관련 이슈/PR, 레퍼런스 등.
     validations:
       required: false

@@ -3,6 +3,6 @@ contact_links:
   - name: 💬 사용법 문의 / 후원
     url: https://discord.com/users/901304044767834123
     about: 버그·기능 제안이 아닌 일반 문의는 디스코드로 연락해 주세요.
-  - name: 📖 리팩토링 로드맵 문서
-    url: https://github.com/WisdomIT/chzzk-vote/blob/master/docs/ROADMAP.md
-    about: 프로젝트의 방향과 진행 중인 리팩토링 계획을 확인할 수 있습니다.
+  - name: 🗺️ 리팩토링 로드맵
+    url: https://github.com/WisdomIT/chzzk-vote/issues?q=label%3Aroadmap
+    about: 프로젝트의 방향과 진행 중인 리팩토링 계획(로드맵 이슈)을 확인할 수 있습니다.
