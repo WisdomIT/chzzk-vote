@@ -1,0 +1,78 @@
+name: "🛠️ [운영자] 작업 단위"
+description: "레포 소유자 전용. 실제 작업 단위(PR 1개 크기). 반드시 상위 로드맵 이슈를 연결합니다. (일반 사용자는 버그/기능 제안을 이용해 주세요)"
+title: "[Task] "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **운영자용 템플릿입니다.**
+        > 작업 단위는 도메인별·작업별로 분리하며, 한 작업 단위 = 한 PR을 원칙으로 합니다.
+        > 상위 로드맵 이슈 연결은 **필수**입니다 — 맥락 없이 작업하지 않기 위함입니다.
+
+  - type: input
+    id: roadmap-ref
+    attributes:
+      label: 🔗 상위 로드맵 이슈
+      description: "이 작업이 속한 로드맵 이슈를 반드시 링크하세요. (예: #12)"
+      placeholder: "#00"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: 📍 Phase
+      description: 이 작업이 속한 Phase.
+      options:
+        - "Phase 0 — 개발 인프라"
+        - "Phase 0.5 — 라이브러리 최신화"
+        - "Phase 1 — 레이아웃/UX"
+        - "Phase 2 — 공식 SDK + OAuth + DB"
+        - "Phase 3 — 계정 기반 기능"
+        - "상시 (Cross-cutting)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 📝 작업 개요
+      description: 이 작업 단위가 무엇을 하는지 한두 문단으로.
+    validations:
+      required: true
+
+  - type: textarea
+    id: todo
+    attributes:
+      label: ✅ 상세 작업 내용
+      description: 체크리스트로 세부 작업을 나열.
+      placeholder: |
+        - [ ] 세부 작업 1
+        - [ ] 세부 작업 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: dod
+    attributes:
+      label: 🎯 완료 기준 (Definition of Done)
+      description: 이 작업이 "끝났다"고 판단하는 구체적 조건.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 📂 관련 도메인 / 파일
+      description: 영향받는 도메인(vote/donation/viewer/roulette/config 등)이나 주요 파일.
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 💭 참고사항
+      description: 참고 링크, 주의점, 의존하는 다른 작업 등.
+    validations:
+      required: false
