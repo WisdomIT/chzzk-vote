@@ -23,6 +23,9 @@ env:
 
 jobs:
   teardown:
+    # 릴리스 PR(dev→master, head=dev)은 teardown 대상이 아니다.
+    # (deploy.yml에서 pr-N preview를 만들지 않으며, dev preview는 상시 유지)
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.ref != 'dev'
     runs-on: ubuntu-latest
     steps:
       - name: Resolve PR number
@@ -57,6 +60,10 @@ jobs:
           fi
 
       - name: Delete GitHub deployment environment
+        # 배포 기록 삭제까지는 GITHUB_TOKEN으로 가능하지만,
+        # 마지막 환경 자체 삭제는 admin 권한이 필요해 항상 403이 난다.
+        # 기록 삭제만으로 Deployments 탭 정리는 충분하므로 실패를 무시한다.
+        continue-on-error: true
         uses: bobheadxi/deployments@v1
         with:
           step: delete-env

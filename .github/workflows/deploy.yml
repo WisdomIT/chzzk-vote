@@ -22,6 +22,10 @@ env:
 
 jobs:
   deploy:
+    # 릴리스 PR(dev→master, head=dev)은 PR preview를 만들지 않는다.
+    # dev push의 Preview 배포가 이미 존재하므로 중복이며,
+    # 머지 시 teardown되면 dev preview가 내려간 것과 같은 효과가 난다.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
