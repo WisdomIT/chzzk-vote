@@ -1,0 +1,64 @@
+name: Cleanup preview
+
+# PR 머지/닫힘 시 preview 정리.
+# pull_request_target(closed)은 base 브랜치 컨텍스트에서 실행되어
+# 머지 직후 PR merge-ref가 사라져도 취소되지 않는다.
+# (PR 코드를 checkout 하지 않으므로 fork PR에도 안전)
+on:
+  pull_request_target:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "정리할 PR 번호"
+        required: true
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  teardown:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve PR number
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "num=${{ github.event.inputs.pr_number }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "num=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Remove Vercel preview deployments for this PR
+        run: |
+          N="${{ steps.pr.outputs.num }}"
+          hosts=$(vercel list chzzk-vote \
+            --meta prNumber=$N \
+            --token=${{ secrets.VERCEL_TOKEN }} 2>/dev/null \
+            | grep -Eo '[a-z0-9-]+\.vercel\.app' \
+            | grep -v '^chzzk-vote\.vercel\.app$' \
+            | sort -u || true)
+          if [ -z "$hosts" ]; then
+            echo "제거할 preview 배포가 없습니다 (PR #$N)."
+          else
+            echo "$hosts" | while read -r h; do
+              [ -n "$h" ] || continue
+              echo "Removing $h"
+              vercel remove "$h" --yes --token=${{ secrets.VERCEL_TOKEN }} || true
+            done
+          fi
+
+      - name: Delete GitHub deployment environment
+        uses: bobheadxi/deployments@v1
+        with:
+          step: delete-env
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: pr-${{ steps.pr.outputs.num }}

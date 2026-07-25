@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, dev]
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
 
 # 같은 ref의 이전 실행은 취소 (중복 배포 방지)
 concurrency:
@@ -22,8 +22,6 @@ env:
 
 jobs:
   deploy:
-    # PR이 닫힌(머지) 이벤트에서는 배포하지 않음 — teardown 잡이 처리
-    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -117,36 +115,3 @@ jobs:
           env: ${{ steps.gh_deploy.outputs.env }}
           deployment_id: ${{ steps.gh_deploy.outputs.deployment_id }}
           env_url: ${{ steps.deploy.outputs.url }}
-
-  # PR 머지/닫힘 시 preview 정리: Vercel 배포 실제 제거 + GitHub 환경 삭제
-  teardown:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Remove Vercel preview deployments for this PR
-        run: |
-          hosts=$(vercel list chzzk-vote \
-            --meta prNumber=${{ github.event.pull_request.number }} \
-            --token=${{ secrets.VERCEL_TOKEN }} 2>/dev/null \
-            | grep -Eo '[a-z0-9-]+\.vercel\.app' \
-            | grep -v '^chzzk-vote\.vercel\.app$' \
-            | sort -u || true)
-          if [ -z "$hosts" ]; then
-            echo "제거할 preview 배포가 없습니다 (PR #${{ github.event.pull_request.number }})."
-          else
-            echo "$hosts" | while read -r h; do
-              [ -n "$h" ] || continue
-              echo "Removing $h"
-              vercel remove "$h" --yes --token=${{ secrets.VERCEL_TOKEN }} || true
-            done
-          fi
-
-      - name: Delete GitHub deployment environment
-        uses: bobheadxi/deployments@v1
-        with:
-          step: delete-env
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: pr-${{ github.event.pull_request.number }}
