@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.0](https://github.com/WisdomIT/chzzk-vote/compare/v0.2.0...v0.3.0) (2026-07-25)
+
+
+### 📦 Miscellaneous
+
+* Next.js 16 + React 19 마이그레이션 ([#48](https://github.com/WisdomIT/chzzk-vote/issues/48)) ([0fbaaa2](https://github.com/WisdomIT/chzzk-vote/commit/0fbaaa25034e5a5f7d1e4edd135f74bd75645079))
+* Phase 0.5 릴리스 트리거 및 changelog 섹션 구성 ([#51](https://github.com/WisdomIT/chzzk-vote/issues/51)) ([7236c0b](https://github.com/WisdomIT/chzzk-vote/commit/7236c0b2ab0347f67dafa92e4122ece94b038e0b))
+* 기타 의존성 최신화 (zustand 5, styled-components 6.4 등) ([#49](https://github.com/WisdomIT/chzzk-vote/issues/49)) ([ba15414](https://github.com/WisdomIT/chzzk-vote/commit/ba1541490fdab3b7f7b1bae6da77d1d73443f5b6))
+
 ## [0.2.0](https://github.com/WisdomIT/chzzk-vote/compare/v0.1.0...v0.2.0) (2026-07-25)
 
 
