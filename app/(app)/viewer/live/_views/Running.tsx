@@ -10,8 +10,8 @@ import {
   type SetStateAction,
   useRef,
 } from "react";
-import Config from "../../../_components/Viewer/Config";
-import Viewers from "../../../_components/Viewer/Viewers";
+import Config from "@/app/_components/Viewer/Config";
+import Viewers from "@/app/_components/Viewer/Viewers";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
 import Chat from "@/app/_components/Slot/Chat";
