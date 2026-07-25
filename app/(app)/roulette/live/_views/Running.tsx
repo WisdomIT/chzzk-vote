@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RouletteType } from "../page";
+import { RouletteType } from "@/lib/stores/roulette";
 import { Container } from "./index.styled";
 import { BottomBtns, Complete, WheelContainer } from "./Running.styled";
 import dynamic from "next/dynamic";

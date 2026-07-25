@@ -5,7 +5,7 @@ import MainButton from "@/app/_components/Main/MainButton";
 import { Container, ContainerCenter } from "./index.styled";
 import { List, ListScroll, ListScrollEnd } from "./Ready.styled";
 import AddListItem from "@/app/_components/Vote/AddListItem";
-import { RouletteType } from "../page";
+import { RouletteType } from "@/lib/stores/roulette";
 import SetListRouletteItem from "../_components/SetListRouletteItem";
 import { useSearchParams } from "next/navigation";
 
