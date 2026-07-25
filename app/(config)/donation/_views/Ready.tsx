@@ -14,7 +14,7 @@ import {
   Timers,
 } from "./Ready.styled";
 import AddListItem from "@/app/_components/Vote/AddListItem";
-import { DoneConfigType } from "../page";
+import { DoneConfigType } from "@/lib/stores/donation";
 import SetListItemCustom from "@/app/_components/Vote/SetListItemCustom";
 import MainCheckbox from "@/app/_components/Main/MainCheckbox";
 import MainInput from "@/app/_components/Main/MainInput";

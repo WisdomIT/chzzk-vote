@@ -26,7 +26,7 @@ import {
   List,
   ContainerCenter,
 } from "./index.styled";
-import { DoneConfigType } from "../page";
+import { DoneConfigType } from "@/lib/stores/donation";
 import { webhook } from "@/lib/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 import Timer from "@/app/_components/Vote/Timer";
