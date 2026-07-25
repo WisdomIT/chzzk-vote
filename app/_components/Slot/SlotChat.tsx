@@ -3,6 +3,7 @@
 import { ViewersConfigType, ViewerType } from "@/lib/types";
 import {
   type Dispatch,
+  type JSX,
   memo,
   type SetStateAction,
   useEffect,

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { type JSX } from "react";
 import { ChatEvent, ChzzkChat, DonationEvent, type Profile } from "chzzk";
 import { ViewerType } from "@/lib/types";
 import { styled } from "styled-components";

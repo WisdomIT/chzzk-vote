@@ -68,6 +68,7 @@ export default function Completed({
             })
             .map((item) => (
               <ListItem
+                key={item.id}
                 index={item.id}
                 name={item.name}
                 total={total}
