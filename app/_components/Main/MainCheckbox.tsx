@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Icon } from "./MainCheckbox.styled";
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, JSX } from "react";
 import { faCheck } from "@awesome.me/kit-8710ef4103/icons/sharp/solid";
 
 interface CustomButtonProps

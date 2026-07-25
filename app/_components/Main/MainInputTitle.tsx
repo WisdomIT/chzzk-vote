@@ -1,5 +1,5 @@
 import React from "react";
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, JSX } from "react";
 import { Container, Text, Title, Description, Input } from "./MainInput.styled";
 
 interface CustomTextInputProps
