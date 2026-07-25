@@ -92,7 +92,7 @@ export default function Running({
   // 데이터를 버퍼링하기 위한 ref
   const voteSet = useRef(new Set<string>());
   const voteBuffer = useRef<VoteType[]>([...vote]);
-  const bufferTimeout = useRef<NodeJS.Timeout>();
+  const bufferTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
   function handleOnChat(viewer: ViewerType, message: string) {
     if (!voteSet.current || !voteBuffer.current) return;
@@ -165,6 +165,7 @@ export default function Running({
         <List>
           {vote.map((item) => (
             <ListItem
+              key={item.id}
               index={item.id}
               name={item.name}
               total={total}

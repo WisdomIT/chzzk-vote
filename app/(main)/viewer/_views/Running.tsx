@@ -45,7 +45,7 @@ export default function Running({
   // 데이터를 버퍼링하기 위한 ref
   const viewerSet = useRef(new Set<string>());
   const viewerBuffer = useRef<ViewerType[]>([]);
-  const bufferTimeout = useRef<NodeJS.Timeout>();
+  const bufferTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
   function handleOnChat(viewer: ViewerType) {
     if (!viewerSet.current || !viewerBuffer.current) return;
