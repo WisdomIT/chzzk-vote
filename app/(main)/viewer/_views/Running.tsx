@@ -15,7 +15,7 @@ import Viewers from "../../../_components/Viewer/Viewers";
 import { useGlobalOptionStore } from "@/lib/zustand";
 import useChzzkChat from "@/lib/useChzzkChat";
 import Chat from "@/app/_components/Slot/Chat";
-import { webhook } from "../../_api/webhook";
+import { webhook } from "@/lib/webhook";
 import ChzzkError from "@/app/_components/Viewer/ChzzkError";
 import SlotChat, { handleSlotStart } from "@/app/_components/Slot/SlotChat";
 import Timer from "@/app/_components/Vote/Timer";
