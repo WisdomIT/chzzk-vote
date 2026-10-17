@@ -50,14 +50,18 @@ export const useVoteStore = create<VoteStoreState & VoteStoreActions>()(
         return { drawn: [...prev.drawn, viewer] };
       }),
     start: (timerSeconds) =>
-      set(() => {
+      set((prev) => {
         let timer: Date | null = null;
         if (timerSeconds !== null) {
           timer = new Date();
           timer.setSeconds(timer.getSeconds() + timerSeconds);
         }
+        // 진행 중 /vote로 돌아왔다가 다시 시작하는 경우를 대비해
+        // 이전 투표자·추첨 기록은 항상 비우고 시작한다 (항목 이름은 유지).
         return {
           state: "running",
+          vote: prev.vote.map((item) => ({ ...item, viewers: [] })),
+          drawn: [],
           time: { start: new Date(), end: null },
           timer,
         };
