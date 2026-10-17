@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
   deployments: write
 
 env:
@@ -24,7 +25,7 @@ env:
 jobs:
   teardown:
     # 릴리스 PR(dev→master, head=dev)은 teardown 대상이 아니다.
-    # (deploy.yml에서 pr-N preview를 만들지 않으며, dev preview는 상시 유지)
+    # (deploy.yml에서 PR preview를 만들지 않으며, dev preview는 상시 유지)
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.ref != 'dev'
     runs-on: ubuntu-latest
     steps:
@@ -59,13 +60,33 @@ jobs:
             done
           fi
 
-      - name: Delete GitHub deployment environment
-        # 배포 기록 삭제까지는 GITHUB_TOKEN으로 가능하지만,
-        # 마지막 환경 자체 삭제는 admin 권한이 필요해 항상 403이 난다.
-        # 기록 삭제만으로 Deployments 탭 정리는 충분하므로 실패를 무시한다.
-        continue-on-error: true
-        uses: bobheadxi/deployments@v1
+      # PRs 환경은 여러 PR이 공유하므로 환경을 지우지 않고,
+      # 이 PR의 head 브랜치(ref)로 기록된 배포만 inactive로 전환한다.
+      - name: Deactivate GitHub deployments of this PR
+        uses: actions/github-script@v7
         with:
-          step: delete-env
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: pr-${{ steps.pr.outputs.num }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pull_number = Number('${{ steps.pr.outputs.num }}');
+            const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number });
+            const ref = pr.head.ref;
+            const environment = 'PRs';
+
+            const deployments = await github.paginate(github.rest.repos.listDeployments, {
+              owner, repo, environment, ref, per_page: 100,
+            });
+            if (deployments.length === 0) {
+              core.info(`비활성화할 배포가 없습니다 (PR #${pull_number}, ref=${ref}).`);
+              return;
+            }
+            for (const d of deployments) {
+              const { data: statuses } = await github.rest.repos.listDeploymentStatuses({
+                owner, repo, deployment_id: d.id, per_page: 1,
+              });
+              if (statuses[0]?.state === 'inactive') continue;
+              core.info(`${environment}.${d.id} (${ref} @ ${d.sha.slice(0, 7)}) → inactive`);
+              await github.rest.repos.createDeploymentStatus({
+                owner, repo, deployment_id: d.id,
+                state: 'inactive', auto_inactive: false,
+              });
+            }

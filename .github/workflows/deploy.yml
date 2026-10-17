@@ -37,7 +37,9 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      # master → production, dev push → Preview, PR → pr-<번호>
+      # master → Production, dev push → Preview, PR → PRs (단일 환경)
+      # PR 배포는 환경을 PR마다 만들지 않고 PRs 하나에 모아 히스토리를 한 리스트로 관리한다.
+      # 어느 PR의 배포인지는 ref(head 브랜치)와 desc(PR 번호)로 구분한다.
       - name: Resolve deploy target
         id: target
         run: |
@@ -45,14 +47,17 @@ jobs:
             echo "prod=true"         >> "$GITHUB_OUTPUT"
             echo "env=production"    >> "$GITHUB_OUTPUT"
             echo "gh_env=Production" >> "$GITHUB_OUTPUT"
+            echo "desc="             >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "prod=false"     >> "$GITHUB_OUTPUT"
             echo "env=preview"    >> "$GITHUB_OUTPUT"
-            echo "gh_env=pr-${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+            echo "gh_env=PRs"     >> "$GITHUB_OUTPUT"
+            echo "desc=PR #${{ github.event.pull_request.number }} (${{ github.head_ref }})" >> "$GITHUB_OUTPUT"
           else
             echo "prod=false"    >> "$GITHUB_OUTPUT"
             echo "env=preview"   >> "$GITHUB_OUTPUT"
             echo "gh_env=Preview" >> "$GITHUB_OUTPUT"
+            echo "desc="         >> "$GITHUB_OUTPUT"
           fi
 
       - name: Start GitHub deployment
@@ -63,6 +68,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.target.outputs.gh_env }}
           ref: ${{ github.head_ref || github.ref_name }}
+          desc: ${{ steps.target.outputs.desc }}
 
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=${{ steps.target.outputs.env }} --token=${{ secrets.VERCEL_TOKEN }}
@@ -109,6 +115,8 @@ jobs:
             }
 
       # GitHub Deployments 탭에 결과 기록 (성공/실패 + 배포 URL)
+      # override: false — PRs 환경은 여러 PR이 공유하므로 환경 단위 자동 비활성화를 끈다.
+      # (Production/Preview는 ref가 하나뿐이라 아래 ref 단위 비활성화로 기존과 동일하게 동작)
       - name: Finish GitHub deployment
         if: always() && steps.gh_deploy.outputs.deployment_id
         uses: bobheadxi/deployments@v1
@@ -119,3 +127,33 @@ jobs:
           env: ${{ steps.gh_deploy.outputs.env }}
           deployment_id: ${{ steps.gh_deploy.outputs.deployment_id }}
           env_url: ${{ steps.deploy.outputs.url }}
+          override: false
+
+      # 같은 환경·같은 ref(브랜치)의 이전 배포만 inactive로 전환한다.
+      # PRs 환경에서는 PR마다 최신 배포 하나씩이 active로 남는다.
+      - name: Deactivate previous deployments of this ref
+        if: success() && steps.gh_deploy.outputs.deployment_id
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const environment = '${{ steps.gh_deploy.outputs.env }}';
+            const ref = '${{ github.head_ref || github.ref_name }}';
+            const current = Number('${{ steps.gh_deploy.outputs.deployment_id }}');
+            const { owner, repo } = context.repo;
+
+            const deployments = await github.paginate(github.rest.repos.listDeployments, {
+              owner, repo, environment, ref, per_page: 100,
+            });
+
+            for (const d of deployments) {
+              if (d.id === current) continue;
+              const { data: statuses } = await github.rest.repos.listDeploymentStatuses({
+                owner, repo, deployment_id: d.id, per_page: 1,
+              });
+              if (statuses[0]?.state === 'inactive') continue;
+              core.info(`${environment}.${d.id} (${ref} @ ${d.sha.slice(0, 7)}) → inactive`);
+              await github.rest.repos.createDeploymentStatus({
+                owner, repo, deployment_id: d.id,
+                state: 'inactive', auto_inactive: false,
+              });
+            }
