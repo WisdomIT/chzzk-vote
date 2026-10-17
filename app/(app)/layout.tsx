@@ -4,6 +4,7 @@ import Header from "../_components/Layout/Header";
 import Footer from "../_components/Layout/Footer";
 import { styled } from "styled-components";
 import ProtectedRoute from "../_components/Layout/ProtectedRoute";
+import { AppModeGlobalStyle } from "../_components/Layout/Styled/AppModeGlobalStyle";
 import { useGlobalOptionStore } from "@/lib/zustand";
 
 // 앱 모드 레이아웃 — 진행 중인 투표 화면용 (*/live).
@@ -32,6 +33,7 @@ export default function Layout({
 
   return (
     <Container $zoom={zoom}>
+      <AppModeGlobalStyle />
       <Header />
       <Main>
         <ProtectedRoute>{children}</ProtectedRoute>

@@ -12,16 +12,11 @@ export const StyledGlobalProvider = createGlobalStyle`
   outline: none;
 }
 
+/* html/body의 높이 고정(100vh + overflow hidden)은 앱 모드 레이아웃((main)/(app))의
+   AppModeGlobalStyle이 담당한다. 기본값은 웹 모드(문서 스크롤 허용). */
 html,
 body {
   max-width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-
-  ${({ theme }) => theme.device.mobile} {
-    height: fit-content;
-    overflow: auto;
-  }
 }
 
 body {

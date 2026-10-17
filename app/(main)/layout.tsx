@@ -2,8 +2,9 @@
 
 import Header from "../_components/Layout/Header";
 import Footer from "../_components/Layout/Footer";
-import { createGlobalStyle, styled } from "styled-components";
+import { styled } from "styled-components";
 import ProtectedRoute from "../_components/Layout/ProtectedRoute";
+import { AppModeGlobalStyle } from "../_components/Layout/Styled/AppModeGlobalStyle";
 import { useGlobalOptionStore } from "@/lib/zustand";
 
 const Container = styled.div<{ $zoom: number }>`
@@ -37,6 +38,7 @@ export default function Layout({
 
   return (
     <Container $zoom={zoom}>
+      <AppModeGlobalStyle />
       <Header />
       <Main>
         <ProtectedRoute>{children}</ProtectedRoute>
