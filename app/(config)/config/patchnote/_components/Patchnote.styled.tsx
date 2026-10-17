@@ -1,21 +1,19 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div<{ $zoom: number }>`
+// 웹 모드: 내부 스크롤 대신 페이지 스크롤을 사용한다.
+export const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
   width: 100%;
   max-width: 1000px;
-  max-height: calc(100vh * ${({ $zoom }) => 100 / $zoom} - 480px);
   padding: 40px;
   gap: 40px;
   border: 1px solid ${({ theme }) => theme.colors.border02};
   border-radius: ${({ theme }) => theme.rounded.base};
   color: ${({ theme }) => theme.colors.content};
-  overflow-y: auto;
 
   ${({ theme }) => theme.device.mobile} {
-    max-height: fit-content;
     padding: 20px;
   }
 `;
